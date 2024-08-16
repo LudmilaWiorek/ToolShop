@@ -37,13 +37,15 @@ test.describe.parallel('end to end tests', () => {
     const passwordInput = page.locator('#password')
     const submitButton = page.locator('.btnSubmit')
 
+    //create array of products, but push to array is included in addtocart method
+    let arrayProducts: string[] = []
     // Act
     // we search for some hammer
     await toolsPage.search('Hammer')
     // click classic claw hammer
     await toolsPage.chooseItem(' Claw Hammer ') // wywalić do konsta!!!
     // add it to cart
-    await toolsPage.addToCart()
+    await toolsPage.addToCart(arrayProducts, 'Claw Hammer')
     await page.waitForTimeout(3000)
 
     // Assert
@@ -57,7 +59,7 @@ test.describe.parallel('end to end tests', () => {
     await accessoryPage.thorHammer.click()
     await page.waitForTimeout(3000) // must be 3 sec, with 2 seconds delay test fails!
     // add it to cart
-    await toolsPage.addToCart()
+    await toolsPage.addToCart(arrayProducts, 'Thor Hammer')
 
     // Assert
     await expect(accessoryPage.productAddedMessage).toBeVisible()
@@ -72,7 +74,7 @@ test.describe.parallel('end to end tests', () => {
     await accessoryPage.saw.waitFor()
     // click on circular saw because it looks cool
     await accessoryPage.saw.click()
-    await toolsPage.addToCart()
+    await toolsPage.addToCart(arrayProducts, 'Circular Saw')
 
     // Assert
     await expect(accessoryPage.productAddedMessage).toBeVisible()
@@ -81,20 +83,20 @@ test.describe.parallel('end to end tests', () => {
     // we go to checkout
     await accessoryPage.cartIcon.click()
 
-    // Assert
-    // we check if all items are in the cart
     //CART
+    //for every lineItem we get its name and we compare it with array element
+    const lineItem = await cartPage.itemName
+    for (let i = 0; i < arrayProducts.length; i++) {
+      const nameOfProduct0 = await cartPage.getName(lineItem.nth(i))
+      await expect(nameOfProduct0).toHaveText(arrayProducts[i])
+    }
+    //can't put it to method in class because of "expect" inside
 
-    const itemLocatorInCart = await cartPage.getItemCount()
-
-    await expect(accessoryPage.productName.nth(0)).toHaveText('Claw Hammer')
-    await expect(accessoryPage.productName.nth(1)).toHaveText('Thor Hammer')
-    await expect(accessoryPage.productName.nth(2)).toHaveText('Circular Saw')
-    await expect(itemLocatorInCart).toHaveCount(3)
+    //Assert
+    await expect(lineItem).toHaveCount(3)
 
     //here should be method checking total price of cart (?)
 
-    // await accessoryPage.proceedButton.click()
     await accessoryPage.successButton.click()
 
     // we need to sign in
@@ -109,7 +111,6 @@ test.describe.parallel('end to end tests', () => {
     await accessoryPage.proceedButton.click()
 
     // we need to fill delivery formular
-
     const billingAddress: billingAddressModel = {
       address: 'Sezamkowa 3/30',
       city: 'Warsaw',
