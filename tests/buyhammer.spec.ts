@@ -3,28 +3,30 @@ import { LoginPage } from '../pages/login.page'
 import { ToolsPage } from '../pages/tools.page'
 import { DeliveryPage, billingAddressModel } from '../pages/delivery.page'
 import { AccessoryPage } from '../pages/accessory.page'
+import { CartPage } from '../pages/cart.page'
 
 test.describe.parallel('end to end tests', () => {
   let loginPage: LoginPage
   let toolsPage: ToolsPage
   let deliveryPage: DeliveryPage
   let accessoryPage: AccessoryPage
+  let cartPage: CartPage
   test.beforeEach('login test', async ({ page }) => {
     loginPage = new LoginPage(page)
     await loginPage.goToPage(page)
     toolsPage = new ToolsPage(page)
     deliveryPage = new DeliveryPage(page)
     accessoryPage = new AccessoryPage(page)
+    cartPage = new CartPage(page)
   })
   test('login with correct credentials', async ({ page }) => {
     const dataEmail = 'customer2@practicesoftwaretesting.com'
     const dataPass = 'welcome01'
-    // const pageTitle = page.locator('[data-test="page-title"]')
     const textMyAccount = 'My account'
 
     await loginPage.login(dataEmail, dataPass)
     await page.waitForLoadState()
-    await expect(accessoryPage.pageTitle).toContainText(textMyAccount)
+    await expect(loginPage.myAccountTitle).toContainText(textMyAccount)
   })
 
   test('first end to end test', async ({ page }) => {
@@ -42,7 +44,7 @@ test.describe.parallel('end to end tests', () => {
     await toolsPage.chooseItem(' Claw Hammer ') // wywalić do konsta!!!
     // add it to cart
     await toolsPage.addToCart()
-    await page.waitForTimeout(3000) // czekamy 3sec
+    await page.waitForTimeout(3000)
 
     // Assert
     await expect(accessoryPage.productAddedMessage).toBeVisible()
@@ -53,9 +55,9 @@ test.describe.parallel('end to end tests', () => {
     await toolsPage.chooseItem(' Thor Hammer ')
     await accessoryPage.thorHammer.waitFor()
     await accessoryPage.thorHammer.click()
+    await page.waitForTimeout(3000) // must be 3 sec, with 2 seconds delay test fails!
     // add it to cart
     await toolsPage.addToCart()
-    await page.waitForTimeout(3000)
 
     // Assert
     await expect(accessoryPage.productAddedMessage).toBeVisible()
@@ -81,11 +83,14 @@ test.describe.parallel('end to end tests', () => {
 
     // Assert
     // we check if all items are in the cart
+    //CART
 
-    // await expect(productName.nth(0)).toHaveText('Claw Hammer')
-    // await expect(productName.nth(1)).toHaveText('Thor Hammer')
-    // await expect(productName.nth(2)).toHaveText('Circular Saw')
-    // await expect(productName).toHaveCount(3)
+    const itemLocatorInCart = await cartPage.getItemCount()
+
+    await expect(accessoryPage.productName.nth(0)).toHaveText('Claw Hammer')
+    await expect(accessoryPage.productName.nth(1)).toHaveText('Thor Hammer')
+    await expect(accessoryPage.productName.nth(2)).toHaveText('Circular Saw')
+    await expect(itemLocatorInCart).toHaveCount(3)
 
     //here should be method checking total price of cart (?)
 
