@@ -29,9 +29,9 @@ export class ToolsPage {
   async addToCart(arrayProducts: lineItem[]) {
     await this.addToCartButton.click()
     const dataProduct: lineItem = {
-      name: await this.name.innerText(),
-      quantity: await this.quantity.inputValue(),
-      price: await this.price.innerText(),
+      name: (await this.name.innerText()),
+      quantity: (await this.quantity.inputValue()),
+      price: (await this.price.innerText()),
     }
     await arrayProducts.push(dataProduct)
   }
