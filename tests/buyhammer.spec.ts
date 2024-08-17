@@ -4,6 +4,7 @@ import { ToolsPage } from '../pages/tools.page'
 import { DeliveryPage, billingAddressModel } from '../pages/delivery.page'
 import { AccessoryPage } from '../pages/accessory.page'
 import { CartPage } from '../pages/cart.page'
+import { lineItem } from '../models/lineItem.model'
 
 test.describe.parallel('end to end tests', () => {
   let loginPage: LoginPage
@@ -37,15 +38,16 @@ test.describe.parallel('end to end tests', () => {
     const passwordInput = page.locator('#password')
     const submitButton = page.locator('.btnSubmit')
 
-    //create array of products, but push to array is included in addtocart method
-    let arrayProducts: string[] = []
+    //create array of products, but push to array is included in addToCart method
+    let arrayProducts: lineItem[] = []
+
     // Act
     // we search for some hammer
     await toolsPage.search('Hammer')
     // click classic claw hammer
     await toolsPage.chooseItem(' Claw Hammer ') // wywalić do konsta!!!
     // add it to cart
-    await toolsPage.addToCart(arrayProducts, 'Claw Hammer')
+    await toolsPage.addToCart(arrayProducts)
     await page.waitForTimeout(3000)
 
     // Assert
@@ -56,14 +58,18 @@ test.describe.parallel('end to end tests', () => {
     // click on Thor Hammer in related products
     await toolsPage.chooseItem(' Thor Hammer ')
     await accessoryPage.thorHammer.waitFor()
+
     await accessoryPage.thorHammer.click()
-    await page.waitForTimeout(3000) // must be 3 sec, with 2 seconds delay test fails!
+    await page.waitForTimeout(3000)
+    // must be 3 sec, with 2 seconds delay test fails!
+    //we increase quantity of thor hammers
+    await toolsPage.increaseButton.click()
     // add it to cart
-    await toolsPage.addToCart(arrayProducts, 'Thor Hammer')
+    await toolsPage.addToCart(arrayProducts)
 
     // Assert
     await expect(accessoryPage.productAddedMessage).toBeVisible()
-    await expect(accessoryPage.cartCount).toHaveText('2')
+    await expect(accessoryPage.cartCount).toHaveText('3')
 
     // Act
     // click on Tool Shop Logo in order to go to main page
@@ -74,28 +80,33 @@ test.describe.parallel('end to end tests', () => {
     await accessoryPage.saw.waitFor()
     // click on circular saw because it looks cool
     await accessoryPage.saw.click()
-    await toolsPage.addToCart(arrayProducts, 'Circular Saw')
+    await toolsPage.addToCart(arrayProducts)
 
     // Assert
     await expect(accessoryPage.productAddedMessage).toBeVisible()
-    await expect(accessoryPage.cartCount).toHaveText('3')
+    await expect(accessoryPage.cartCount).toHaveText('4')
 
     // we go to checkout
     await accessoryPage.cartIcon.click()
 
-    //CART
+    // ~~CART~~
+    //using this loop tells us if this, what we have in our virtual basket
+    // equals what we have in cart on the web
+    console.log(arrayProducts)
     //for every lineItem we get its name and we compare it with array element
-    const lineItem = await cartPage.itemName
+    const lineItemLocators = await cartPage.itemName
     for (let i = 0; i < arrayProducts.length; i++) {
-      const nameOfProduct0 = await cartPage.getName(lineItem.nth(i))
-      await expect(nameOfProduct0).toHaveText(arrayProducts[i])
+      const nameOfProduct = await cartPage.getName(lineItemLocators.nth(i))
+      await expect(nameOfProduct).toHaveText(arrayProducts[i].name)
+      // for every lineItem we check if quantity is demanded quantity number
+      const quantityOfProduct = await cartPage.getQuantity(
+        lineItemLocators.nth(i),
+      )
+      await expect(quantityOfProduct).toHaveValue(arrayProducts[i].quantity)
     }
     //can't put it to method in class because of "expect" inside
-
     //Assert
-    await expect(lineItem).toHaveCount(3)
-
-    //here should be method checking total price of cart (?)
+    await expect(lineItemLocators).toHaveCount(3)
 
     await accessoryPage.successButton.click()
 

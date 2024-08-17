@@ -9,7 +9,7 @@ export class LoginPage {
   readonly submitButton: Locator
   readonly errorMessage: Locator
   readonly myAccountTitle: Locator
-
+  
   constructor(page: Page) {
     this.page = page
     this.signIn = page.locator('[data-test="nav-sign-in"]')

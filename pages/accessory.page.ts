@@ -9,11 +9,10 @@ export class AccessoryPage {
   readonly saw: Locator
   readonly logoToolShop: Locator
   readonly cartIcon: Locator
-  readonly productName: Locator
   readonly proceedButton: Locator
   readonly messageYouReLogged: Locator
   readonly successButton: Locator
-  readonly pageTitle: Locator
+ 
 
   constructor(page: Page) {
     this.page = page
@@ -24,11 +23,8 @@ export class AccessoryPage {
     this.saw = page.locator('//h5[text()=" Circular Saw "]')
     this.cartIcon = page.locator('//a[@class="nav-link" and @href="/checkout"]')
     this.logoToolShop = page.locator('#Layer_1')
-    this.productName = page.locator('.product-title')
     this.proceedButton = page.locator('[data-test="proceed-2"]')
     this.messageYouReLogged = page.getByText('Hello Jack Howe, you are')
     this.successButton = page.locator("//button[text()='Proceed to checkout']")
-
-    this.pageTitle = page.locator('[data-test="page-title"]')
   }
 }
