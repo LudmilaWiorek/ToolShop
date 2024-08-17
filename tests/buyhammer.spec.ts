@@ -106,6 +106,9 @@ test.describe.parallel('end to end tests', () => {
       //for every line we check price of product
       const priceForProduct = await cartPage.getPrice(lineItemLocators.nth(i))
       await expect(priceForProduct).toContainText(arrayProducts[i].price)
+      // we check if quantity * price = total
+      const checkedTotal = await cartPage.checkTotal(lineItemLocators.nth(i))
+      await expect(checkedTotal).toBeTruthy()
     }
 
     //can't put it to method in class because of "expect" inside
@@ -125,7 +128,7 @@ test.describe.parallel('end to end tests', () => {
     // await page.pause()
     await accessoryPage.proceedButton.click()
 
-    // we need to fill delivery formular
+    // we need to fill delivery formular and we overwrite data
     const billingAddress: billingAddressModel = {
       address: 'Sezamkowa 3/30',
       city: 'Warsaw',
