@@ -17,8 +17,10 @@ export class CartPage {
   async getQuantity(quantity: Locator): Promise<Locator> {
     return quantity.locator('.form-control.quantity')
   }
-
-  getPrice
+  async getPrice(productPrice: Locator): Promise<Locator> {
+    return productPrice.locator('//td[3]/span')
+    // we check for a row with price, loop check inside for values
+  }
 
   async getTotal(): Promise<Number> {
     //method counting price of products in cart

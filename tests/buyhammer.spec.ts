@@ -103,7 +103,11 @@ test.describe.parallel('end to end tests', () => {
         lineItemLocators.nth(i),
       )
       await expect(quantityOfProduct).toHaveValue(arrayProducts[i].quantity)
+      //for every line we check price of product
+      const priceForProduct = await cartPage.getPrice(lineItemLocators.nth(i))
+      await expect(priceForProduct).toContainText(arrayProducts[i].price)
     }
+
     //can't put it to method in class because of "expect" inside
     //Assert
     await expect(lineItemLocators).toHaveCount(3)
@@ -130,6 +134,8 @@ test.describe.parallel('end to end tests', () => {
       postCode: '03-022',
     }
     await page.waitForLoadState()
+    await page.waitForTimeout(2000)
     await deliveryPage.fillDeliveryFormular(billingAddress)
+    await accessoryPage.billingButton.click()
   })
 })
