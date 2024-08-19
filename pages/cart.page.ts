@@ -4,11 +4,13 @@ export class CartPage {
   readonly page: Page
 
   readonly itemName: Locator
+  readonly totalSumLocator: Locator
 
   constructor(page: Page) {
     this.page = page
 
     this.itemName = page.locator('//tbody/tr')
+    this.totalSumLocator = page.locator('//tfoot/tr/td[4]')
   }
 
   async getName(itemLocator: Locator): Promise<Locator> {

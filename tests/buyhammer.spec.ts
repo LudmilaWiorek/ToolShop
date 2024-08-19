@@ -38,7 +38,7 @@ test.describe.parallel('end to end tests', () => {
     const passwordInput = page.locator('#password')
     const submitButton = page.locator('.btnSubmit')
 
-    //create array of products, but push to array is included in addToCart method
+    //create array of products, but push to array is included in addToCart method in toolsPage
     let arrayProducts: lineItem[] = []
 
     // Act
@@ -94,6 +94,7 @@ test.describe.parallel('end to end tests', () => {
     // equals what we have in cart on the web
     console.log(arrayProducts)
     //for every lineItem we get its name and we compare it with array element
+    let sumTotal = 0
     const lineItemLocators = await cartPage.itemName
     for (let i = 0; i < arrayProducts.length; i++) {
       const nameOfProduct = await cartPage.getName(lineItemLocators.nth(i))
@@ -109,10 +110,21 @@ test.describe.parallel('end to end tests', () => {
       // we check if quantity * price = total
       const checkedTotal = await cartPage.checkTotal(lineItemLocators.nth(i))
       await expect(checkedTotal).toBeTruthy()
-    }
 
-    //can't put it to method in class because of "expect" inside
+      // we sum total cost of shopping
+      sumTotal +=
+        Number.parseFloat(arrayProducts[i].price) *
+        Number.parseInt(arrayProducts[i].quantity)
+    }
+    console.log(sumTotal)
+    const totalSumInCart = (await cartPage.totalSumLocator.innerText()).replace(
+      '$',
+      '',
+    )
+
     //Assert
+    await expect(totalSumInCart).toEqual(String(sumTotal))
+
     await expect(lineItemLocators).toHaveCount(3)
 
     await accessoryPage.successButton.click()
@@ -122,13 +134,11 @@ test.describe.parallel('end to end tests', () => {
     await passwordInput.fill(dataPass)
 
     await submitButton.click()
-    //? or we don't because it says we are already logged in
 
     await expect(accessoryPage.messageYouReLogged).toBeVisible()
-    // await page.pause()
     await accessoryPage.proceedButton.click()
 
-    // we need to fill delivery formular and we overwrite data
+    // we need to fill delivery formular and we overwrite built in data
     const billingAddress: billingAddressModel = {
       address: 'Sezamkowa 3/30',
       city: 'Warsaw',
@@ -137,7 +147,7 @@ test.describe.parallel('end to end tests', () => {
       postCode: '03-022',
     }
     await page.waitForLoadState()
-    await page.waitForTimeout(2000)
+    await page.waitForTimeout(2000) // timeout is needed so we can overwrite predefined address
     await deliveryPage.fillDeliveryFormular(billingAddress)
     await accessoryPage.billingButton.click()
   })
