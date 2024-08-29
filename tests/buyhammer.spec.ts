@@ -5,6 +5,7 @@ import { DeliveryPage, billingAddressModel } from '../pages/delivery.page'
 import { AccessoryPage } from '../pages/accessory.page'
 import { CartPage } from '../pages/cart.page'
 import { lineItem } from '../models/lineItem.model'
+import * as users from '../loginData/users.json'
 
 test.describe.parallel('end to end tests', () => {
   let loginPage: LoginPage
@@ -21,8 +22,8 @@ test.describe.parallel('end to end tests', () => {
     cartPage = new CartPage(page)
   })
   test('login with correct credentials', async ({ page }) => {
-    const dataEmail = 'customer2@practicesoftwaretesting.com'
-    const dataPass = 'welcome01'
+    const dataEmail = users.userdata[0].email
+    const dataPass = users.userdata[0].password
     const textMyAccount = 'My account'
 
     await loginPage.login(dataEmail, dataPass)
@@ -32,11 +33,13 @@ test.describe.parallel('end to end tests', () => {
 
   test('first end to end test', async ({ page }) => {
     // Arrange
-    const dataEmail = 'customer2@practicesoftwaretesting.com'
-    const dataPass = 'welcome01'
+    const dataEmail = users.userdata[0].email
+    const dataPass = users.userdata[0].password
     const emailInput = page.locator('#email')
     const passwordInput = page.locator('#password')
     const submitButton = page.locator('.btnSubmit')
+    const thorHammerString = ' Thor Hammer '
+    const clawHammerString = ' Claw Hammer '
 
     //create array of products, but push to array is included in addToCart method in toolsPage
     let arrayProducts: lineItem[] = []
@@ -45,7 +48,7 @@ test.describe.parallel('end to end tests', () => {
     // we search for some hammer
     await toolsPage.search('Hammer')
     // click classic claw hammer
-    await toolsPage.chooseItem(' Claw Hammer ') // wywalić do konsta!!!
+    await toolsPage.chooseItem(clawHammerString)
     // add it to cart
     await toolsPage.addToCart(arrayProducts)
     await page.waitForTimeout(3000)
@@ -56,12 +59,13 @@ test.describe.parallel('end to end tests', () => {
 
     // Act
     // click on Thor Hammer in related products
-    await toolsPage.chooseItem(' Thor Hammer ')
+    await toolsPage.chooseItem(thorHammerString)
     await accessoryPage.thorHammer.waitFor()
 
     await accessoryPage.thorHammer.click()
     await page.waitForTimeout(3000)
     // must be 3 sec, with 2 seconds delay test fails!
+
     //we increase quantity of thor hammers
     await toolsPage.increaseButton.click()
     // add it to cart
@@ -72,7 +76,6 @@ test.describe.parallel('end to end tests', () => {
     await expect(accessoryPage.cartCount).toHaveText('3')
 
     // Act
-    // click on Tool Shop Logo in order to go to main page
     await accessoryPage.logoToolShop.click()
     await page.waitForLoadState()
     // in search input let's write "saw"
@@ -89,8 +92,8 @@ test.describe.parallel('end to end tests', () => {
     // we go to checkout
     await accessoryPage.cartIcon.click()
 
-    // ~~CART~~
-    //using this loop tells us if this, what we have in our virtual basket
+    //                         ~~CART~~
+    // using this loop tells us if this, what we have in our virtual basket
     // equals what we have in cart on the web
     console.log(arrayProducts)
     //for every lineItem we get its name and we compare it with array element
@@ -124,7 +127,6 @@ test.describe.parallel('end to end tests', () => {
 
     //Assert
     await expect(totalSumInCart).toEqual(String(sumTotal))
-
     await expect(lineItemLocators).toHaveCount(3)
 
     await accessoryPage.successButton.click()
