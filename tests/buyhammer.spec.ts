@@ -98,10 +98,15 @@ test.describe.parallel('end to end tests', () => {
     console.log(arrayProducts)
     //for every lineItem we get its name and we compare it with array element
     let sumTotal = 0
-    const lineItemLocators = await cartPage.itemName
-    for (let i = 0; i < arrayProducts.length; i++) {
-      const nameOfProduct = await cartPage.getName(lineItemLocators.nth(i))
-      await expect(nameOfProduct).toHaveText(arrayProducts[i].name)
+    const lineItemLocators = await cartPage.itemNameLocator
+
+    const numberOfLineItems = await cartPage.getItemsAmount()
+    console.log('NUMBER OF LINE ITEMS', numberOfLineItems)
+    for (let i = 0; i < numberOfLineItems; i++) {
+      const nameOfProduct = await cartPage.getName(i)
+      // we compare result of function with our virtual basket
+      await expect(nameOfProduct).toBe(arrayProducts[i].name)
+
       // for every lineItem we check if quantity is demanded quantity number
       const quantityOfProduct = await cartPage.getQuantity(
         lineItemLocators.nth(i),
@@ -152,5 +157,15 @@ test.describe.parallel('end to end tests', () => {
     await page.waitForTimeout(2000) // timeout is needed so we can overwrite predefined address
     await deliveryPage.fillDeliveryFormular(billingAddress)
     await accessoryPage.billingButton.click()
+
+    const headerPayment = page.locator('//h3[text()="Payment"]')
+    //we are on payment module
+    await expect(headerPayment).toBeVisible()
+
+    const paymentMethod = page.locator('#payment-method')
+
+    await paymentMethod.selectOption('Gift Card')
+    const placeholderGiftCardNumber = page.getByPlaceholder('Gift Card Number')
+    await expect(placeholderGiftCardNumber).toBeVisible()
   })
 })

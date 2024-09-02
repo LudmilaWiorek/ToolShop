@@ -3,18 +3,27 @@ import { Locator, Page } from '@playwright/test'
 export class CartPage {
   readonly page: Page
 
-  readonly itemName: Locator
+  readonly itemNameLocator: Locator
   readonly totalSumLocator: Locator
-
   constructor(page: Page) {
     this.page = page
 
-    this.itemName = page.locator('//tbody/tr')
+    this.itemNameLocator = page.locator('//tbody/tr')
     this.totalSumLocator = page.locator('//tfoot/tr/td[4]')
   }
+  async getItemsAmount(): Promise<number> {
+    await this.itemNameLocator.last().waitFor()
+    return this.itemNameLocator.count()
+  }
 
-  async getName(itemLocator: Locator): Promise<Locator> {
-    return itemLocator.locator('.product-title')
+  async getName(position: number): Promise<String> {
+    // we get text from the locator part "Item" of lineItem in basket (that has class .product-title)
+
+    const itemName = await this.itemNameLocator
+      .nth(position)
+      .locator('.product-title')
+      .innerText()
+    return itemName.trim()
   }
   async getQuantity(quantity: Locator): Promise<Locator> {
     return quantity.locator('.form-control.quantity')
