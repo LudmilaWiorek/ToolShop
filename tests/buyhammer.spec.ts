@@ -13,6 +13,7 @@ test.describe.parallel('end to end tests', () => {
   let deliveryPage: DeliveryPage
   let accessoryPage: AccessoryPage
   let cartPage: CartPage
+
   test.beforeEach('login test', async ({ page }) => {
     loginPage = new LoginPage(page)
     await loginPage.goToPage(page)
@@ -98,6 +99,7 @@ test.describe.parallel('end to end tests', () => {
     console.log(arrayProducts)
     //for every lineItem we get its name and we compare it with array element
     let sumTotal = 0
+    let calculatedSum = 0
     const lineItemLocators = await cartPage.itemNameLocator
 
     const numberOfLineItems = await cartPage.getItemsAmount()
@@ -116,11 +118,12 @@ test.describe.parallel('end to end tests', () => {
       await expect(priceForProduct).toEqual(arrayProducts[i].price)
       // we check if quantity * price = total
 
-      // CHECK TOTAL COMMENTED
-      // const checkedTotal = await cartPage.checkTotal(lineItemLocators.nth(i))
-      // await expect(checkedTotal).toBeTruthy()
+      const priceTotalForProduct = await cartPage.getTotal(i)
+      const expectedTotalPriceForProduct = quantityOfProduct * priceForProduct
+      await expect(priceTotalForProduct).toEqual(expectedTotalPriceForProduct)
 
       // we sum total cost of shopping
+      calculatedSum += priceTotalForProduct
       sumTotal += arrayProducts[i].price * arrayProducts[i].quantity
     }
     console.log(sumTotal)
@@ -128,6 +131,9 @@ test.describe.parallel('end to end tests', () => {
       '$',
       '',
     )
+    const cartTotal = await cartPage.getCartTotal()
+    console.log('CALCULATED SUM', calculatedSum)
+    await expect(cartTotal).toEqual(calculatedSum)
 
     //Assert
     await expect(totalSumInCart).toEqual(String(sumTotal))
