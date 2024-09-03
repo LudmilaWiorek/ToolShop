@@ -30,7 +30,7 @@ export class ToolsPage {
     await this.addToCartButton.click()
     const dataProduct: lineItem = {
       name: (await this.name.innerText()),
-      quantity: (await this.quantity.inputValue()),
+      quantity: Number.parseInt(await this.quantity.inputValue()),
       price: (await this.price.innerText()),
     }
     await arrayProducts.push(dataProduct)

@@ -1,7 +1,6 @@
-
 export interface lineItem {
-name: string
-quantity: string
-price: string
-total?: string
+  name: string
+  quantity: number
+  price: string
+  total?: string
 }

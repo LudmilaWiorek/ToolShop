@@ -23,11 +23,19 @@ export class CartPage {
       .nth(position)
       .locator('.product-title')
       .innerText()
+    //  we remove space from the end
     return itemName.trim()
   }
-  async getQuantity(quantity: Locator): Promise<Locator> {
-    return quantity.locator('.form-control.quantity')
+
+  async getQuantity(position: number): Promise<number> {
+    const itemQuantity = await this.itemNameLocator
+      .nth(position)
+      .locator('.form-control.quantity')
+      .inputValue()
+    console.log('ITEMQUANTITY', itemQuantity)
+    return Number.parseInt(itemQuantity)
   }
+
   async getPrice(productPrice: Locator): Promise<Locator> {
     return productPrice.locator('//td[3]/span')
     // we check for a row with price, loop check inside for values
