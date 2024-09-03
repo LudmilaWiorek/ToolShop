@@ -112,17 +112,16 @@ test.describe.parallel('end to end tests', () => {
       await expect(quantityOfProduct).toEqual(arrayProducts[i].quantity)
 
       //for every line we check price of product
-      const priceForProduct = await cartPage.getPrice(lineItemLocators.nth(i))
-      await expect(priceForProduct).toContainText(arrayProducts[i].price)
+      const priceForProduct = await cartPage.getPrice(i)
+      await expect(priceForProduct).toEqual(arrayProducts[i].price)
       // we check if quantity * price = total
-      
+
       // CHECK TOTAL COMMENTED
       // const checkedTotal = await cartPage.checkTotal(lineItemLocators.nth(i))
       // await expect(checkedTotal).toBeTruthy()
 
       // we sum total cost of shopping
-      sumTotal +=
-        Number.parseFloat(arrayProducts[i].price) * arrayProducts[i].quantity
+      sumTotal += arrayProducts[i].price * arrayProducts[i].quantity
     }
     console.log(sumTotal)
     const totalSumInCart = (await cartPage.totalSumLocator.innerText()).replace(

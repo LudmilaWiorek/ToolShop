@@ -1,6 +1,6 @@
 export interface lineItem {
   name: string
   quantity: number
-  price: string
+  price: number
   total?: string
 }

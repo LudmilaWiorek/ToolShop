@@ -31,7 +31,7 @@ export class ToolsPage {
     const dataProduct: lineItem = {
       name: (await this.name.innerText()),
       quantity: Number.parseInt(await this.quantity.inputValue()),
-      price: (await this.price.innerText()),
+      price: Number.parseFloat(await this.price.innerText()),
     }
     await arrayProducts.push(dataProduct)
   }

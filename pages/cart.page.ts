@@ -32,12 +32,18 @@ export class CartPage {
       .nth(position)
       .locator('.form-control.quantity')
       .inputValue()
-    console.log('ITEMQUANTITY', itemQuantity)
     return Number.parseInt(itemQuantity)
   }
 
-  async getPrice(productPrice: Locator): Promise<Locator> {
-    return productPrice.locator('//td[3]/span')
+  async getPrice(position: number): Promise<number> {
+    const itemPrice = (
+      await this.itemNameLocator
+        .nth(position)
+        .locator('//td[3]/span')
+        .innerText()
+    ).replace('$', '')
+
+    return Number.parseFloat(itemPrice)
     // we check for a row with price, loop check inside for values
   }
 
