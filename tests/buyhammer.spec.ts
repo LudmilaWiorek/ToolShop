@@ -1,11 +1,12 @@
 import { test, expect } from '@playwright/test'
 import { LoginPage } from '../pages/login.page'
 import { ToolsPage } from '../pages/tools.page'
-import { DeliveryPage, billingAddressModel } from '../pages/delivery.page'
+import { DeliveryPage } from '../pages/delivery.page'
 import { AccessoryPage } from '../pages/accessory.page'
 import { CartPage } from '../pages/cart.page'
 import { lineItem } from '../models/lineItem.model'
 import * as users from '../loginData/users.json'
+import { billingAddressModel } from '../models/billingAddress.model'
 
 test.describe.parallel('end to end tests', () => {
   let loginPage: LoginPage
@@ -90,7 +91,7 @@ test.describe.parallel('end to end tests', () => {
     await expect(accessoryPage.productAddedMessage).toBeVisible()
     await expect(accessoryPage.cartCount).toHaveText('4')
 
-    // we go to checkout
+    // we go to cart page
     await accessoryPage.cartIcon.click()
 
     //                         ~~CART~~
@@ -100,10 +101,9 @@ test.describe.parallel('end to end tests', () => {
     //for every lineItem we get its name and we compare it with array element
     let sumTotal = 0
     let calculatedSum = 0
-    const lineItemLocators = await cartPage.itemNameLocator
+    const lineItemLocators = await cartPage.itemLineLocator
 
-    const numberOfLineItems = await cartPage.getItemsAmount()
-    console.log('NUMBER OF LINE ITEMS', numberOfLineItems)
+    let numberOfLineItems = await cartPage.getItemsAmount()
     for (let i = 0; i < numberOfLineItems; i++) {
       const nameOfProduct = await cartPage.getName(i)
       // we compare result of function with our virtual basket
@@ -126,21 +126,45 @@ test.describe.parallel('end to end tests', () => {
       calculatedSum += priceTotalForProduct
       sumTotal += arrayProducts[i].price * arrayProducts[i].quantity
     }
-    console.log(sumTotal)
     const totalSumInCart = (await cartPage.totalSumLocator.innerText()).replace(
       '$',
       '',
     )
     const cartTotal = await cartPage.getCartTotal()
-    console.log('CALCULATED SUM', calculatedSum)
     await expect(cartTotal).toEqual(calculatedSum)
 
     //Assert
     await expect(totalSumInCart).toEqual(String(sumTotal))
     await expect(lineItemLocators).toHaveCount(3)
 
+    await cartPage.deleteProduct(2, arrayProducts)
+    await expect(lineItemLocators).toHaveCount(numberOfLineItems - 1)
+    numberOfLineItems = await cartPage.getItemsAmount()
+
+    for (let i = 0; i < numberOfLineItems; i++) {
+      const nameOfProduct = await cartPage.getName(i)
+      // we compare result of function with our virtual basket
+      await expect(nameOfProduct).toBe(arrayProducts[i].name)
+
+      // for every lineItem we check if quantity is demanded quantity number
+      const quantityOfProduct = await cartPage.getQuantity(i)
+      await expect(quantityOfProduct).toEqual(arrayProducts[i].quantity)
+
+      //for every line we check price of product
+      const priceForProduct = await cartPage.getPrice(i)
+      await expect(priceForProduct).toEqual(arrayProducts[i].price)
+      // we check if quantity * price = total
+
+      const priceTotalForProduct = await cartPage.getTotal(i)
+      const expectedTotalPriceForProduct = quantityOfProduct * priceForProduct
+      await expect(priceTotalForProduct).toEqual(expectedTotalPriceForProduct)
+      calculatedSum += priceTotalForProduct
+      sumTotal += arrayProducts[i].price * arrayProducts[i].quantity
+    }
+
     await accessoryPage.successButton.click()
 
+    //                     ~~LOGIN PAGE~~
     // we need to sign in
     await emailInput.fill(dataEmail)
     await passwordInput.fill(dataPass)
@@ -150,7 +174,8 @@ test.describe.parallel('end to end tests', () => {
     await expect(accessoryPage.messageYouReLogged).toBeVisible()
     await accessoryPage.proceedButton.click()
 
-    // we need to fill delivery formular and we overwrite built in data
+    //                  ~~DELIVERY FORM~~
+    // we need to fill delivery form and we overwrite built in data
     const billingAddress: billingAddressModel = {
       address: 'Sezamkowa 3/30',
       city: 'Warsaw',
@@ -160,11 +185,11 @@ test.describe.parallel('end to end tests', () => {
     }
     await page.waitForLoadState()
     await page.waitForTimeout(2000) // timeout is needed so we can overwrite predefined address
-    await deliveryPage.fillDeliveryFormular(billingAddress)
+    await deliveryPage.fillDeliveryForm(billingAddress)
     await accessoryPage.billingButton.click()
 
     const headerPayment = page.locator('//h3[text()="Payment"]')
-    //we are on payment module
+    // ~~PAYMENT~~
     await expect(headerPayment).toBeVisible()
 
     const paymentMethod = page.locator('#payment-method')
