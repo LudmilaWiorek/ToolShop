@@ -7,7 +7,6 @@ import { CartPage } from '../pages/cart.page'
 import { lineItem } from '../models/lineItem.model'
 import * as users from '../loginData/users.json'
 import { billingAddressModel } from '../models/billingAddress.model'
-import { vi } from '@faker-js/faker'
 
 test.describe.parallel('end to end tests', () => {
   let loginPage: LoginPage
