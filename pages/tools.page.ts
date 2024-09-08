@@ -12,6 +12,7 @@ export class ToolsPage {
   readonly quantity: Locator
   readonly price: Locator
   readonly increaseButton: Locator
+  readonly decreaseButton: Locator
 
   constructor(page: Page) {
     this.page = page
@@ -24,16 +25,26 @@ export class ToolsPage {
     this.quantity = page.locator('#quantity-input')
     this.price = page.locator('//span[@data-test="unit-price"]')
     this.increaseButton = page.locator('#btn-increase-quantity')
+    this.decreaseButton = page.locator('#btn-decrease-quantity')
   }
 
   async addToCart(arrayProducts: lineItem[]) {
     await this.addToCartButton.click()
     const dataProduct: lineItem = {
-      name: (await this.name.innerText()),
+      name: await this.name.innerText(),
       quantity: Number.parseInt(await this.quantity.inputValue()),
       price: Number.parseFloat(await this.price.innerText()),
     }
     await arrayProducts.push(dataProduct)
+  }
+
+  async getItemAmountInArrayCart(arrayProducts: lineItem[]): Promise<number> {
+    let sumOfProducts = 0
+    for (let i = 0; i < arrayProducts.length; i++) {
+      sumOfProducts += arrayProducts[i].quantity
+    }
+
+    return sumOfProducts
   }
 
   async chooseItem(itemName: string) {
@@ -41,6 +52,17 @@ export class ToolsPage {
     await dynamicItemName.click()
   }
 
+  async increaseItemCount() {
+    await this.increaseButton.click()
+  }
+
+  async decreaseItemCount() {
+    await this.decreaseButton.click()
+  }
+
+  async changeItemAmount(amount: number) {
+    await this.quantity.fill(`${amount}`)
+  }
   async search(itemName: string) {
     await this.searchInput.fill(itemName)
     await this.searchInput.press('Enter')

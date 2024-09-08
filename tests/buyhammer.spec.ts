@@ -7,6 +7,7 @@ import { CartPage } from '../pages/cart.page'
 import { lineItem } from '../models/lineItem.model'
 import * as users from '../loginData/users.json'
 import { billingAddressModel } from '../models/billingAddress.model'
+import { vi } from '@faker-js/faker'
 
 test.describe.parallel('end to end tests', () => {
   let loginPage: LoginPage
@@ -55,9 +56,14 @@ test.describe.parallel('end to end tests', () => {
     await toolsPage.addToCart(arrayProducts)
     await page.waitForTimeout(3000)
 
+    let virtualBasketCount =
+      await toolsPage.getItemAmountInArrayCart(arrayProducts)
+
     // Assert
     await expect(accessoryPage.productAddedMessage).toBeVisible()
-    await expect(accessoryPage.cartCount).toHaveText('1')
+    await expect(accessoryPage.cartCount).toHaveText(
+      virtualBasketCount.toString(),
+    )
 
     // Act
     // click on Thor Hammer in related products
@@ -69,13 +75,15 @@ test.describe.parallel('end to end tests', () => {
     // must be 3 sec, with 2 seconds delay test fails!
 
     //we increase quantity of thor hammers
-    await toolsPage.increaseButton.click()
+    await toolsPage.increaseItemCount()
     // add it to cart
     await toolsPage.addToCart(arrayProducts)
-
+    virtualBasketCount = await toolsPage.getItemAmountInArrayCart(arrayProducts)
     // Assert
     await expect(accessoryPage.productAddedMessage).toBeVisible()
-    await expect(accessoryPage.cartCount).toHaveText('3')
+    await expect(accessoryPage.cartCount).toHaveText(
+      virtualBasketCount.toString(),
+    )
 
     // Act
     await accessoryPage.logoToolShop.click()
@@ -85,11 +93,14 @@ test.describe.parallel('end to end tests', () => {
     await accessoryPage.saw.waitFor()
     // click on circular saw because it looks cool
     await accessoryPage.saw.click()
+    await toolsPage.changeItemAmount(5)
     await toolsPage.addToCart(arrayProducts)
-
+    virtualBasketCount = await toolsPage.getItemAmountInArrayCart(arrayProducts)
     // Assert
     await expect(accessoryPage.productAddedMessage).toBeVisible()
-    await expect(accessoryPage.cartCount).toHaveText('4')
+    await expect(accessoryPage.cartCount).toHaveText(
+      virtualBasketCount.toString(),
+    )
 
     // we go to cart page
     await accessoryPage.cartIcon.click()
