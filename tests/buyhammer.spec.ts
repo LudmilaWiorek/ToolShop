@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test as baseTest, expect } from '@playwright/test'
 import { LoginPage } from '../pages/login.page'
 import { ToolsPage } from '../pages/tools.page'
 import { DeliveryPage } from '../pages/delivery.page'
@@ -8,22 +8,43 @@ import { lineItem } from '../models/lineItem.model'
 import * as users from '../loginData/users.json'
 import { billingAddressModel } from '../models/billingAddress.model'
 
-test.describe.parallel('end to end tests', () => {
-  let loginPage: LoginPage
-  let toolsPage: ToolsPage
-  let deliveryPage: DeliveryPage
-  let accessoryPage: AccessoryPage
-  let cartPage: CartPage
+export interface MyFixtures {
+  loginPage: LoginPage
+  toolsPage: ToolsPage
+  deliveryPage: DeliveryPage
+  accessoryPage: AccessoryPage
+  cartPage: CartPage
+}
 
-  test.beforeEach('login test', async ({ page }) => {
-    loginPage = new LoginPage(page)
-    await loginPage.goToPage(page)
-    toolsPage = new ToolsPage(page)
-    deliveryPage = new DeliveryPage(page)
-    accessoryPage = new AccessoryPage(page)
-    cartPage = new CartPage(page)
+export const test = baseTest.extend<MyFixtures>({
+  loginPage: async ({ page }, use) => {
+    const loginPage = new LoginPage(page)
+    await loginPage.goToPage() // ?
+    await use(loginPage) // returns loginPage
+  },
+  toolsPage: async ({ page }, use) => {
+    const toolsPage = new ToolsPage(page)
+    await use(toolsPage)
+  },
+  deliveryPage: async ({ page }, use) => {
+    const deliveryPage = new DeliveryPage(page)
+    await use(deliveryPage)
+  },
+  accessoryPage: async ({ page }, use) => {
+    const accessoryPage = new AccessoryPage(page)
+    await use(accessoryPage)
+  },
+  cartPage: async ({ page }, use) => {
+    const cartPage = new CartPage(page)
+    await use(cartPage)
+  },
+})
+
+test.describe.parallel('end to end tests', () => {
+  test.beforeEach(async ({ loginPage }) => {
+    // await loginPage.goToPage()
   })
-  test('login with correct credentials', async ({ page }) => {
+  test('login with correct credentials', async ({ loginPage, page }) => {
     const dataEmail = users.userdata[0].email
     const dataPass = users.userdata[0].password
     const textMyAccount = 'My account'
@@ -33,7 +54,13 @@ test.describe.parallel('end to end tests', () => {
     await expect(loginPage.myAccountTitle).toContainText(textMyAccount)
   })
 
-  test('first end to end test', async ({ page }) => {
+  test('first end to end test', async ({
+    toolsPage,
+    deliveryPage,
+    accessoryPage,
+    cartPage,
+    page,
+  }) => {
     // Arrange
     const dataEmail = users.userdata[0].email
     const dataPass = users.userdata[0].password
