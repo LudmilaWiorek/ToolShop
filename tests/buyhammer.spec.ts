@@ -7,6 +7,7 @@ import { CartPage } from '../pages/cart.page'
 import { lineItem } from '../models/lineItem.model'
 import * as users from '../loginData/users.json'
 import { billingAddressModel } from '../models/billingAddress.model'
+import { paymentModel, PaymentPage } from '../pages/payment.page'
 
 export interface MyFixtures {
   loginPage: LoginPage
@@ -14,6 +15,7 @@ export interface MyFixtures {
   deliveryPage: DeliveryPage
   accessoryPage: AccessoryPage
   cartPage: CartPage
+  paymentPage: PaymentPage
 }
 
 export const test = baseTest.extend<MyFixtures>({
@@ -38,6 +40,10 @@ export const test = baseTest.extend<MyFixtures>({
     const cartPage = new CartPage(page)
     await use(cartPage)
   },
+  paymentPage: async ({ page }, use) => {
+    const paymentPage = new PaymentPage(page)
+    await use(paymentPage)
+  },
 })
 
 test.describe.parallel('end to end tests', () => {
@@ -59,6 +65,7 @@ test.describe.parallel('end to end tests', () => {
     deliveryPage,
     accessoryPage,
     cartPage,
+    paymentPage,
     page,
   }) => {
     // Arrange
@@ -225,14 +232,16 @@ test.describe.parallel('end to end tests', () => {
     await deliveryPage.fillDeliveryForm(billingAddress)
     await accessoryPage.billingButton.click()
 
-    const headerPayment = page.locator('//h3[text()="Payment"]')
     // ~~PAYMENT~~
+    const headerPayment = paymentPage.h3Payment
     await expect(headerPayment).toBeVisible()
 
-    const paymentMethod = page.locator('#payment-method')
+    const paymentBankTransfer: paymentModel = {
+      method: 'Bank Transfer',
+    }
 
-    await paymentMethod.selectOption('Gift Card')
-    const placeholderGiftCardNumber = page.getByPlaceholder('Gift Card Number')
-    await expect(placeholderGiftCardNumber).toBeVisible()
+    await paymentPage.choosePaymentMethod(paymentBankTransfer)
+
+    await expect(paymentPage.bankName).toBeVisible()
   })
 })

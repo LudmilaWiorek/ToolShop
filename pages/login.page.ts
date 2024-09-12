@@ -1,4 +1,4 @@
-import {  Locator, Page } from '@playwright/test'
+import { Locator, Page } from '@playwright/test'
 
 export class LoginPage {
   readonly page: Page
@@ -9,7 +9,7 @@ export class LoginPage {
   readonly submitButton: Locator
   readonly errorMessage: Locator
   readonly myAccountTitle: Locator
-  
+
   constructor(page: Page) {
     this.page = page
     this.signIn = page.locator('[data-test="nav-sign-in"]')
@@ -19,8 +19,8 @@ export class LoginPage {
     this.errorMessage = page.locator('.help-block')
     this.myAccountTitle = page.locator('[data-test="page-title"]')
   }
-  async goToPage(page: Page) {
-    await page.goto('https://practicesoftwaretesting.com/')
+  async goToPage() {
+    await this.page.goto('https://practicesoftwaretesting.com/')
   }
   async login(dataTestEmail: string, dataTestPassword: string) {
     await this.signIn.click()
@@ -28,6 +28,4 @@ export class LoginPage {
     await this.dataTestPassword.fill(dataTestPassword)
     await this.submitButton.click()
   }
-
 }
-
