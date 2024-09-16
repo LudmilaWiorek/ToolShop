@@ -7,7 +7,8 @@ import { CartPage } from '../pages/cart.page'
 import { lineItem } from '../models/lineItem.model'
 import * as users from '../loginData/users.json'
 import { billingAddressModel } from '../models/billingAddress.model'
-import { paymentModel, PaymentPage } from '../pages/payment.page'
+import { PaymentPage } from '../pages/payment.page'
+import { paymentModel, bankTransferModel } from '../models/payment.model'
 
 export interface MyFixtures {
   loginPage: LoginPage
@@ -232,7 +233,7 @@ test.describe.parallel('end to end tests', () => {
     await deliveryPage.fillDeliveryForm(billingAddress)
     await accessoryPage.billingButton.click()
 
-    // ~~PAYMENT~~
+    //                ~~PAYMENT~~
     const headerPayment = paymentPage.h3Payment
     await expect(headerPayment).toBeVisible()
 
@@ -241,7 +242,17 @@ test.describe.parallel('end to end tests', () => {
     }
 
     await paymentPage.choosePaymentMethod(paymentBankTransfer)
-
+    const bankTransferData: bankTransferModel = {
+      bankName: 'PKO Bank',
+      accountName: 'Jan Kowalski.123.',
+      accountNumber: 1234566789,
+    }
+    await paymentPage.chooseBankTransfer(bankTransferData)
     await expect(paymentPage.bankName).toBeVisible()
+    
+    await paymentPage.confirmPayment()
+    await expect(paymentPage.paymentSuccessful).toHaveText(
+      'Payment was successful',
+    )
   })
 })

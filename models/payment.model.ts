@@ -9,7 +9,7 @@ export interface paymentModel {
 
 export interface bankTransferModel {
   bankName: string
-  accountName: string | number
+  accountName: string 
   accountNumber: number
 }
 
