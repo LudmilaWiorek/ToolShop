@@ -11,7 +11,7 @@ export class PaymentPage {
 
   readonly paymentMethod: Locator
   readonly h3Payment: Locator
-  readonly bankName: Locator
+  readonly bankNameInput: Locator
   readonly accountName: Locator
   readonly accountNumber: Locator
   readonly paymentSuccessful: Locator
@@ -27,13 +27,14 @@ export class PaymentPage {
   readonly giftCardNumberHelper: Locator
   readonly validationCode: Locator
   readonly confirmButton: Locator
+  readonly orderSuccessfulMessage: Locator
 
   constructor(page: Page) {
     this.page = page
 
     this.paymentMethod = page.locator('#payment-method') // dropdown
     this.h3Payment = page.locator('//h3[text()="Payment"]')
-    this.bankName = page.locator('#bank_name')
+    this.bankNameInput = page.locator('#bank_name')
     this.accountName = page.locator('#account_name')
     this.accountNumber = page.locator('#account_number')
     this.paymentSuccessful = page.locator(
@@ -48,20 +49,24 @@ export class PaymentPage {
     this.giftCardNumber = page.locator('#gift_card_number')
     this.validationCode = page.locator('#validation_code')
     this.confirmButton = page.locator('//button[text()=" Confirm "]')
+    this.orderSuccessfulMessage = page.locator('#order-confirmation')
   }
-  // add locators to red allerts!
+  // note: add locators to red alerts!
   async choosePaymentMethod(paymentType: paymentModel): Promise<void> {
     await this.paymentMethod.selectOption(paymentType.method)
   }
 
-  async chooseBankTransfer(bankForm: bankTransferModel): Promise<void> {
-    await this.paymentMethod.selectOption('Bank Transfer')
-    await this.bankName.fill(bankForm.bankName)
-    await this.accountName.fill(bankForm.accountName.toString()) // regex
+  async fillBankData(bankForm: bankTransferModel): Promise<void> {
+    await this.bankNameInput.fill(bankForm.bankName)
+    await this.accountName.fill(bankForm.accountName) // regex
+    await this.accountNumber.fill(bankForm.accountNumber)
+  }
 
-    // accountName: "/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\s.'-]+$/"
-
-    await this.accountNumber.fill(bankForm.accountNumber.toString())
+  async validateBankName(bankName: string): Promise<void> {
+    const regexBankName = /^[A-Za-z\ ]+$/
+    if (!regexBankName.test(bankName)) {
+      throw 'Bank name can only contain letters and spaces.'
+    }
   }
 
   async chooseCashOnDelivery() {}
