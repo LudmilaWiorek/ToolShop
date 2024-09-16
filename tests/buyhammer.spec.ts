@@ -48,9 +48,7 @@ export const test = baseTest.extend<MyFixtures>({
 })
 
 test.describe.parallel('end to end tests', () => {
-  test.beforeEach(async ({ loginPage }) => {
-    // await loginPage.goToPage()
-  })
+  test.beforeEach(async ({ loginPage }) => {})
   test('login with correct credentials', async ({ loginPage, page }) => {
     const dataEmail = users.userdata[0].email
     const dataPass = users.userdata[0].password
@@ -259,6 +257,6 @@ test.describe.parallel('end to end tests', () => {
     await expect(paymentPage.orderSuccessfulMessage).toContainText(
       'Thanks for your order! Your invoice number is ',
     )
-    console.log(' ~~ End-To-End Test Finished ~~')
+    console.log('\x1b[34m', '~~ End-To-End Test Finished ~~') //blue console.log :)
   })
 })
