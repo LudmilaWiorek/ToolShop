@@ -245,14 +245,20 @@ test.describe.parallel('end to end tests', () => {
     const bankTransferData: bankTransferModel = {
       bankName: 'PKO Bank',
       accountName: 'Jan Kowalski.123.',
-      accountNumber: 1234566789,
+      accountNumber: '1234566789',
     }
-    await paymentPage.chooseBankTransfer(bankTransferData)
-    await expect(paymentPage.bankName).toBeVisible()
-    
+    await paymentPage.validateBankName(bankTransferData.bankName)
+    await paymentPage.fillBankData(bankTransferData)
+    await expect(paymentPage.bankNameInput).toBeVisible()
+
     await paymentPage.confirmPayment()
     await expect(paymentPage.paymentSuccessful).toHaveText(
       'Payment was successful',
     )
+    await paymentPage.confirmPayment()
+    await expect(paymentPage.orderSuccessfulMessage).toContainText(
+      'Thanks for your order! Your invoice number is ',
+    )
+    console.log(' ~~ End-To-End Test Finished ~~')
   })
 })
