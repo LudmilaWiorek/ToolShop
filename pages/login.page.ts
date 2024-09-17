@@ -20,7 +20,7 @@ export class LoginPage {
     this.myAccountTitle = page.locator('[data-test="page-title"]')
   }
   async goToPage() {
-    await this.page.goto('https://practicesoftwaretesting.com/')
+    await this.page.goto('/')
   }
   async login(dataTestEmail: string, dataTestPassword: string) {
     await this.signIn.click()
