@@ -1,65 +1,20 @@
-import { test as baseTest, expect } from '@playwright/test'
-import { LoginPage } from '../pages/login.page'
-import { ToolsPage } from '../pages/tools.page'
-import { DeliveryPage } from '../pages/delivery.page'
-import { AccessoryPage } from '../pages/accessory.page'
-import { CartPage } from '../pages/cart.page'
 import { lineItem } from '../models/lineItem.model'
-import * as users from '../loginData/users.json'
 import { billingAddressModel } from '../models/billingAddress.model'
-import { PaymentPage } from '../pages/payment.page'
 import { paymentModel, bankTransferModel } from '../models/payment.model'
+import { fixtures as test, expect } from '../fixtures/fixtures.fixture'
 
-export interface MyFixtures {
-  loginPage: LoginPage
-  toolsPage: ToolsPage
-  deliveryPage: DeliveryPage
-  accessoryPage: AccessoryPage
-  cartPage: CartPage
-  paymentPage: PaymentPage
-}
-
-export const test = baseTest.extend<MyFixtures>({
-  loginPage: async ({ page }, use) => {
-    const loginPage = new LoginPage(page)
-    await loginPage.goToPage() // ?
-    await use(loginPage) // returns loginPage
-  },
-  toolsPage: async ({ page }, use) => {
-    const toolsPage = new ToolsPage(page)
-    await use(toolsPage)
-  },
-  deliveryPage: async ({ page }, use) => {
-    const deliveryPage = new DeliveryPage(page)
-    await use(deliveryPage)
-  },
-  accessoryPage: async ({ page }, use) => {
-    const accessoryPage = new AccessoryPage(page)
-    await use(accessoryPage)
-  },
-  cartPage: async ({ page }, use) => {
-    const cartPage = new CartPage(page)
-    await use(cartPage)
-  },
-  paymentPage: async ({ page }, use) => {
-    const paymentPage = new PaymentPage(page)
-    await use(paymentPage)
-  },
-})
-
+// fixture is a test object
 test.describe.parallel('end to end tests', () => {
   test.beforeEach(async ({ loginPage }) => {})
-  test('login with correct credentials', async ({ loginPage, page }) => {
-    const dataEmail = users.userdata[0].email
-    const dataPass = users.userdata[0].password
+  test('login with correct credentials', async ({ loginPage }) => {
     const textMyAccount = 'My account'
 
-    await loginPage.login(dataEmail, dataPass)
-    await page.waitForLoadState()
     await expect(loginPage.myAccountTitle).toContainText(textMyAccount)
+    await loginPage.goToPage()
   })
 
   test('first end to end test', async ({
+    loginPage,
     toolsPage,
     deliveryPage,
     accessoryPage,
@@ -68,13 +23,13 @@ test.describe.parallel('end to end tests', () => {
     page,
   }) => {
     // Arrange
-    const dataEmail = users.userdata[0].email
-    const dataPass = users.userdata[0].password
-    const emailInput = page.locator('#email')
-    const passwordInput = page.locator('#password')
-    const submitButton = page.locator('.btnSubmit')
     const thorHammerString = ' Thor Hammer '
     const clawHammerString = ' Claw Hammer '
+
+    const textMyAccount = 'My account'
+    await expect(loginPage.myAccountTitle).toContainText(textMyAccount)
+
+    await loginPage.goToPage()
 
     //create array of products, but push to array is included in addToCart method in toolsPage
     let arrayProducts: lineItem[] = []
@@ -123,7 +78,7 @@ test.describe.parallel('end to end tests', () => {
     // in search input let's write "saw"
     await toolsPage.search('Saw')
     await accessoryPage.saw.waitFor()
-    // click on circular saw because it looks cool
+    // click on circular saw
     await accessoryPage.saw.click()
     await toolsPage.changeItemAmount(5)
     await toolsPage.addToCart(arrayProducts)
@@ -207,17 +162,10 @@ test.describe.parallel('end to end tests', () => {
 
     await accessoryPage.successButton.click()
 
-    //                     ~~LOGIN PAGE~~
-    // we need to sign in
-    await emailInput.fill(dataEmail)
-    await passwordInput.fill(dataPass)
-
-    await submitButton.click()
-
-    await expect(accessoryPage.messageYouReLogged).toBeVisible()
+    // already signed in
     await accessoryPage.proceedButton.click()
 
-    //                  ~~DELIVERY FORM~~
+    //                  ~~ DELIVERY FORM ~~
     // we need to fill delivery form and we overwrite built in data
     const billingAddress: billingAddressModel = {
       address: 'Sezamkowa 3/30',
@@ -231,7 +179,7 @@ test.describe.parallel('end to end tests', () => {
     await deliveryPage.fillDeliveryForm(billingAddress)
     await accessoryPage.billingButton.click()
 
-    //                ~~PAYMENT~~
+    //                ~~ PAYMENT ~~
     const headerPayment = paymentPage.h3Payment
     await expect(headerPayment).toBeVisible()
 
