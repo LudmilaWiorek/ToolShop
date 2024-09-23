@@ -1,4 +1,4 @@
-export interface billingAddressModel {
+export interface BillingAddress {
   address: string
   city: string
   state: string

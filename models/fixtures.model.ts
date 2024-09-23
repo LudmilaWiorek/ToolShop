@@ -4,6 +4,7 @@ import { CartPage } from '../pages/cart.page'
 import { DeliveryPage } from '../pages/delivery.page'
 import { LoginPage } from '../pages/login.page'
 import { ToolsPage } from '../pages/tools.page'
+import { APIRequestContext } from '@playwright/test'
 
 export interface MyFixtures {
   loginPage: LoginPage
@@ -11,6 +12,7 @@ export interface MyFixtures {
   deliveryPage: DeliveryPage
   accessoryPage: AccessoryPage
   cartPage: CartPage
+  request: APIRequestContext
 }
 
 export const test = baseTest.extend<MyFixtures>({
@@ -35,4 +37,8 @@ export const test = baseTest.extend<MyFixtures>({
     const cartPage = new CartPage(page)
     await use(cartPage)
   },
+  request: async ({APIRequestContext}, use) =>{
+    const request = new APIRequestContext(APIRequestContext)
+    await use(request)
+  }
 })

@@ -2,8 +2,7 @@ import { test, expect } from '@playwright/test'
 import { LoginPage } from '../pages/login.page'
 
 test('set new password functionality', async ({ page }) => {
-  let loginPage: LoginPage
-  loginPage = new LoginPage(page)
+  const loginPage = new LoginPage(page)
   const setNewPasswordButton = page.locator('.btnSubmit')
   const forgetPasswordLink = page.locator('.ForgetPwd')
   const emailInput = page.locator('#email')

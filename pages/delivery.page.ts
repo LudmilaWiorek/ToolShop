@@ -1,12 +1,5 @@
 import { Locator, Page } from '@playwright/test'
-
-export interface billingAddressModel {
-  address: string
-  city: string
-  state: string
-  country: string
-  postCode: string
-}
+import { BillingAddress } from '../models/billingAddress.model'
 
 export class DeliveryPage {
   readonly page: Page
@@ -26,7 +19,7 @@ export class DeliveryPage {
     this.postCode = page.locator('#postcode')
   }
 
-  async fillDeliveryFormular(address: billingAddressModel) {
+  async fillDeliveryForm(address: BillingAddress) {
     await this.address.fill(address.address)
     await this.city.fill(address.city)
     await this.state.fill(address.state)

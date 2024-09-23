@@ -1,5 +1,5 @@
 import { Locator, Page } from '@playwright/test'
-import { lineItem } from '../models/lineItem.model'
+import { LineItem as LineItem } from '../models/lineItem.model'
 
 export class ToolsPage {
   readonly page: Page
@@ -28,9 +28,9 @@ export class ToolsPage {
     this.decreaseButton = page.locator('#btn-decrease-quantity')
   }
 
-  async addToCart(arrayProducts: lineItem[]) {
+  async addToCart(arrayProducts: LineItem[]) {
     await this.addToCartButton.click()
-    const dataProduct: lineItem = {
+    const dataProduct: LineItem = {
       name: await this.name.innerText(),
       quantity: Number.parseInt(await this.quantity.inputValue()),
       price: Number.parseFloat(await this.price.innerText()),
@@ -38,7 +38,7 @@ export class ToolsPage {
     await arrayProducts.push(dataProduct)
   }
 
-  async getItemAmountInArrayCart(arrayProducts: lineItem[]): Promise<number> {
+  async getItemAmountInArrayCart(arrayProducts: LineItem[]): Promise<number> {
     let sumOfProducts = 0
     for (let i = 0; i < arrayProducts.length; i++) {
       sumOfProducts += arrayProducts[i].quantity

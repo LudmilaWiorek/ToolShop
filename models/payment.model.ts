@@ -1,4 +1,4 @@
-export interface paymentModel {
+export interface PaymentModel {
   method:
     | 'Bank Transfer'
     | 'Cash on Delivery'
@@ -7,20 +7,20 @@ export interface paymentModel {
     | 'Gift Card'
 }
 
-export interface bankTransferModel {
+export interface BankTransferModel {
   bankName: string
-  accountName: string 
+  accountName: string
   accountNumber: string
 }
 
-export interface creditCardModel {
+export interface CreditCardModel {
   creditCardNumber: number // specify 16-digit format?
   expirationDate: number // specify date format - MM/YYYY - must be 01-12/YYYY
   CVV: number //3-4 digits
   cardHolderName: string
 }
 
-export interface giftCardModel {
+export interface GiftCardModel {
   giftCardNumber: number | string
   validationCode: number
 }

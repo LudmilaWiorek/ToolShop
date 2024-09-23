@@ -1,6 +1,6 @@
-import { lineItem } from '../models/lineItem.model'
-import { billingAddressModel } from '../models/billingAddress.model'
-import { paymentModel, bankTransferModel } from '../models/payment.model'
+import { LineItem } from '../models/lineItem.model'
+import { BillingAddress } from '../models/billingAddress.model'
+import { PaymentModel, BankTransferModel } from '../models/payment.model'
 import { fixtures as test, expect } from '../fixtures/fixtures.fixture'
 
 // fixture is a test object
@@ -31,8 +31,8 @@ test.describe.parallel('end to end tests', () => {
 
     await loginPage.goToPage()
 
-    //create array of products, but push to array is included in addToCart method in toolsPage
-    let arrayProducts: lineItem[] = []
+    // create array of products, but push to array is included in addToCart method in toolsPage
+    let arrayProducts: LineItem[] = []
 
     // Act
     // we search for some hammer
@@ -61,7 +61,7 @@ test.describe.parallel('end to end tests', () => {
     await page.waitForTimeout(3000)
     // must be 3 sec, with 2 seconds delay test fails!
 
-    //we increase quantity of thor hammers
+    // we increase quantity of thor hammers
     await toolsPage.increaseItemCount()
     // add it to cart
     await toolsPage.addToCart(arrayProducts)
@@ -96,7 +96,7 @@ test.describe.parallel('end to end tests', () => {
     // using this loop tells us if this, what we have in our virtual basket
     // equals what we have in cart on the web
     console.log(arrayProducts)
-    //for every lineItem we get its name and we compare it with array element
+    // for every lineItem we get its name and we compare it with array element
     let sumTotal = 0
     let calculatedSum = 0
     const lineItemLocators = await cartPage.itemLineLocator
@@ -148,7 +148,7 @@ test.describe.parallel('end to end tests', () => {
       const quantityOfProduct = await cartPage.getQuantity(i)
       await expect(quantityOfProduct).toEqual(arrayProducts[i].quantity)
 
-      //for every line we check price of product
+      // for every line we check price of product
       const priceForProduct = await cartPage.getPrice(i)
       await expect(priceForProduct).toEqual(arrayProducts[i].price)
       // we check if quantity * price = total
@@ -167,14 +167,13 @@ test.describe.parallel('end to end tests', () => {
 
     //                  ~~ DELIVERY FORM ~~
     // we need to fill delivery form and we overwrite built in data
-    const billingAddress: billingAddressModel = {
+    const billingAddress: BillingAddress = {
       address: 'Sezamkowa 3/30',
       city: 'Warsaw',
       state: 'mazowieckie',
       country: 'Poland',
       postCode: '03-022',
     }
-    await page.waitForLoadState()
     await page.waitForTimeout(2000) // timeout is needed so we can overwrite predefined address
     await deliveryPage.fillDeliveryForm(billingAddress)
     await accessoryPage.billingButton.click()
@@ -183,12 +182,12 @@ test.describe.parallel('end to end tests', () => {
     const headerPayment = paymentPage.h3Payment
     await expect(headerPayment).toBeVisible()
 
-    const paymentBankTransfer: paymentModel = {
+    const paymentBankTransfer: PaymentModel = {
       method: 'Bank Transfer',
     }
 
     await paymentPage.choosePaymentMethod(paymentBankTransfer)
-    const bankTransferData: bankTransferModel = {
+    const bankTransferData: BankTransferModel = {
       bankName: 'PKO Bank',
       accountName: 'Jan Kowalski.123.',
       accountNumber: '1234566789',

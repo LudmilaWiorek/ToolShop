@@ -1,4 +1,4 @@
-export interface lineItem {
+export interface LineItem {
   name: string
   quantity: number
   price: number

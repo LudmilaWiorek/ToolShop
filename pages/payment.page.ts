@@ -1,9 +1,9 @@
 import { Locator, Page } from '@playwright/test'
 import {
-  paymentModel,
+  PaymentModel,
   bankTransferModel,
-  creditCardModel,
-  giftCardModel,
+  CreditCardModel,
+  GiftCardModel,
 } from '../models/payment.model'
 
 export class PaymentPage {
@@ -44,6 +44,7 @@ export class PaymentPage {
     this.expirationDate = page.locator('#expiration_date')
     this.cvvCode = page.locator('#cvv')
     this.cardHolderName = page.locator('#card_holder_name')
+
     this.monthlyInstallments = page.locator('#monthly_installments') // dropdown
     this.monthlyHelper = page.locator('#monthly_installments_help')
     this.giftCardNumber = page.locator('#gift_card_number')
@@ -52,13 +53,13 @@ export class PaymentPage {
     this.orderSuccessfulMessage = page.locator('#order-confirmation')
   }
   // note: add locators to red alerts!
-  async choosePaymentMethod(paymentType: paymentModel): Promise<void> {
+  async choosePaymentMethod(paymentType: PaymentModel): Promise<void> {
     await this.paymentMethod.selectOption(paymentType.method)
   }
 
   async fillBankData(bankForm: bankTransferModel): Promise<void> {
     await this.bankNameInput.fill(bankForm.bankName)
-    await this.accountName.fill(bankForm.accountName) // regex
+    await this.accountName.fill(bankForm.accountName) 
     await this.accountNumber.fill(bankForm.accountNumber)
   }
 
@@ -71,7 +72,13 @@ export class PaymentPage {
 
   async chooseCashOnDelivery() {}
   // ? no form to fill
-  async chooseCreditCard() {}
+
+  async chooseCreditCard() {
+    await this.creditCardNumber.fill('1111-2222-3333-4444')
+    await this.expirationDate.fill('12/2024')
+    await this.cvvCode.fill('123')
+    await this.cardHolderName.fill('x')
+  }
 
   async chooseBuyNowPayLater() {}
 

@@ -1,5 +1,5 @@
 import { Locator, Page } from '@playwright/test'
-import { lineItem } from '../models/lineItem.model'
+import { LineItem } from '../models/lineItem.model'
 export class CartPage {
   readonly page: Page
 
@@ -25,8 +25,8 @@ export class CartPage {
       .nth(position)
       .locator('.product-title')
       .innerText()
-      
-      //  we remove space from the end
+
+    //  we remove space from the end
     return itemName.trim()
   }
 
@@ -73,7 +73,7 @@ export class CartPage {
 
   async deleteProduct(
     position: number,
-    arrayProducts: lineItem[],
+    arrayProducts: LineItem[],
   ): Promise<void> {
     await this.itemLineLocator.nth(position).locator('.btn-danger').click()
     await arrayProducts.splice(position, 1)
