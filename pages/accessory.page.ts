@@ -1,5 +1,5 @@
 import { Locator, Page } from '@playwright/test'
-
+import * as itemNames from '../products/itemNames.json'
 export class AccessoryPage {
   readonly page: Page
 
@@ -19,8 +19,10 @@ export class AccessoryPage {
 
     this.productAddedMessage = page.getByLabel('Product added to shopping')
     this.cartCount = page.locator('#lblCartCount')
-    this.thorHammer = page.locator('//h5[text()=" Thor Hammer "]')
-    this.saw = page.locator('//h5[text()=" Circular Saw "]')
+    this.thorHammer = page.locator(
+      `//h5[text()="${itemNames.itemName[0].name}"]`,
+    )
+    this.saw = page.locator(`//h5[text()="${itemNames.itemName[1].name}"]`)
     this.cartIcon = page.locator('//a[@class="nav-link" and @href="/checkout"]')
     this.logoToolShop = page.locator('#Layer_1')
     this.proceedButton = page.locator('[data-test="proceed-2"]')
