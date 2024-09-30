@@ -1,11 +1,12 @@
 import { LineItem } from '../models/lineItem.model'
 import { BillingAddress } from '../models/billingAddress.model'
-import { PaymentModel, BankTransferModel } from '../models/payment.model'
+import { PaymentModel } from '../models/payment.model'
 import { fixtures as test, expect } from '../fixtures/fixtures.fixture'
+import { fillPaymentForm } from '../factories/payment.factory'
 
 // fixture is a test object
 test.describe.parallel('end to end tests', () => {
-  test.beforeEach(async ({ loginPage }) => {})
+  test.beforeEach(async () => {})
   test('login with correct credentials', async ({ loginPage }) => {
     const textMyAccount = 'My account'
 
@@ -93,8 +94,7 @@ test.describe.parallel('end to end tests', () => {
     await accessoryPage.cartIcon.click()
 
     //                         ~~CART~~
-    // using this loop tells us if this, what we have in our virtual basket
-    // equals what we have in cart on the web
+    // using this loop tells us if this, what we have in our virtual basket equals what we have in cart on the web
     console.log(arrayProducts)
     // for every lineItem we get its name and we compare it with array element
     let sumTotal = 0
@@ -162,7 +162,7 @@ test.describe.parallel('end to end tests', () => {
 
     await accessoryPage.successButton.click()
 
-    // already signed in
+    // already signed in💥
     await accessoryPage.proceedButton.click()
 
     //                  ~~ DELIVERY FORM ~~
@@ -182,28 +182,21 @@ test.describe.parallel('end to end tests', () => {
     const headerPayment = paymentPage.h3Payment
     await expect(headerPayment).toBeVisible()
 
-    const paymentBankTransfer: PaymentModel = {
-      method: 'Bank Transfer',
+    const payment: PaymentModel = {
+      method: 'Credit Card',
     }
-
-    await paymentPage.choosePaymentMethod(paymentBankTransfer)
-    const bankTransferData: BankTransferModel = {
-      bankName: 'PKO Bank',
-      accountName: 'Jan Kowalski.123.',
-      accountNumber: '1234566789',
-    }
-    await paymentPage.validateBankName(bankTransferData.bankName)
-    await paymentPage.fillBankData(bankTransferData)
-    await expect(paymentPage.bankNameInput).toBeVisible()
+    await fillPaymentForm(paymentPage, payment.method)
 
     await paymentPage.confirmPayment()
+
     await expect(paymentPage.paymentSuccessful).toHaveText(
       'Payment was successful',
     )
     await paymentPage.confirmPayment()
     await expect(paymentPage.orderSuccessfulMessage).toContainText(
-      'Thanks for your order! Your invoice number is ',
+      'Thanks for your order! Your invoice number is INV',
     )
-    console.log('\x1b[34m', '~~ End-To-End Test Finished ~~') //blue console.log :)
+
+    console.log('💙\x1b[34m', '~~ End-To-End Test Finished ~~') //blue console.log :)
   })
 })

@@ -14,13 +14,19 @@ export interface BankTransferModel {
 }
 
 export interface CreditCardModel {
-  creditCardNumber: number // specify 16-digit format?
-  expirationDate: number // specify date format - MM/YYYY - must be 01-12/YYYY
-  CVV: number //3-4 digits
+  creditCardNumber: string
+  expirationDate: string
+  CVV: string
   cardHolderName: string
 }
-
+export interface BuyNowPayLaterModel {
+  installment:
+    | '3 Monthly Installments'
+    | '6 Monthly Installments'
+    | '9 Monthly Installments'
+    | '12 Monthly Installments'
+}
 export interface GiftCardModel {
-  giftCardNumber: number | string
-  validationCode: number
+  giftCardNumber: string
+  validationCode: string
 }

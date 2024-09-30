@@ -1,9 +1,10 @@
 import { Locator, Page } from '@playwright/test'
 import {
   PaymentModel,
-  bankTransferModel,
+  BankTransferModel,
   CreditCardModel,
   GiftCardModel,
+  BuyNowPayLaterModel,
 } from '../models/payment.model'
 
 export class PaymentPage {
@@ -47,6 +48,7 @@ export class PaymentPage {
 
     this.monthlyInstallments = page.locator('#monthly_installments') // dropdown
     this.monthlyHelper = page.locator('#monthly_installments_help')
+
     this.giftCardNumber = page.locator('#gift_card_number')
     this.validationCode = page.locator('#validation_code')
     this.confirmButton = page.locator('//button[text()=" Confirm "]')
@@ -57,9 +59,9 @@ export class PaymentPage {
     await this.paymentMethod.selectOption(paymentType.method)
   }
 
-  async fillBankData(bankForm: bankTransferModel): Promise<void> {
+  async fillBankData(bankForm: BankTransferModel): Promise<void> {
     await this.bankNameInput.fill(bankForm.bankName)
-    await this.accountName.fill(bankForm.accountName) 
+    await this.accountName.fill(bankForm.accountName)
     await this.accountNumber.fill(bankForm.accountNumber)
   }
 
@@ -73,18 +75,27 @@ export class PaymentPage {
   async chooseCashOnDelivery() {}
   // ? no form to fill
 
-  async chooseCreditCard() {
-    await this.creditCardNumber.fill('1111-2222-3333-4444')
-    await this.expirationDate.fill('12/2024')
-    await this.cvvCode.fill('123')
-    await this.cardHolderName.fill('x')
+  async fillCreditCardData(cardData: CreditCardModel) {
+    await this.creditCardNumber.fill(cardData.creditCardNumber)
+    await this.expirationDate.fill(cardData.expirationDate)
+    await this.cvvCode.fill(cardData.CVV)
+    await this.cardHolderName.fill(cardData.cardHolderName)
   }
 
-  async chooseBuyNowPayLater() {}
+  async chooseBuyNowPayLater(
+    chooseInstallment: BuyNowPayLaterModel,
+  ): Promise<void> {
+    await this.monthlyInstallments.selectOption(chooseInstallment.installment)
+  }
 
-  async chooseGiftCard() {}
+  async fillGiftCard(giftCardData: GiftCardModel) {
+    await this.giftCardNumber.fill(giftCardData.giftCardNumber)
+    await this.validationCode.fill(giftCardData.validationCode)
+  }
 
   async confirmPayment(): Promise<void> {
     await this.confirmButton.click()
   }
+
+  
 }
