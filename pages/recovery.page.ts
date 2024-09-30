@@ -1,12 +1,13 @@
 import { Page, Locator } from '@playwright/test'
 import * as users from '../loginData/users.json'
 
-export class RecoveryPassword {
+export class RecoveryPage {
   readonly page: Page
   readonly forgetPasswordLink: Locator
   readonly emailInput: Locator
   readonly setNewPasswordButton: Locator
   readonly h3ForgotPassword: Locator
+  
   constructor(page: Page) {
     this.page = page
     this.forgetPasswordLink = page.locator('.ForgetPwd')

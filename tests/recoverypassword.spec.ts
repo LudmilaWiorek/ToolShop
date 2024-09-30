@@ -1,17 +1,15 @@
-import { test, expect } from '@playwright/test'
 import { LoginPage } from '../pages/login.page'
-import { RecoveryPassword } from '../pages/recovery.page'
+import { fixtures as test, expect } from '../fixtures/fixtures.fixture'
 
-test('set new password functionality', async ({ page }) => {
+test('set new password functionality', async ({ page, recoveryPage }) => {
   const loginPage = new LoginPage(page)
-  const recoveryPassword = new RecoveryPassword(page)
 
   await loginPage.goToPage()
   await loginPage.signIn()
-  await recoveryPassword.recoverPassword()
+  await recoveryPage.recoverPassword()
 
-  await expect(recoveryPassword.h3ForgotPassword).toBeVisible()
-  await recoveryPassword.setNewPassword()
+  await expect(recoveryPage.h3ForgotPassword).toBeVisible()
+  await recoveryPage.setNewPassword()
 })
 
 // this functionality doesn't work properly!
