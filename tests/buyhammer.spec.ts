@@ -6,8 +6,7 @@ import { fillPaymentForm } from '../factories/payment.factory'
 
 // fixture is a test object
 test.describe.parallel('end to end tests', () => {
-  test.beforeEach(async () => {})
-  test('login with correct credentials', async ({ loginPage }) => {
+  test.beforeEach('login with correct credentials', async ({ loginPage }) => {
     const textMyAccount = 'My account'
 
     await expect(loginPage.myAccountTitle).toContainText(textMyAccount)
@@ -15,7 +14,6 @@ test.describe.parallel('end to end tests', () => {
   })
 
   test('first end to end test', async ({
-    loginPage,
     toolsPage,
     deliveryPage,
     accessoryPage,
@@ -26,11 +24,6 @@ test.describe.parallel('end to end tests', () => {
     // Arrange
     const thorHammerString = ' Thor Hammer '
     const clawHammerString = ' Claw Hammer '
-
-    const textMyAccount = 'My account'
-    await expect(loginPage.myAccountTitle).toContainText(textMyAccount)
-
-    await loginPage.goToPage()
 
     // create array of products, but push to array is included in addToCart method in toolsPage
     let arrayProducts: LineItem[] = []
