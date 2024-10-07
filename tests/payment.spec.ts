@@ -1,10 +1,5 @@
-// import { fixtures as test, expect } from '../fixtures/fixtures.fixture'
-import { test, expect, APIRequestContext, Page } from '@playwright/test'
-import { APIResponse } from '@playwright/test'
-import { PaymentPage } from '../pages/payment.page'
+import { test, APIRequestContext, Page } from '@playwright/test'
 import * as users from '../loginData/users.json'
-import { ToolsPage } from '../pages/tools.page'
-import { AccessoryPage } from '../pages/accessory.page'
 import { LoginPage } from '../pages/login.page'
 
 class ApiStore {
@@ -14,17 +9,10 @@ class ApiStore {
   constructor(request: APIRequestContext) {
     this.request = request
   }
-  // heder w parametrze metody createCart jest wykorzystany w post jako drugi header
   async createCart(headers): Promise<string> {
     const response = await this.request.post(
       `${this.baseUrl}/carts`,
       (headers = headers),
-      //pierwszy header jest parametrem do metody post!
-      // to jest przepis na wyslanie komendy stworzenia koszyku
-      // HEADER to ustawienia do api
-      //Api to sa komendy wysylasz cos i cos chcesz
-
-      //komenda jęst request, która wysyla informację, stworz nowy koszyk
     )
     if (response.status() != 201) throw 'Cannot create new Cart!'
     const responseJson = JSON.parse(await response.text())
@@ -38,7 +26,7 @@ class ApiStore {
     }
     const response = await this.request.post(`${this.baseUrl}/users/login`, {
       data: loginData,
-    }) // wysylam request z zalacznikiem (data, bo zawsze data bedzie zalacznikiem do biblioteki request.post (get rowniez))
+    })
     if (response.status() != 200) throw 'Cannot log in!'
     const responseJson = JSON.parse(await response.text())
     return responseJson.access_token
@@ -65,8 +53,6 @@ class ApiStore {
       console.log('response', await response.text())
       throw 'Something is not ok with adding product'
     }
-    // const responseJson = JSON.parse(await response.text())
-    // return responseJson.result
   }
 
   async checkItemsInCart(cartId: string): Promise<string> {
@@ -79,14 +65,12 @@ class ApiStore {
 }
 test.describe('testing payment module', () => {
   let apiClass: ApiStore
-  let accessoryPage: AccessoryPage
   let loginPage: LoginPage
   test('POST - creating a cart and add some products into it', async ({
     request,
     page,
   }) => {
-    //login to account
-
+    // login to account by API
     apiClass = new ApiStore(request)
     const dataEmail = users.userdata[0].email
     const dataPass = users.userdata[0].password
@@ -98,13 +82,22 @@ test.describe('testing payment module', () => {
     // creating cart
     const cartId = await apiClass.createCart(headers)
     console.log(cartId)
-
     // add some product to cart
-    await apiClass.addItem('01J8FSS96FJNGCX95TNHSNXGSS', 5, cartId, headers)
-    await apiClass.addItem('01J8FSS9ED1EEB4P1D0QTJXGX4', 2, cartId, headers)
-    await apiClass.addItem('01J8FSS9E7PZMNNB370KY399PB', 2, cartId, headers)
+    await apiClass.addItem('01J9M273KYN3GXCV5C2AV7J5H3', 5, cartId, headers)
+    await apiClass.addItem('01J9M273GMJEA187833XZK3ZKH', 2, cartId, headers)
+    await apiClass.addItem('01J9M273S89Q4ZY4DE97DZ2MFN', 2, cartId, headers)
 
     const cart = await apiClass.checkItemsInCart(cartId)
     console.log(cart)
+
+    // open browser
+    loginPage = new LoginPage(page)
+    await loginPage.goToPage()
+    await loginPage.login(dataEmail, dataPass)
+    console.log('CARTID', cartId)
+    await page.evaluate((cartId) => {
+      sessionStorage['cart_id'] = cartId
+      sessionStorage['cart_quantity'] = 5 // because there are 2 parameters in session storage about cart; number is needed just to have possibility to enter the cart
+    }, cartId)
   })
 })
