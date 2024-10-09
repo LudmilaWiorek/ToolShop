@@ -30,4 +30,8 @@ export class AccessoryPage {
     this.successButton = page.locator("//button[text()='Proceed to checkout']")
     this.billingButton = page.locator('//button[@data-test="proceed-3"]')
   }
+
+  async openCart() {
+    await this.cartIcon.click()
+  }
 }
