@@ -7,11 +7,8 @@ export class ApiStore {
   constructor(request: APIRequestContext) {
     this.request = request
   }
-  async createCart(headers): Promise<string> {
-    const response = await this.request.post(
-      `${this.baseUrl}/carts`,
-      (headers = headers),
-    )
+  async createCart(): Promise<string> {
+    const response = await this.request.post(`${this.baseUrl}/carts`)
     if (response.status() != 201) throw 'Cannot create new Cart!'
     const responseJson = JSON.parse(await response.text())
     return responseJson.id
@@ -34,30 +31,35 @@ export class ApiStore {
     product_id: string,
     quantity: number,
     cartId: string,
-    headers,
+    // headers,
   ): Promise<void> {
     const productData = {
       product_id: product_id,
       quantity: quantity,
     }
-    console.log('CART_ID', cartId)
     const response = await this.request.post(
       `${this.baseUrl}/carts/${cartId}`,
-      { headers: headers, data: productData },
+      { data: productData },
     )
 
     if (response.status() != 200) {
-      console.log('RESPONSE STATUS', response.status())
-      console.log('response', await response.text())
       throw 'Something is not ok with adding product'
     }
   }
 
-  async checkItemsInCart(cartId: string): Promise<string> {
+  async getItemsFromCart(cartId: string): Promise<string> {
     const response = await this.request.get(`${this.baseUrl}/carts/${cartId}`)
 
     if (response.status() != 200) throw 'Cannot read value in cart!'
     const responseJson = JSON.parse(await response.text())
     return responseJson.cart_items
+  }
+
+  async prepareCart(): Promise<string> {
+    const cartId = await this.createCart()
+    // add some product to cart
+    // CAREFUL sometimes id products changing and are needed to manual update!
+    await this.addItem('01J9REZFFNWC5BD5ET23ESCTT2', 5, cartId)
+    return cartId
   }
 }
