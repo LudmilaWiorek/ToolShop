@@ -55,6 +55,7 @@ export class PaymentPage {
     this.orderSuccessfulMessage = page.locator('#order-confirmation')
   }
   // note: add locators to red alerts!
+  // is choosePaymentMethod used?
   async choosePaymentMethod(paymentType: PaymentModel): Promise<void> {
     await this.paymentMethod.selectOption(paymentType.method)
   }
@@ -161,4 +162,6 @@ export class PaymentPage {
         break
     }
   }
+
+
 }

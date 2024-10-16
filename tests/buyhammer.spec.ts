@@ -1,8 +1,6 @@
 import { LineItem } from '../models/lineItem.model'
-import { BillingAddress } from '../models/billingAddress.model'
 import { PaymentModel } from '../models/payment.model'
 import { fixtures as test, expect } from '../fixtures/fixtures.fixture'
-import { fillPaymentForm } from '../factories/payment.factory'
 
 // fixture is a test object
 test.describe.parallel('end to end tests', () => {
@@ -10,7 +8,7 @@ test.describe.parallel('end to end tests', () => {
     const textMyAccount = 'My account'
 
     await expect(loginPage.myAccountTitle).toContainText(textMyAccount)
-    await loginPage.goToPage()
+    await loginPage.goToPage() 
   })
 
   test('first end to end test', async ({
@@ -84,7 +82,7 @@ test.describe.parallel('end to end tests', () => {
     )
 
     // we go to cart page
-    await accessoryPage.cartIcon.click()
+    await accessoryPage.openCart()
 
     //                         ~~CART~~
     // using this loop tells us if this, what we have in our virtual basket equals what we have in cart on the web
@@ -153,23 +151,16 @@ test.describe.parallel('end to end tests', () => {
       sumTotal += arrayProducts[i].price * arrayProducts[i].quantity
     }
 
-    await accessoryPage.successButton.click()
+    await accessoryPage.confirmCart()
 
     // already signed in💥
-    await accessoryPage.proceedButton.click()
+    await accessoryPage.confirmLoginData()
 
     //                  ~~ DELIVERY FORM ~~
     // we need to fill delivery form and we overwrite built in data
-    const billingAddress: BillingAddress = {
-      address: 'Sezamkowa 3/30',
-      city: 'Warsaw',
-      state: 'mazowieckie',
-      country: 'Poland',
-      postCode: '03-022',
-    }
     await page.waitForTimeout(2000) // timeout is needed so we can overwrite predefined address
-    await deliveryPage.fillDeliveryForm(billingAddress)
-    await accessoryPage.billingButton.click()
+    await deliveryPage.fillDeliveryForm(deliveryPage.billingAddress)
+    await deliveryPage.confirmAddress()
 
     //                ~~ PAYMENT ~~
     const headerPayment = paymentPage.h3Payment
@@ -178,7 +169,7 @@ test.describe.parallel('end to end tests', () => {
     const payment: PaymentModel = {
       method: 'Credit Card',
     }
-    await fillPaymentForm(paymentPage, payment.method)
+    await paymentPage.fillPaymentForm(paymentPage, payment.method)
 
     await paymentPage.confirmPayment()
 

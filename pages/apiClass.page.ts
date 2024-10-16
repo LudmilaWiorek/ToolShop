@@ -31,7 +31,6 @@ export class ApiStore {
     product_id: string,
     quantity: number,
     cartId: string,
-    // headers,
   ): Promise<void> {
     const productData = {
       product_id: product_id,
@@ -59,7 +58,7 @@ export class ApiStore {
     const cartId = await this.createCart()
     // add some product to cart
     // CAREFUL sometimes id products changing and are needed to manual update!
-    await this.addItem('01J9REZFFNWC5BD5ET23ESCTT2', 5, cartId)
+    await this.addItem('01JAAPM51R5WF623XGW59JF70B', 5, cartId)
     return cartId
   }
 }

@@ -9,6 +9,7 @@ export class DeliveryPage {
   readonly state: Locator
   readonly country: Locator
   readonly postCode: Locator
+  readonly billingButton: Locator
 
   constructor(page: Page) {
     this.page = page
@@ -17,6 +18,7 @@ export class DeliveryPage {
     this.state = page.locator('#state')
     this.country = page.locator('#country')
     this.postCode = page.locator('#postcode')
+    this.billingButton = page.locator('//button[@data-test="proceed-3"]')
   }
 
   async fillDeliveryForm(address: BillingAddress) {
@@ -25,5 +27,16 @@ export class DeliveryPage {
     await this.state.fill(address.state)
     await this.country.fill(address.country)
     await this.postCode.fill(address.postCode)
+  }
+
+  billingAddress: BillingAddress = {
+    address: 'Sezamkowa 3/30',
+    city: 'Warsaw',
+    state: 'mazowieckie',
+    country: 'Poland',
+    postCode: '03-022',
+  }
+  async confirmAddress(){
+    await this.billingButton.click()
   }
 }

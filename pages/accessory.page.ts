@@ -12,7 +12,7 @@ export class AccessoryPage {
   readonly proceedButton: Locator
   readonly messageYouReLogged: Locator
   readonly successButton: Locator
-  readonly billingButton: Locator
+ 
 
   constructor(page: Page) {
     this.page = page
@@ -28,10 +28,18 @@ export class AccessoryPage {
     this.proceedButton = page.locator('[data-test="proceed-2"]')
     this.messageYouReLogged = page.getByText('Hello Jack Howe, you are')
     this.successButton = page.locator("//button[text()='Proceed to checkout']")
-    this.billingButton = page.locator('//button[@data-test="proceed-3"]')
+
   }
 
   async openCart() {
     await this.cartIcon.click()
   }
+  async confirmCart() {
+    await this.successButton.click()
+  }
+  async confirmLoginData(){
+    await this.proceedButton.click()
+  }
+
+
 }
