@@ -6,7 +6,6 @@ import { AccessoryPage } from '../pages/accessory.page'
 import { DeliveryPage } from '../pages/delivery.page'
 import { PaymentPage } from '../pages/payment.page'
 import { PaymentModel } from '../models/payment.model'
-import { faker } from '@faker-js/faker/locale/en'
 
 test.describe.parallel('testing payment module', async () => {
   let apiClass: ApiStore
@@ -54,20 +53,29 @@ test.describe.parallel('testing payment module', async () => {
       await expect(headerPayment).toBeVisible()
     },
   )
-
+  // positive scenarios
   test('testing bank transfer module', async () => {
     const payment: PaymentModel = {
       method: 'Bank Transfer',
     }
     await paymentPage.fillPaymentForm(paymentPage, payment.method)
     await paymentPage.confirmPayment()
+
+    await expect(paymentPage.paymentSuccessful).toHaveText(
+      'Payment was successful',
+    )
   })
+
   test('testing cash on delivery module', async () => {
     const payment: PaymentModel = {
       method: 'Cash on Delivery',
     }
     await paymentPage.fillPaymentForm(paymentPage, payment.method)
     await paymentPage.confirmPayment()
+
+    await expect(paymentPage.paymentSuccessful).toHaveText(
+      'Payment was successful',
+    )
   })
   test('testing buy now pay later module', async () => {
     const payment: PaymentModel = {
@@ -75,6 +83,10 @@ test.describe.parallel('testing payment module', async () => {
     }
     await paymentPage.fillPaymentForm(paymentPage, payment.method)
     await paymentPage.confirmPayment()
+
+    await expect(paymentPage.paymentSuccessful).toHaveText(
+      'Payment was successful',
+    )
   })
   test('testing gift card module', async () => {
     const payment: PaymentModel = {
@@ -82,5 +94,9 @@ test.describe.parallel('testing payment module', async () => {
     }
     await paymentPage.fillPaymentForm(paymentPage, payment.method)
     await paymentPage.confirmPayment()
+
+    await expect(paymentPage.paymentSuccessful).toHaveText(
+      'Payment was successful',
+    )
   })
 })
