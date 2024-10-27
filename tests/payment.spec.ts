@@ -22,7 +22,7 @@ test.describe.parallel('testing payment module', async () => {
       const dataPass = users.userdata[0].password
 
       // creating cart
-      const cartId = await apiClass.prepareCart()
+      const cartId = await apiClass.prepareCart(3)
 
       // open browser
       loginPage = new LoginPage(page)
@@ -38,6 +38,7 @@ test.describe.parallel('testing payment module', async () => {
       // open cart
       accessoryPage = new AccessoryPage(page)
       await accessoryPage.openCart()
+
       await accessoryPage.confirmCart()
       // confirm login user
       await accessoryPage.confirmLoginData()
