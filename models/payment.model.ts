@@ -5,6 +5,11 @@ export interface PaymentModel {
     | 'Credit Card'
     | 'Buy Now Pay Later'
     | 'Gift Card'
+  // payment details
+  bankTransferModel?: BankTransferModel
+  creditCardModel?: CreditCardModel
+  buyNowPayLaterModel?: BuyNowPayLaterModel
+  giftCardModel?: GiftCardModel
 }
 
 export interface BankTransferModel {
