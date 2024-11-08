@@ -59,7 +59,7 @@ test.describe.parallel('testing payment module', async () => {
     const payment: PaymentModel = {
       method: 'Bank Transfer',
     }
-    await paymentPage.fillPaymentForm(paymentPage, payment.method)
+    await paymentPage.fillPaymentForm(payment.method)
     await paymentPage.confirmPayment()
 
     await expect(paymentPage.paymentSuccessful).toHaveText(
@@ -71,7 +71,7 @@ test.describe.parallel('testing payment module', async () => {
     const payment: PaymentModel = {
       method: 'Cash on Delivery',
     }
-    await paymentPage.fillPaymentForm(paymentPage, payment.method)
+    await paymentPage.fillPaymentForm(payment.method)
     await paymentPage.confirmPayment()
 
     await expect(paymentPage.paymentSuccessful).toHaveText(
@@ -82,7 +82,7 @@ test.describe.parallel('testing payment module', async () => {
     const payment: PaymentModel = {
       method: 'Buy Now Pay Later',
     }
-    await paymentPage.fillPaymentForm(paymentPage, payment.method)
+    await paymentPage.fillPaymentForm(payment.method)
     await paymentPage.confirmPayment()
 
     await expect(paymentPage.paymentSuccessful).toHaveText(
@@ -93,7 +93,7 @@ test.describe.parallel('testing payment module', async () => {
     const payment: PaymentModel = {
       method: 'Gift Card',
     }
-    await paymentPage.fillPaymentForm(paymentPage, payment.method)
+    await paymentPage.fillPaymentForm(payment.method)
     await paymentPage.confirmPayment()
 
     await expect(paymentPage.paymentSuccessful).toHaveText(

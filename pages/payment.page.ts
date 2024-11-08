@@ -1,10 +1,10 @@
 import { Locator, Page } from '@playwright/test'
 import {
-  PaymentModel,
   BankTransferModel,
+  BuyNowPayLaterModel,
   CreditCardModel,
   GiftCardModel,
-  BuyNowPayLaterModel,
+  PaymentModel,
 } from '../models/payment.model'
 
 export class PaymentPage {
@@ -55,12 +55,12 @@ export class PaymentPage {
     this.orderSuccessfulMessage = page.locator('#order-confirmation')
   }
   // note: add locators to red alerts!
-  // is choosePaymentMethod used?
   async choosePaymentMethod(paymentType: PaymentModel): Promise<void> {
     await this.paymentMethod.selectOption(paymentType.method)
   }
 
-  async fillBankData(bankForm: BankTransferModel): Promise<void> {
+  async fillBankData(bankForm: BankTransferModel | undefined): Promise<void> {
+    if (bankForm === undefined) throw 'no data about bank transfer model'
     await this.bankNameInput.fill(bankForm.bankName)
     await this.accountName.fill(bankForm.accountName)
     await this.accountNumber.fill(bankForm.accountNumber)
@@ -97,64 +97,65 @@ export class PaymentPage {
   async confirmPayment(): Promise<void> {
     await this.confirmButton.click()
   }
-
-  async fillPaymentForm(paymentPage: PaymentPage, paymentMethod: string) {
+  // Payment model zeby byl rozszerzony potencjalnie o dane do przelewu;
+  // FillPaymentForm powinien przyjmowac paymentModel, a paymentModel powinien zawierac dane potrzenbe do zrealizowania płatnosci;
+  async fillPaymentForm(paymentMethod: string) {
     switch (paymentMethod) {
       case 'Bank Transfer':
         const paymentBankTransfer: PaymentModel = {
           method: 'Bank Transfer',
+          bankTransferModel: {
+            bankName: 'PKO Bank',
+            accountName: 'Jan Kowalski.123.',
+            accountNumber: '1234566789',
+          },
         }
-        await paymentPage.choosePaymentMethod(paymentBankTransfer)
-        const bankTransferData: BankTransferModel = {
-          bankName: 'PKO Bank',
-          accountName: 'Jan Kowalski.123.',
-          accountNumber: '1234566789',
-        }
-        await paymentPage.fillBankData(bankTransferData)
+        await this.choosePaymentMethod(paymentBankTransfer)
+        await this.fillBankData(paymentBankTransfer.bankTransferModel)
         break
 
       case 'Cash on Delivery':
         const paymentCashOnDelivery: PaymentModel = {
           method: 'Cash on Delivery',
         }
-        await paymentPage.choosePaymentMethod(paymentCashOnDelivery)
+        await this.choosePaymentMethod(paymentCashOnDelivery)
         break
 
       case 'Credit Card':
         const paymentCreditCard: PaymentModel = {
           method: 'Credit Card',
         }
-        await paymentPage.choosePaymentMethod(paymentCreditCard)
+        await this.choosePaymentMethod(paymentCreditCard)
         const paymentCreditCardData: CreditCardModel = {
           creditCardNumber: '1111-2222-3333-4444',
           expirationDate: '02/2025',
           CVV: '123',
           cardHolderName: 'V',
         }
-        await paymentPage.fillCreditCardData(paymentCreditCardData)
+        await this.fillCreditCardData(paymentCreditCardData)
         break
 
       case 'Buy Now Pay Later':
         const paymentBuyNowPayLater: PaymentModel = {
           method: 'Buy Now Pay Later',
         }
-        await paymentPage.choosePaymentMethod(paymentBuyNowPayLater)
+        await this.choosePaymentMethod(paymentBuyNowPayLater)
         const paymentInstallment: BuyNowPayLaterModel = {
           installment: '12 Monthly Installments',
         }
-        await paymentPage.chooseBuyNowPayLater(paymentInstallment)
+        await this.chooseBuyNowPayLater(paymentInstallment)
         break
 
       case 'Gift Card':
         const giftCard: PaymentModel = {
           method: 'Gift Card',
         }
-        await paymentPage.choosePaymentMethod(giftCard)
+        await this.choosePaymentMethod(giftCard)
         const paymentGiftCard: GiftCardModel = {
           giftCardNumber: '1234abc',
           validationCode: '4567',
         }
-        await paymentPage.fillGiftCard(paymentGiftCard)
+        await this.fillGiftCard(paymentGiftCard)
         break
 
       default:
@@ -162,6 +163,4 @@ export class PaymentPage {
         break
     }
   }
-
-
 }
