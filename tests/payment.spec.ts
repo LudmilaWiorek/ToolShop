@@ -65,11 +65,6 @@ test.describe.parallel('testing payment module', async () => {
       },
     }
     await paymentPage.fillPaymentForm(payment)
-    await paymentPage.confirmPayment()
-
-    await expect(paymentPage.paymentSuccessful).toHaveText(
-      'Payment was successful',
-    )
   })
 
   test('testing credit card module', async () => {
@@ -83,11 +78,6 @@ test.describe.parallel('testing payment module', async () => {
       },
     }
     await paymentPage.fillPaymentForm(payment)
-    await paymentPage.confirmPayment()
-
-    await expect(paymentPage.paymentSuccessful).toHaveText(
-      'Payment was successful',
-    )
   })
 
   test('testing cash on delivery module', async () => {
@@ -95,11 +85,6 @@ test.describe.parallel('testing payment module', async () => {
       method: 'Cash on Delivery',
     }
     await paymentPage.fillPaymentForm(payment)
-    await paymentPage.confirmPayment()
-
-    await expect(paymentPage.paymentSuccessful).toHaveText(
-      'Payment was successful',
-    )
   })
   test('testing buy now pay later module', async () => {
     const payment: PaymentModel = {
@@ -109,12 +94,6 @@ test.describe.parallel('testing payment module', async () => {
       },
     }
     await paymentPage.fillPaymentForm(payment)
-    await paymentPage.confirmPayment()
-
-    await expect(paymentPage.paymentSuccessful).toHaveText(
-      'Payment was successful',
-    )
-    // const
   })
   test('testing gift card module', async () => {
     const payment: PaymentModel = {
@@ -125,6 +104,9 @@ test.describe.parallel('testing payment module', async () => {
       },
     }
     await paymentPage.fillPaymentForm(payment)
+  })
+
+  test.afterEach('confirm payment and assert', async () => {
     await paymentPage.confirmPayment()
 
     await expect(paymentPage.paymentSuccessful).toHaveText(
