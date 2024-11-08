@@ -58,8 +58,31 @@ test.describe.parallel('testing payment module', async () => {
   test('testing bank transfer module', async () => {
     const payment: PaymentModel = {
       method: 'Bank Transfer',
+      bankTransferModel: {
+        bankName: 'PKO Bank',
+        accountName: 'Jan Kowalski.123.',
+        accountNumber: '1234566789',
+      },
     }
-    await paymentPage.fillPaymentForm(payment.method)
+    await paymentPage.fillPaymentForm(payment)
+    await paymentPage.confirmPayment()
+
+    await expect(paymentPage.paymentSuccessful).toHaveText(
+      'Payment was successful',
+    )
+  })
+
+  test('testing credit card module', async () => {
+    const payment: PaymentModel = {
+      method: 'Credit Card',
+      creditCardModel: {
+        creditCardNumber: '1111-2222-3333-4444',
+        expirationDate: '02/2025',
+        CVV: '123',
+        cardHolderName: 'V',
+      },
+    }
+    await paymentPage.fillPaymentForm(payment)
     await paymentPage.confirmPayment()
 
     await expect(paymentPage.paymentSuccessful).toHaveText(
@@ -71,7 +94,7 @@ test.describe.parallel('testing payment module', async () => {
     const payment: PaymentModel = {
       method: 'Cash on Delivery',
     }
-    await paymentPage.fillPaymentForm(payment.method)
+    await paymentPage.fillPaymentForm(payment)
     await paymentPage.confirmPayment()
 
     await expect(paymentPage.paymentSuccessful).toHaveText(
@@ -81,19 +104,27 @@ test.describe.parallel('testing payment module', async () => {
   test('testing buy now pay later module', async () => {
     const payment: PaymentModel = {
       method: 'Buy Now Pay Later',
+      buyNowPayLaterModel: {
+        installment: '12 Monthly Installments',
+      },
     }
-    await paymentPage.fillPaymentForm(payment.method)
+    await paymentPage.fillPaymentForm(payment)
     await paymentPage.confirmPayment()
 
     await expect(paymentPage.paymentSuccessful).toHaveText(
       'Payment was successful',
     )
+    // const
   })
   test('testing gift card module', async () => {
     const payment: PaymentModel = {
       method: 'Gift Card',
+      giftCardModel: {
+        giftCardNumber: '1234abc',
+        validationCode: '4567',
+      },
     }
-    await paymentPage.fillPaymentForm(payment.method)
+    await paymentPage.fillPaymentForm(payment)
     await paymentPage.confirmPayment()
 
     await expect(paymentPage.paymentSuccessful).toHaveText(
