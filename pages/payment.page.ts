@@ -59,8 +59,7 @@ export class PaymentPage {
     await this.paymentMethod.selectOption(paymentType.method)
   }
 
-  async fillBankData(bankForm: BankTransferModel | undefined): Promise<void> {
-    if (bankForm === undefined) throw 'no data about bank transfer model'
+  async fillBankData(bankForm: BankTransferModel): Promise<void> {
     await this.bankNameInput.fill(bankForm.bankName)
     await this.accountName.fill(bankForm.accountName)
     await this.accountNumber.fill(bankForm.accountNumber)
@@ -97,65 +96,43 @@ export class PaymentPage {
   async confirmPayment(): Promise<void> {
     await this.confirmButton.click()
   }
-  // Payment model zeby byl rozszerzony potencjalnie o dane do przelewu;
-  // FillPaymentForm powinien przyjmowac paymentModel, a paymentModel powinien zawierac dane potrzenbe do zrealizowania płatnosci;
-  async fillPaymentForm(paymentMethod: string) {
-    switch (paymentMethod) {
+
+  async fillPaymentForm(paymentObject: PaymentModel) {
+    switch (paymentObject.method) {
       case 'Bank Transfer':
-        const paymentBankTransfer: PaymentModel = {
-          method: 'Bank Transfer',
-          bankTransferModel: {
-            bankName: 'PKO Bank',
-            accountName: 'Jan Kowalski.123.',
-            accountNumber: '1234566789',
-          },
-        }
-        await this.choosePaymentMethod(paymentBankTransfer)
-        await this.fillBankData(paymentBankTransfer.bankTransferModel)
+        await this.choosePaymentMethod(paymentObject)
+        if (paymentObject.bankTransferModel === undefined)
+          throw 'no data about bank transfer model'
+
+        await this.fillBankData(paymentObject.bankTransferModel)
         break
 
       case 'Cash on Delivery':
-        const paymentCashOnDelivery: PaymentModel = {
-          method: 'Cash on Delivery',
-        }
-        await this.choosePaymentMethod(paymentCashOnDelivery)
+        await this.choosePaymentMethod(paymentObject)
         break
 
       case 'Credit Card':
-        const paymentCreditCard: PaymentModel = {
-          method: 'Credit Card',
-        }
-        await this.choosePaymentMethod(paymentCreditCard)
-        const paymentCreditCardData: CreditCardModel = {
-          creditCardNumber: '1111-2222-3333-4444',
-          expirationDate: '02/2025',
-          CVV: '123',
-          cardHolderName: 'V',
-        }
-        await this.fillCreditCardData(paymentCreditCardData)
+        await this.choosePaymentMethod(paymentObject)
+        if (paymentObject.creditCardModel === undefined)
+          throw 'no data about credit card model'
+
+        await this.fillCreditCardData(paymentObject.creditCardModel)
         break
 
       case 'Buy Now Pay Later':
-        const paymentBuyNowPayLater: PaymentModel = {
-          method: 'Buy Now Pay Later',
-        }
-        await this.choosePaymentMethod(paymentBuyNowPayLater)
-        const paymentInstallment: BuyNowPayLaterModel = {
-          installment: '12 Monthly Installments',
-        }
-        await this.chooseBuyNowPayLater(paymentInstallment)
+        await this.choosePaymentMethod(paymentObject)
+        if (paymentObject.buyNowPayLaterModel === undefined)
+          throw 'no data about buy now pay later model'
+        await this.chooseBuyNowPayLater(paymentObject.buyNowPayLaterModel)
         break
 
       case 'Gift Card':
-        const giftCard: PaymentModel = {
-          method: 'Gift Card',
-        }
-        await this.choosePaymentMethod(giftCard)
-        const paymentGiftCard: GiftCardModel = {
-          giftCardNumber: '1234abc',
-          validationCode: '4567',
-        }
-        await this.fillGiftCard(paymentGiftCard)
+     
+        await this.choosePaymentMethod(paymentObject)
+          if (paymentObject.giftCardModel === undefined)
+          throw 'no data about gift card model'
+    
+        await this.fillGiftCard(paymentObject.giftCardModel)
         break
 
       default:
