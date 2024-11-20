@@ -5,7 +5,7 @@ import { DeliveryPage } from '../pages/delivery.page'
 import { AccessoryPage } from '../pages/accessory.page'
 import { CartPage } from '../pages/cart.page'
 import { PaymentPage } from '../pages/payment.page'
-import * as users from '../loginData/users.json'
+import * as users from '../JSONS/users.json'
 import { RecoveryPage } from '../pages/recovery.page'
 
 interface MyFixtures {
@@ -48,10 +48,10 @@ export const fixtures = baseTest.extend<MyFixtures>({
     const paymentPage = new PaymentPage(page)
     await use(paymentPage)
   },
-  recoveryPage: async ({page}, use) => {
+  recoveryPage: async ({ page }, use) => {
     const recoveryPage = new RecoveryPage(page)
     await use(recoveryPage)
-  }
+  },
 })
 
 export { expect } from '@playwright/test'
