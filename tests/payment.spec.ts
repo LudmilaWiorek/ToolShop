@@ -59,6 +59,25 @@ test.describe.parallel('testing payment module', async () => {
       'Payment was successful',
     )
   })
+  test('testing bank transfer module - incorrect bankName', async ({
+    paymentPage,
+  }) => {
+    const payment: PaymentModel = {
+      method: 'Bank Transfer',
+      bankTransferModel: {
+        bankName: '111111111',
+        accountName: 'Jan Kowalski.123.',
+        accountNumber: '1234566789',
+      },
+    }
+    await paymentPage.fillPaymentForm(payment)
+    const incorrectBankNameInput = paymentPage.bankNameAlert
+
+    await expect(incorrectBankNameInput).toHaveText(
+      ' Bank name can only contain letters and spaces. ',
+    )
+    await expect(paymentPage.confirmButton).toBeDisabled()
+  })
 
   test('testing credit card module', async ({ paymentPage }) => {
     const payment: PaymentModel = {
