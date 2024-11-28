@@ -1,4 +1,4 @@
-import { test, expect, Page, request } from '@playwright/test'
+import { test, expect, request } from '@playwright/test'
 
 test('registrationTest', async ({ page }) => {
   await page.goto('')
@@ -149,7 +149,6 @@ test.describe('login section tests', () => {
     const response = await context.get(
       // 'https://api.practicesoftwaretesting.com/endpoint-that-returns-500',
       'https://api.practicesoftwaretesting.com/auth/social-login?provider=google',
-    
     )
 
     expect(response.status()).toBe(500) // dzieki not test przechodzi :)
