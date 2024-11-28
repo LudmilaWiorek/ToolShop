@@ -7,25 +7,20 @@ require('dotenv').config()
 
 export default defineConfig({
   testDir: './tests',
-  timeout: 70_000,
-  expect: { timeout: 30_000 },
-  // use: { slowMo: 600 },
-
+  timeout: 60_000,
+  // expect: { timeout: 30_000 },
+  expect: { toPass: { timeout: 1000 } },
   fullyParallel: true,
-
-  /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
-  /* Retry on CI only */
   retries: 0,
-  /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   use: {
     baseURL: 'https://practicesoftwaretesting.com/',
-
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on',
+    launchOptions: {
+      // slowMo: 5000, // UWAGA NA SLOWMO
+    },
   },
 
   /* Configure projects for major browsers */
