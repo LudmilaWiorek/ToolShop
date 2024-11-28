@@ -1,5 +1,5 @@
 import { Locator, Page } from '@playwright/test'
-import { LineItem as LineItem } from '../models/lineItem.model'
+import { LineItem } from '../models/lineItem.model'
 
 export class ToolsPage {
   readonly page: Page

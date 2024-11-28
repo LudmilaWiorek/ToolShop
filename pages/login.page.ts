@@ -27,6 +27,7 @@ export class LoginPage {
   }
   async login(dataTestEmail: string, dataTestPassword: string) {
     await this.signInIcon.click()
+
     await this.dataTestEmail.fill(dataTestEmail)
     await this.page.waitForTimeout(500)
     await this.dataTestPassword.fill(dataTestPassword)

@@ -29,6 +29,7 @@ export class PaymentPage {
   readonly validationCode: Locator
   readonly confirmButton: Locator
   readonly orderSuccessfulMessage: Locator
+  readonly bankNameAlert: Locator
 
   constructor(page: Page) {
     this.page = page
@@ -53,6 +54,9 @@ export class PaymentPage {
     this.validationCode = page.locator('#validation_code')
     this.confirmButton = page.locator('//button[text()=" Confirm "]')
     this.orderSuccessfulMessage = page.locator('#order-confirmation')
+    this.bankNameAlert = page.locator(
+      '//div[text()=" Bank name can only contain letters and spaces. "]',
+    )
   }
   // note: add locators to red alerts!
   async choosePaymentMethod(paymentType: PaymentModel): Promise<void> {
@@ -96,42 +100,42 @@ export class PaymentPage {
   async confirmPayment(): Promise<void> {
     await this.confirmButton.click()
   }
-
+  // main switch payment function
   async fillPaymentForm(paymentObject: PaymentModel) {
+    await this.choosePaymentMethod(paymentObject)
     switch (paymentObject.method) {
       case 'Bank Transfer':
-        await this.choosePaymentMethod(paymentObject)
+        // await this.choosePaymentMethod(paymentObject)
         if (paymentObject.bankTransferModel === undefined)
-          throw 'no data about bank transfer model'
+          throw new Error('no data about bank transfer model')
 
         await this.fillBankData(paymentObject.bankTransferModel)
         break
 
       case 'Cash on Delivery':
-        await this.choosePaymentMethod(paymentObject)
+        // await this.choosePaymentMethod(paymentObject)
         break
 
       case 'Credit Card':
-        await this.choosePaymentMethod(paymentObject)
+        // await this.choosePaymentMethod(paymentObject)
         if (paymentObject.creditCardModel === undefined)
-          throw 'no data about credit card model'
+          throw new Error('no data about credit card model')
 
         await this.fillCreditCardData(paymentObject.creditCardModel)
         break
 
       case 'Buy Now Pay Later':
-        await this.choosePaymentMethod(paymentObject)
+        // await this.choosePaymentMethod(paymentObject)
         if (paymentObject.buyNowPayLaterModel === undefined)
-          throw 'no data about buy now pay later model'
+          throw new Error('no data about buy now pay later model')
         await this.chooseBuyNowPayLater(paymentObject.buyNowPayLaterModel)
         break
 
       case 'Gift Card':
-     
-        await this.choosePaymentMethod(paymentObject)
-          if (paymentObject.giftCardModel === undefined)
-          throw 'no data about gift card model'
-    
+        // await this.choosePaymentMethod(paymentObject)
+        if (paymentObject.giftCardModel === undefined)
+          throw new Error('no data about gift card model')
+
         await this.fillGiftCard(paymentObject.giftCardModel)
         break
 
