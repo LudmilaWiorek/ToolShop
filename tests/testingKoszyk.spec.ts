@@ -1,7 +1,8 @@
 import { fixtures as test, expect } from '../fixtures/fixtures.fixture'
+import { PaymentModel } from '../models/payment.model'
 import { ApiStore } from '../pages/apiClass.page'
 
-test.describe.parallel('testing payment module', async () => {
+test.describe.parallel.only('testing payment module', async () => {
   let apiClass: ApiStore
   test.beforeEach(
     'POST - creating a cart and add some products into it',
@@ -41,5 +42,20 @@ test.describe.parallel('testing payment module', async () => {
       await expect(headerPayment).toBeVisible()
     },
   )
-  test('jakis test', async () => {})
+  test('jakis test testowy', async ({ paymentPage }) => {
+    const payment: PaymentModel = {
+      method: 'Bank Transfer',
+      bankTransferModel: {
+        bankName: 'PKO Bank',
+        accountName: 'Jan Kowalski.123.',
+        accountNumber: '1234566789',
+      },
+    }
+    await paymentPage.fillPaymentForm(payment)
+    await paymentPage.confirmPayment()
+
+    await expect(paymentPage.paymentSuccessful).toHaveText(
+      'Payment was successful',
+    )
+  })
 })

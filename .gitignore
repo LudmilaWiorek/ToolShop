@@ -6,4 +6,4 @@ node_modules/
 .env
 /config/
 /.vscode/
-testingKoszyk.spec.test
+/testingKoszyk.spec.test
