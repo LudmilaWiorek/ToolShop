@@ -1,5 +1,5 @@
 import { Locator, Page } from '@playwright/test'
-import * as itemNames from '../products/itemNames.json'
+import * as itemNames from '../JSONS/itemNames.json'
 export class AccessoryPage {
   readonly page: Page
 
@@ -12,7 +12,6 @@ export class AccessoryPage {
   readonly proceedButton: Locator
   readonly messageYouReLogged: Locator
   readonly successButton: Locator
- 
 
   constructor(page: Page) {
     this.page = page
@@ -28,7 +27,6 @@ export class AccessoryPage {
     this.proceedButton = page.locator('[data-test="proceed-2"]')
     this.messageYouReLogged = page.getByText('Hello Jack Howe, you are')
     this.successButton = page.locator("//button[text()='Proceed to checkout']")
-
   }
 
   async openCart() {
@@ -37,9 +35,7 @@ export class AccessoryPage {
   async confirmCart() {
     await this.successButton.click()
   }
-  async confirmLoginData(){
+  async confirmLoginData() {
     await this.proceedButton.click()
   }
-
-
 }
