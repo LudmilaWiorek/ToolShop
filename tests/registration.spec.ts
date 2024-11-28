@@ -128,7 +128,7 @@ test.describe('login section tests', () => {
     expect(url).toBe(
       'https://api.practicesoftwaretesting.com/auth/social-login?provider=google',
     )
-    console.log('Nowe okno zostało otwarte z URL:', url)
+    // console.log('Nowe okno zostało otwarte z URL:', url)
 
     const classLocator500Error = newPage.locator(
       // '//div[contains(@class,"ml-4")]',
@@ -153,8 +153,8 @@ test.describe('login section tests', () => {
 
     expect(response.status()).toBe(500) // dzieki not test przechodzi :)
 
-    const responseBody = await response.text()
-    console.log('Treść odpowiedzi:', responseBody)
+    // const responseBody = await response.text()
+    // console.log('Treść odpowiedzi:', responseBody)
 
     // Zakończ kontekst
     await context.dispose()

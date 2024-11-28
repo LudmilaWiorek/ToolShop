@@ -23,7 +23,7 @@ test.describe.parallel('end to end tests', () => {
     const clawHammerString = ' Claw Hammer '
 
     // create array of products, but push to array is included in addToCart method in toolsPage
-    let arrayProducts: LineItem[] = []
+    const arrayProducts: LineItem[] = []
 
     // Act
     // we search for some hammer
@@ -83,7 +83,6 @@ test.describe.parallel('end to end tests', () => {
     //                         ~~CART~~
     // using this loop tells us if this, what we have in our virtual basket equals what we have in cart on the web
     await accessoryPage.openCart()
-    console.log(arrayProducts)
     // for every lineItem we get its name and we compare it with array element
     let sumTotal = 0
     let calculatedSum = 0
@@ -184,6 +183,6 @@ test.describe.parallel('end to end tests', () => {
       'Thanks for your order! Your invoice number is INV',
     )
 
-    console.log('💙\x1b[34m', '~~ End-To-End Test Finished ~~') //blue console.log :)
+    // console.log('💙\x1b[34m', '~~ End-To-End Test Finished ~~') //blue console.log :)
   })
 })

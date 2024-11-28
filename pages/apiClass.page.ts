@@ -1,7 +1,7 @@
 import { APIRequestContext } from '@playwright/test'
 
 export class ApiStore {
-  checkItemsInCart(cartId: string) {
+  checkItemsInCart() {
     throw new Error('Method not implemented.')
   }
   readonly request: APIRequestContext
@@ -55,7 +55,7 @@ export class ApiStore {
     const responseJson = JSON.parse(await response.text())
     count = Math.min(count, responseJson.total) // we care about total number of products
 
-    let ids: string[] = []
+    const ids: string[] = []
     for (let i = 0; i < count; i++) {
       ids.push(responseJson.data[i].id)
     }
@@ -76,7 +76,7 @@ export class ApiStore {
     const idProducts = await this.getXItems(countItems)
 
     await idProducts.forEach((id) => {
-      let randomNumber = Math.floor(Math.random() * 5) + 1
+      const randomNumber = Math.floor(Math.random() * 5) + 1
 
       this.addItem(id, randomNumber, cartId)
     })

@@ -18,7 +18,7 @@ export class CartPage {
     return this.itemLineLocator.count()
   }
 
-  async getName(position: number): Promise<String> {
+  async getName(position: number): Promise<string> {
     // we get text from the locator part "Item" of lineItem in basket (that has class .product-title)
 
     const itemName = await this.itemLineLocator

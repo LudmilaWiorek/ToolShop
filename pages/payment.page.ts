@@ -70,7 +70,7 @@ export class PaymentPage {
   }
 
   async validateBankName(bankName: string): Promise<void> {
-    const regexBankName = /^[A-Za-z\ ]+$/
+    const regexBankName = /^[A-Za-z ]+$/
     if (!regexBankName.test(bankName)) {
       throw 'Bank name can only contain letters and spaces.'
     }
@@ -140,7 +140,7 @@ export class PaymentPage {
         break
 
       default:
-        console.log('❌There is no such payment method')
+        // console.log('❌There is no such payment method')
         break
     }
   }
