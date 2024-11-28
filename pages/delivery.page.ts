@@ -36,7 +36,7 @@ export class DeliveryPage {
     country: 'Poland',
     postCode: '03-022',
   }
-  async confirmAddress(){
+  async confirmAddress() {
     await this.billingButton.click()
   }
 }
