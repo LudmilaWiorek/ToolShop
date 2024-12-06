@@ -4,11 +4,12 @@
   "main": "index.js",
   "scripts": {
     "format": "npx prettier --write .",
+    "lint": "npm run lint",
     "test": "npx playwright test",
     "test:headed": "npm run test -- --headed",
     "test:ui": "npm run test -- --ui",
     "show-report": "npx playwright show-report"
-  },
+  }, 
   "keywords": [],
   "author": "",
   "license": "ISC",

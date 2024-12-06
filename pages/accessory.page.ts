@@ -29,13 +29,13 @@ export class AccessoryPage {
     this.successButton = page.locator("//button[text()='Proceed to checkout']")
   }
 
-  async openCart() {
+  async openCart(): Promise<void> {
     await this.cartIcon.click()
   }
-  async confirmCart() {
+  async confirmCart(): Promise<void> {
     await this.successButton.click()
   }
-  async confirmLoginData() {
+  async confirmLoginData(): Promise<void> {
     await this.proceedButton.click()
   }
 }

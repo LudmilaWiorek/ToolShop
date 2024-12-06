@@ -1,7 +1,7 @@
 import { APIRequestContext } from '@playwright/test'
 
 export class ApiStore {
-  checkItemsInCart() {
+  checkItemsInCart(): Promise<void> {
     throw new Error('Method not implemented.')
   }
   readonly request: APIRequestContext

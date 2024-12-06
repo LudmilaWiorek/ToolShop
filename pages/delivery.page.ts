@@ -21,7 +21,7 @@ export class DeliveryPage {
     this.billingButton = page.locator('//button[@data-test="proceed-3"]')
   }
 
-  async fillDeliveryForm(address: BillingAddress) {
+  async fillDeliveryForm(address: BillingAddress): Promise<void> {
     await this.address.fill(address.address)
     await this.city.fill(address.city)
     await this.state.fill(address.state)
@@ -36,7 +36,7 @@ export class DeliveryPage {
     country: 'Poland',
     postCode: '03-022',
   }
-  async confirmAddress() {
+  async confirmAddress(): Promise<void> {
     await this.billingButton.click()
   }
 }

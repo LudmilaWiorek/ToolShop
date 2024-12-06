@@ -28,7 +28,7 @@ export class ToolsPage {
     this.decreaseButton = page.locator('#btn-decrease-quantity')
   }
 
-  async addToCart(arrayProducts: LineItem[]) {
+  async addToCart(arrayProducts: LineItem[]): Promise<void> {
     await this.addToCartButton.click()
     const dataProduct: LineItem = {
       name: await this.name.innerText(),
@@ -47,23 +47,23 @@ export class ToolsPage {
     return sumOfProducts
   }
 
-  async chooseItem(itemName: string) {
+  async chooseItem(itemName: string): Promise<void> {
     const dynamicItemName = this.page.locator(`//*[text()="${itemName}"]`)
     await dynamicItemName.click()
   }
 
-  async increaseItemCount() {
+  async increaseItemCount(): Promise<void> {
     await this.increaseButton.click()
   }
 
-  async decreaseItemCount() {
+  async decreaseItemCount(): Promise<void> {
     await this.decreaseButton.click()
   }
 
-  async changeItemAmount(amount: number) {
+  async changeItemAmount(amount: number): Promise<void> {
     await this.quantity.fill(`${amount}`)
   }
-  async search(itemName: string) {
+  async search(itemName: string): Promise<void> {
     await this.searchInput.fill(itemName)
     await this.searchInput.press('Enter')
   }

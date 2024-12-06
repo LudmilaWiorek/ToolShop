@@ -19,13 +19,13 @@ export class LoginPage {
     this.errorMessage = page.locator('.help-block')
     this.myAccountTitle = page.locator('[data-test="page-title"]')
   }
-  async goToPage() {
+  async goToPage(): Promise<void> {
     await this.page.goto('/')
   }
-  async signIn() {
+  async signIn(): Promise<void> {
     await this.signInIcon.click()
   }
-  async login(dataTestEmail: string, dataTestPassword: string) {
+  async login(dataTestEmail: string, dataTestPassword: string): Promise<void> {
     await this.signInIcon.click()
 
     await this.dataTestEmail.fill(dataTestEmail)

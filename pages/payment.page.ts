@@ -76,10 +76,10 @@ export class PaymentPage {
     }
   }
 
-  async chooseCashOnDelivery() {}
+  async chooseCashOnDelivery(): Promise<void> {}
   // ? no form to fill
 
-  async fillCreditCardData(cardData: CreditCardModel) {
+  async fillCreditCardData(cardData: CreditCardModel): Promise<void> {
     await this.creditCardNumber.fill(cardData.creditCardNumber)
     await this.expirationDate.fill(cardData.expirationDate)
     await this.cvvCode.fill(cardData.CVV)
@@ -92,7 +92,7 @@ export class PaymentPage {
     await this.monthlyInstallments.selectOption(chooseInstallment.installment)
   }
 
-  async fillGiftCard(giftCardData: GiftCardModel) {
+  async fillGiftCard(giftCardData: GiftCardModel): Promise<void> {
     await this.giftCardNumber.fill(giftCardData.giftCardNumber)
     await this.validationCode.fill(giftCardData.validationCode)
   }
@@ -101,7 +101,7 @@ export class PaymentPage {
     await this.confirmButton.click()
   }
   // main switch payment function
-  async fillPaymentForm(paymentObject: PaymentModel) {
+  async fillPaymentForm(paymentObject: PaymentModel): Promise<void> {
     await this.choosePaymentMethod(paymentObject)
     switch (paymentObject.method) {
       case 'Bank Transfer':
