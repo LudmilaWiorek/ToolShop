@@ -1,6 +1,6 @@
-import { fixtures as test, expect } from '../fixtures/fixtures.fixture'
-import { ApiStore } from '../pages/apiClass.page'
+import { expect, fixtures as test } from '../fixtures/fixtures.fixture'
 import { PaymentModel } from '../models/payment.model'
+import { ApiStore } from '../pages/apiClass.page'
 
 test.describe.parallel('testing payment module', async () => {
   let apiClass: ApiStore

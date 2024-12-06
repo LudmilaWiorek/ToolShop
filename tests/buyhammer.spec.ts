@@ -1,6 +1,6 @@
+import { expect, fixtures as test } from '../fixtures/fixtures.fixture'
 import { LineItem } from '../models/lineItem.model'
 import { PaymentModel } from '../models/payment.model'
-import { fixtures as test, expect } from '../fixtures/fixtures.fixture'
 
 // fixture is a test object
 test.describe.parallel('end to end tests', () => {

@@ -1,11 +1,5 @@
 import { defineConfig, devices } from '@playwright/test'
 
-require('dotenv').config()
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-
 export default defineConfig({
   testDir: './tests',
   timeout: 60_000,
@@ -24,7 +18,6 @@ export default defineConfig({
     },
   },
 
-  /* Configure projects for major browsers */
   projects: [
     {
       name: 'chromium',
