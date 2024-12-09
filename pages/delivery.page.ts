@@ -1,5 +1,5 @@
-import { Locator, Page } from '@playwright/test'
 import { BillingAddress } from '../models/billingAddress.model'
+import { Locator, Page } from '@playwright/test'
 
 export class DeliveryPage {
   readonly page: Page

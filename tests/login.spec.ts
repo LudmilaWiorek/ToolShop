@@ -1,6 +1,6 @@
-import { test, expect } from '@playwright/test'
-import { LoginPage } from '../pages/login.page'
 import * as users from '../JSONS/users.json'
+import { LoginPage } from '../pages/login.page'
+import { expect, test } from '@playwright/test'
 
 test.describe('login section tests', () => {
   let loginPage: LoginPage

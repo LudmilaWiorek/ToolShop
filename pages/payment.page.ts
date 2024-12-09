@@ -1,4 +1,3 @@
-import { Locator, Page } from '@playwright/test'
 import {
   BankTransferModel,
   BuyNowPayLaterModel,
@@ -6,6 +5,7 @@ import {
   GiftCardModel,
   PaymentModel,
 } from '../models/payment.model'
+import { Locator, Page } from '@playwright/test'
 
 export class PaymentPage {
   readonly page: Page

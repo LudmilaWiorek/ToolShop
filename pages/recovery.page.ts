@@ -1,5 +1,5 @@
-import { Page, Locator } from '@playwright/test'
 import * as users from '../JSONS/users.json'
+import { Locator, Page } from '@playwright/test'
 
 export class RecoveryPage {
   readonly page: Page

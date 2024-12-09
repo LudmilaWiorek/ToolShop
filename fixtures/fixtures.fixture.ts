@@ -1,12 +1,12 @@
-import { test as baseTest } from '@playwright/test'
-import { LoginPage } from '../pages/login.page'
-import { ToolsPage } from '../pages/tools.page'
-import { DeliveryPage } from '../pages/delivery.page'
+import * as users from '../JSONS/users.json'
 import { AccessoryPage } from '../pages/accessory.page'
 import { CartPage } from '../pages/cart.page'
+import { DeliveryPage } from '../pages/delivery.page'
+import { LoginPage } from '../pages/login.page'
 import { PaymentPage } from '../pages/payment.page'
-import * as users from '../JSONS/users.json'
 import { RecoveryPage } from '../pages/recovery.page'
+import { ToolsPage } from '../pages/tools.page'
+import { test as baseTest } from '@playwright/test'
 
 interface MyFixtures {
   loginPage: LoginPage
@@ -25,6 +25,7 @@ export const fixtures = baseTest.extend<MyFixtures>({
     const dataEmail = users.userdata[0].email
     const dataPass = users.userdata[0].password
     await loginPage.login(dataEmail, dataPass)
+    await page.waitForTimeout(1000)
     await page.waitForLoadState()
     await use(loginPage) // returns loginPage
   },
