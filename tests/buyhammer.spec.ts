@@ -5,8 +5,11 @@ import { PaymentModel } from '../models/payment.model'
 // fixture is a test object
 test.describe.parallel('end to end tests', () => {
   test.beforeEach('login with correct credentials', async ({ loginPage }) => {
-    const textMyAccount = 'My account'
-    await expect(loginPage.myAccountTitle).toContainText(textMyAccount)
+    const arrayUrl = await loginPage.page.url().split('/')
+    const lastArrayElement = await arrayUrl[arrayUrl.length - 1]
+    if (lastArrayElement !== 'account') {
+      throw 'login failed'
+    }
     await loginPage.goToPage()
   })
 
@@ -26,11 +29,8 @@ test.describe.parallel('end to end tests', () => {
     const arrayProducts: LineItem[] = []
 
     // Act
-    // we search for some hammer
     await toolsPage.search('Hammer')
-    // click classic claw hammer
     await toolsPage.chooseItem(clawHammerString)
-    // add it to cart
     await toolsPage.addToCart(arrayProducts)
     await page.waitForTimeout(3000)
 
@@ -44,7 +44,7 @@ test.describe.parallel('end to end tests', () => {
     )
 
     // Act
-    // click on Thor Hammer in related products
+    // click on Thor Hammer in related products section
     await toolsPage.chooseItem(thorHammerString)
     await accessoryPage.thorHammer.waitFor()
 
@@ -52,13 +52,12 @@ test.describe.parallel('end to end tests', () => {
     await page.waitForTimeout(3000)
     // must be 3 sec, with 2 seconds delay test fails!
 
-    // we increase quantity of thor hammers
+    // we increase quantity of thor hammers - function commented because there is only one thor hammer right now
     // await toolsPage.increaseItemCount()
-    // add it to cart
+    // add the hammer to cart
     await toolsPage.addToCart(arrayProducts)
     virtualBasketCount = await toolsPage.getItemAmountInArrayCart(arrayProducts)
     // Assert
-    // await expect(accessoryPage.productAddedMessage).toBeVisible()
     await expect(accessoryPage.cartCount).toHaveText(
       virtualBasketCount.toString(),
     )
@@ -66,14 +65,13 @@ test.describe.parallel('end to end tests', () => {
     // Act
     await accessoryPage.logoToolShop.click()
     await page.waitForLoadState()
-    // in search input let's write "saw"
     await toolsPage.search('Saw')
     await accessoryPage.saw.waitFor()
-    // click on circular saw
     await accessoryPage.saw.click()
     await toolsPage.changeItemAmount(5)
     await toolsPage.addToCart(arrayProducts)
     virtualBasketCount = await toolsPage.getItemAmountInArrayCart(arrayProducts)
+
     // Assert
     await expect(accessoryPage.productAddedMessage).toBeVisible()
     await expect(accessoryPage.cartCount).toHaveText(
