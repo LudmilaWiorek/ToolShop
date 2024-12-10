@@ -1,3 +1,4 @@
+import { RegistrationModel } from '../models/registration.model'
 import { Locator, Page } from '@playwright/test'
 
 export class RegistrationPage {
@@ -33,21 +34,21 @@ export class RegistrationPage {
     this.password = page.locator('[data-test="password"]')
     this.registerButton = page.locator('[data-test="register-submit"]')
   }
-
-  async registerUser(): Promise<void> {
-    await this.registerLink.click()
-    await this.firstNameInput.fill('Tom')
-    await this.lastNameInput.fill('Riddle')
-    await this.dateOfBirth.fill('2000-01-01')
-    await this.addressInput.fill('Elm street 14')
-    await this.postCode.fill('10-100')
-    await this.city.fill('City')
-    await this.state.fill('State')
-    await this.country.selectOption('US')
-    await this.phone.fill('123456789')
-    await this.email.fill('TomRiddle22345556@test.com')
-    await this.password.fill('NightmareOfTheElmStreet12#')
+  async goToRegPage(): Promise<void> {
+    await this.page.goto('/auth/register')
+  }
+  async registerUser(user: RegistrationModel): Promise<void> {
+    await this.firstNameInput.fill(user.firstName)
+    await this.lastNameInput.fill(user.lastName)
+    await this.dateOfBirth.fill(user.dateOfBirth)
+    await this.addressInput.fill(user.address)
+    await this.postCode.fill(user.postCode)
+    await this.city.fill(user.city)
+    await this.state.fill(user.state)
+    await this.country.selectOption(user.country)
+    await this.phone.fill(user.phone)
+    await this.email.fill(user.email)
+    await this.password.fill(user.password)
     await this.registerButton.click()
   }
 }
-

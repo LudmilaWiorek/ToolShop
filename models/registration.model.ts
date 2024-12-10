@@ -1,8 +1,8 @@
 export interface RegistrationModel {
-  firstNameInput: string
-  lastNameInput: string
+  firstName: string
+  lastName: string
   dateOfBirth: string
-  addressInput: string
+  address: string
   postCode: string
   city: string
   state: string
