@@ -1,12 +1,13 @@
 import { RegistrationModel } from '../models/registration.model'
-import { ApiStore } from '../pages/apiClass.page'
+import { ApiUser } from '../pages/apiUser.page'
 import { RegistrationPage } from '../pages/registration.page'
+import { faker } from '@faker-js/faker'
 import { expect, test } from '@playwright/test'
 
 test.describe('registration tests', () => {
   test('new registration test', async ({ page, request }) => {
     const registrationPage = new RegistrationPage(page)
-    const apiStore = new ApiStore(request)
+    const apiUser = new ApiUser(request)
 
     const registerUser: RegistrationModel = {
       firstName: 'Tom',
@@ -18,7 +19,7 @@ test.describe('registration tests', () => {
       state: 'Chicago',
       country: 'US',
       phone: '123456789',
-      email: 'TomRiddleee2233345556@test.com',
+      email: faker.internet.email(),
       password: 'NightmareOfTheElmStreet12#',
     }
     await registrationPage.goToRegPage()
@@ -27,10 +28,14 @@ test.describe('registration tests', () => {
       'https://practicesoftwaretesting.com/auth/login',
     )
 
-    const token = await apiStore.loginUser(
+    const token = await apiUser.loginUser(
       registerUser.email,
       registerUser.password,
     )
+
     console.log(token)
+    const apiUserId = await apiUser.getId()
+    console.log('api user', apiUserId)
+    const deleteUser = await apiUser.deleteUser(apiUserId)
   })
 })
