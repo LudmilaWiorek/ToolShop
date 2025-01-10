@@ -33,9 +33,7 @@ test.describe('registration tests', () => {
       registerUser.password,
     )
 
-    console.log(token)
     const apiUserId = await apiUser.getId()
-    console.log('api user', apiUserId)
     const deleteUser = await apiUser.deleteUser(apiUserId)
   })
 })

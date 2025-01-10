@@ -2,7 +2,6 @@ import { expect, fixtures as test } from '../fixtures/fixtures.fixture'
 import { LineItem } from '../models/lineItem.model'
 import { PaymentModel } from '../models/payment.model'
 
-// fixture is a test object
 test.describe.parallel('end to end tests', () => {
   test.beforeEach('login with correct credentials', async ({ loginPage }) => {
     const arrayUrl = await loginPage.page.url().split('/')
@@ -13,7 +12,7 @@ test.describe.parallel('end to end tests', () => {
     await loginPage.goToPage()
   })
 
-  test('first end to end test', async ({
+  test('purchasing test', async ({
     toolsPage,
     deliveryPage,
     accessoryPage,
@@ -21,48 +20,44 @@ test.describe.parallel('end to end tests', () => {
     paymentPage,
     page,
   }) => {
-    // Arrange
     const thorHammerString = ' Thor Hammer '
     const clawHammerString = ' Claw Hammer '
 
     // create array of products, but push to array is included in addToCart method in toolsPage
     const arrayProducts: LineItem[] = []
 
-    // Act
     await toolsPage.search('Hammer')
     await toolsPage.chooseItem(clawHammerString)
+    await page.waitForTimeout(3000)
+    await toolsPage.increaseItemCount()
     await toolsPage.addToCart(arrayProducts)
     await page.waitForTimeout(3000)
 
     let virtualBasketCount =
       await toolsPage.getItemAmountInArrayCart(arrayProducts)
 
-    // Assert
     await expect(accessoryPage.productAddedMessage).toBeVisible()
     await expect(accessoryPage.cartCount).toHaveText(
       virtualBasketCount.toString(),
     )
 
-    // Act
-    // click on Thor Hammer in related products section
     await toolsPage.chooseItem(thorHammerString)
     await accessoryPage.thorHammer.waitFor()
+
+    await expect(toolsPage.quantity).toHaveValue('2')
 
     await accessoryPage.thorHammer.click()
     await page.waitForTimeout(3000)
     // must be 3 sec, with 2 seconds delay test fails!
 
-    // we increase quantity of thor hammers - function commented because there is only one thor hammer right now
-    // await toolsPage.increaseItemCount()
-    // add the hammer to cart
+    await toolsPage.decreaseItemCount()
     await toolsPage.addToCart(arrayProducts)
     virtualBasketCount = await toolsPage.getItemAmountInArrayCart(arrayProducts)
-    // Assert
+
     await expect(accessoryPage.cartCount).toHaveText(
       virtualBasketCount.toString(),
     )
 
-    // Act
     await accessoryPage.logoToolShop.click()
     await page.waitForLoadState()
     await toolsPage.search('Saw')
@@ -72,7 +67,6 @@ test.describe.parallel('end to end tests', () => {
     await toolsPage.addToCart(arrayProducts)
     virtualBasketCount = await toolsPage.getItemAmountInArrayCart(arrayProducts)
 
-    // Assert
     await expect(accessoryPage.productAddedMessage).toBeVisible()
     await expect(accessoryPage.cartCount).toHaveText(
       virtualBasketCount.toString(),
@@ -116,7 +110,6 @@ test.describe.parallel('end to end tests', () => {
     const cartTotal = await cartPage.getCartTotal()
     await expect(cartTotal).toEqual(calculatedSum)
 
-    //Assert
     await expect(totalSumInCart).toEqual(String(sumTotal))
     await expect(lineItemLocators).toHaveCount(3)
 
@@ -180,7 +173,5 @@ test.describe.parallel('end to end tests', () => {
     await expect(paymentPage.orderSuccessfulMessage).toContainText(
       'Thanks for your order! Your invoice number is INV',
     )
-
-    // console.log('💙\x1b[34m', '~~ End-To-End Test Finished ~~') //blue console.log :)
   })
 })

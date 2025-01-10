@@ -14,7 +14,7 @@ export default defineConfig({
     baseURL: 'https://practicesoftwaretesting.com/',
     trace: 'on',
     launchOptions: {
-      // slowMo: 5000, // UWAGA NA SLOWMO
+      // slowMo: 2000, // UWAGA NA SLOWMO
     },
   },
 

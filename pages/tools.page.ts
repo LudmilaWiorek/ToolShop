@@ -43,7 +43,6 @@ export class ToolsPage {
     for (let i = 0; i < arrayProducts.length; i++) {
       sumOfProducts += arrayProducts[i].quantity
     }
-
     return sumOfProducts
   }
 
@@ -63,6 +62,7 @@ export class ToolsPage {
   async changeItemAmount(amount: number): Promise<void> {
     await this.quantity.fill(`${amount}`)
   }
+
   async search(itemName: string): Promise<void> {
     await this.searchInput.fill(itemName)
     await this.searchInput.press('Enter')
