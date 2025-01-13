@@ -28,10 +28,8 @@ test.describe.parallel('end to end tests', () => {
 
     await toolsPage.search('Hammer')
     await toolsPage.chooseItem(clawHammerString)
-    await page.waitForTimeout(3000)
     await toolsPage.increaseItemCount()
     await toolsPage.addToCart(arrayProducts)
-    await page.waitForTimeout(3000)
 
     let virtualBasketCount =
       await toolsPage.getItemAmountInArrayCart(arrayProducts)

@@ -29,7 +29,7 @@ export class ToolsPage {
   }
 
   async addToCart(arrayProducts: LineItem[]): Promise<void> {
-    await this.addToCartButton.click()
+    await this.addToCartButton.click({ timeout: 3000 })
     const dataProduct: LineItem = {
       name: await this.name.innerText(),
       quantity: Number.parseInt(await this.quantity.inputValue()),
@@ -48,7 +48,7 @@ export class ToolsPage {
 
   async chooseItem(itemName: string): Promise<void> {
     const dynamicItemName = this.page.locator(`//*[text()="${itemName}"]`)
-    await dynamicItemName.click()
+    await dynamicItemName.click({ timeout: 3000 })
   }
 
   async increaseItemCount(): Promise<void> {
