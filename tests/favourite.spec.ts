@@ -17,6 +17,10 @@ test.describe('testing favorite module', () => {
   test('positive - add to favorite section', async ({ page }) => {
     favoritePage = new FavoritePage(page)
     accessoryPage = new AccessoryPage(page)
+
+    const slipJointPliersName = 'Slip Joint Pliers'
+    const itemAddedToFavorite = 'Product added to your favorites list.'
+
     await favoritePage.mainMenu.click()
     await favoritePage.dropdownItemFavorite.click()
     await expect(favoritePage.favoriteTitle).toBeVisible()
@@ -27,10 +31,13 @@ test.describe('testing favorite module', () => {
     await favoritePage.addToFavoritesButton.click()
     await favoritePage.mainMenu.click()
     await favoritePage.dropdownItemFavorite.click()
-    await expect(favoritePage.favoriteTitle).toBeVisible()
 
+    await expect(favoritePage.favoriteTitle).toBeVisible()
+    await expect(favoritePage.messageFavoriteItemAdded).toHaveText(
+      itemAddedToFavorite,
+    )
     await expect(favoritePage.itemAddedToFavoriteSection).toHaveText(
-      'Slip Joint Pliers',
+      slipJointPliersName,
     )
   })
 })
