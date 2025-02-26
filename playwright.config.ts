@@ -3,7 +3,6 @@ import { defineConfig, devices } from '@playwright/test'
 export default defineConfig({
   testDir: './tests',
   timeout: 60_000,
-  // expect: { timeout: 30_000 },
   expect: { toPass: { timeout: 1000 } },
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
@@ -13,9 +12,7 @@ export default defineConfig({
   use: {
     baseURL: 'https://practicesoftwaretesting.com/',
     trace: 'on',
-    launchOptions: {
-      // slowMo: 2000, // UWAGA NA SLOWMO
-    },
+    launchOptions: {},
   },
 
   projects: [
