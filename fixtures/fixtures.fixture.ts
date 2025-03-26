@@ -10,17 +10,29 @@ import { ToolsPage } from '../pages/tools.page'
 import { test as baseTest } from '@playwright/test'
 
 interface MyFixtures {
-  loginPage: LoginPage
-  toolsPage: ToolsPage
-  deliveryPage: DeliveryPage
   accessoryPage: AccessoryPage
   cartPage: CartPage
+  deliveryPage: DeliveryPage
+  loginPage: LoginPage
   paymentPage: PaymentPage
   recoveryPage: RecoveryPage
   registrationPage: RegistrationPage
+  toolsPage: ToolsPage
 }
 
 export const fixtures = baseTest.extend<MyFixtures>({
+  accessoryPage: async ({ page }, use) => {
+    const accessoryPage = new AccessoryPage(page)
+    await use(accessoryPage)
+  },
+  cartPage: async ({ page }, use) => {
+    const cartPage = new CartPage(page)
+    await use(cartPage)
+  },
+  deliveryPage: async ({ page }, use) => {
+    const deliveryPage = new DeliveryPage(page)
+    await use(deliveryPage)
+  },
   loginPage: async ({ page }, use) => {
     const loginPage = new LoginPage(page)
     await loginPage.goToPage()
@@ -31,22 +43,7 @@ export const fixtures = baseTest.extend<MyFixtures>({
     await page.waitForLoadState()
     await use(loginPage) // returns loginPage
   },
-  toolsPage: async ({ page }, use) => {
-    const toolsPage = new ToolsPage(page)
-    await use(toolsPage)
-  },
-  deliveryPage: async ({ page }, use) => {
-    const deliveryPage = new DeliveryPage(page)
-    await use(deliveryPage)
-  },
-  accessoryPage: async ({ page }, use) => {
-    const accessoryPage = new AccessoryPage(page)
-    await use(accessoryPage)
-  },
-  cartPage: async ({ page }, use) => {
-    const cartPage = new CartPage(page)
-    await use(cartPage)
-  },
+
   paymentPage: async ({ page }, use) => {
     const paymentPage = new PaymentPage(page)
     await use(paymentPage)
@@ -58,6 +55,10 @@ export const fixtures = baseTest.extend<MyFixtures>({
   registrationPage: async ({ page }, use) => {
     const registrationPage = new RegistrationPage(page)
     await use(registrationPage)
+  },
+  toolsPage: async ({ page }, use) => {
+    const toolsPage = new ToolsPage(page)
+    await use(toolsPage)
   },
 })
 
