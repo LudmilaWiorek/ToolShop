@@ -1,12 +1,10 @@
+import { expect, fixtures as test } from '../fixtures/fixtures.fixture'
 import { RegistrationModel } from '../models/registration.model'
 import { ApiUser } from '../pages/apiUser.page'
-import { RegistrationPage } from '../pages/registration.page'
 import { faker } from '@faker-js/faker'
-import { expect, test } from '@playwright/test'
 
 test.describe('registration tests', () => {
-  test('new registration test', async ({ page, request }) => {
-    const registrationPage = new RegistrationPage(page)
+  test('new registration test', async ({ page, registrationPage, request }) => {
     const apiUser = new ApiUser(request)
 
     const registerUser: RegistrationModel = {

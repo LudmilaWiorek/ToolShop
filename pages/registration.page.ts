@@ -8,7 +8,7 @@ export class RegistrationPage {
   readonly firstNameInput: Locator
   readonly lastNameInput: Locator
   readonly dateOfBirth: Locator
-  readonly addressInput: Locator
+  readonly streetInput: Locator
   readonly postCode: Locator
   readonly city: Locator
   readonly state: Locator
@@ -24,9 +24,9 @@ export class RegistrationPage {
     this.firstNameInput = page.locator('[data-test="first-name"]')
     this.lastNameInput = page.locator('[data-test="last-name"]')
     this.dateOfBirth = page.locator('[data-test="dob"]')
-    this.addressInput = page.locator('[data-test="address"]')
-    this.postCode = page.locator('[data-test="postcode"]')
-    this.city = page.locator('[data-test="city"]')
+    this.streetInput = page.locator('#street')
+    this.postCode = page.locator('#postal_code')
+    this.city = page.locator('#city')
     this.state = page.locator('[data-test="state"]')
     this.country = page.locator('[data-test="country"]')
     this.phone = page.locator('[data-test="phone"]')
@@ -41,7 +41,7 @@ export class RegistrationPage {
     await this.firstNameInput.fill(user.firstName)
     await this.lastNameInput.fill(user.lastName)
     await this.dateOfBirth.fill(user.dateOfBirth)
-    await this.addressInput.fill(user.address)
+    await this.streetInput.fill(user.address)
     await this.postCode.fill(user.postCode)
     await this.city.fill(user.city)
     await this.state.fill(user.state)
