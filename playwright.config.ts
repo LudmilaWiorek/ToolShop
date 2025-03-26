@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test'
 
 export default defineConfig({
   testDir: './tests',
-  timeout: 60_000,
+  timeout: 20_000,
   // expect: { timeout: 30_000 },
   expect: { toPass: { timeout: 1000 } },
   fullyParallel: true,
@@ -16,6 +16,7 @@ export default defineConfig({
     launchOptions: {
       // slowMo: 2000, // UWAGA NA SLOWMO
     },
+    // headless: false,
   },
 
   projects: [
