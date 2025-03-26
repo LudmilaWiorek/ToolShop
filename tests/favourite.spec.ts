@@ -1,11 +1,6 @@
-import { fixtures as test } from '../fixtures/fixtures.fixture'
-import { AccessoryPage } from '../pages/accessory.page'
-import { FavoritePage } from '../pages/favorite.page'
-import { expect } from '@playwright/test'
+import { expect, fixtures as test } from '../fixtures/fixtures.fixture'
 
 test.describe('testing favorite module', () => {
-  let favoritePage: FavoritePage
-  let accessoryPage: AccessoryPage
   test.beforeEach('login with correct credentials', async ({ loginPage }) => {
     const arrayUrl = await loginPage.page.url().split('/')
     const lastArrayElement = await arrayUrl[arrayUrl.length - 1]
@@ -14,10 +9,10 @@ test.describe('testing favorite module', () => {
     }
     await loginPage.goToPage()
   })
-  test('positive - add to favorite section', async ({ page }) => {
-    favoritePage = new FavoritePage(page)
-    accessoryPage = new AccessoryPage(page)
-
+  test('positive - add to favorite section', async ({
+    accessoryPage,
+    favoritePage: favoritePage,
+  }) => {
     const slipJointPliersName = 'Slip Joint Pliers'
     const itemAddedToFavorite = 'Product added to your favorites list.'
 

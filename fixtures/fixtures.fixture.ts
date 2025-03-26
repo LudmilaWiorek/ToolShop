@@ -2,6 +2,7 @@ import * as users from '../JSONS/users.json'
 import { AccessoryPage } from '../pages/accessory.page'
 import { CartPage } from '../pages/cart.page'
 import { DeliveryPage } from '../pages/delivery.page'
+import { FavoritePage } from '../pages/favorite.page'
 import { LoginPage } from '../pages/login.page'
 import { PaymentPage } from '../pages/payment.page'
 import { RecoveryPage } from '../pages/recovery.page'
@@ -13,6 +14,7 @@ interface MyFixtures {
   accessoryPage: AccessoryPage
   cartPage: CartPage
   deliveryPage: DeliveryPage
+  favoritePage: FavoritePage
   loginPage: LoginPage
   paymentPage: PaymentPage
   recoveryPage: RecoveryPage
@@ -33,6 +35,10 @@ export const fixtures = baseTest.extend<MyFixtures>({
     const deliveryPage = new DeliveryPage(page)
     await use(deliveryPage)
   },
+  favoritePage: async ({ page }, use) => {
+    const favouritePage = new FavoritePage(page)
+    await use(favouritePage)
+  },
   loginPage: async ({ page }, use) => {
     const loginPage = new LoginPage(page)
     await loginPage.goToPage()
@@ -41,9 +47,8 @@ export const fixtures = baseTest.extend<MyFixtures>({
     await loginPage.login(dataEmail, dataPass)
     await page.waitForTimeout(1000)
     await page.waitForLoadState()
-    await use(loginPage) // returns loginPage
+    await use(loginPage)
   },
-
   paymentPage: async ({ page }, use) => {
     const paymentPage = new PaymentPage(page)
     await use(paymentPage)
