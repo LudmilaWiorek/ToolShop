@@ -14,7 +14,6 @@ export class ApiStore {
     return responseJson.id
   }
 
-
   async addItem(
     product_id: string,
     quantity: number,
@@ -60,11 +59,16 @@ export class ApiStore {
     // add some product to cart
     const idProducts = await this.getXItems(countItems)
 
-    await idProducts.forEach((id) => {
-      const randomNumber = Math.floor(Math.random() * 5) + 1
+    // await idProducts.forEach((id) => {
+    //   const randomNumber = Math.floor(Math.random() * 5) + 1
 
-      this.addItem(id, randomNumber, cartId)
-    })
+    //   this.addItem(id, randomNumber, cartId)
+
+    // })
+    for (const id of idProducts) {
+      const randomNumber = Math.floor(Math.random() * 5) + 1
+      await this.addItem(id, randomNumber, cartId)
+    }
     return cartId
   }
 }
