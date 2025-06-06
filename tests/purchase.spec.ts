@@ -143,7 +143,7 @@ test.describe.parallel('end to end tests', () => {
 
     //                  ~~ DELIVERY FORM ~~
     // we need to fill delivery form and we overwrite built-in data
-    await page.waitForTimeout(2000) // timeout is needed so we can overwrite predefined address
+    await page.waitForTimeout(6000) // timeout is needed so we can overwrite predefined address
     await deliveryPage.fillDeliveryForm(deliveryPage.billingAddress)
     await deliveryPage.confirmAddress()
 
@@ -155,7 +155,7 @@ test.describe.parallel('end to end tests', () => {
       method: 'Credit Card',
       creditCardModel: {
         creditCardNumber: '1111-2222-3333-4444',
-        expirationDate: '02/2025',
+        expirationDate: '10/2025',
         CVV: '123',
         cardHolderName: 'V',
       },

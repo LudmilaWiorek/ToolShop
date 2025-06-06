@@ -4,7 +4,7 @@ import { Locator, Page } from '@playwright/test'
 export class DeliveryPage {
   readonly page: Page
 
-  readonly address: Locator
+  readonly street: Locator
   readonly city: Locator
   readonly state: Locator
   readonly country: Locator
@@ -13,16 +13,17 @@ export class DeliveryPage {
 
   constructor(page: Page) {
     this.page = page
-    this.address = page.locator('#address')
+    // this.address = page.locator('#address')
+    this.street = page.locator('#street')
     this.city = page.locator('#city')
     this.state = page.locator('#state')
     this.country = page.locator('#country')
-    this.postCode = page.locator('#postcode')
+    this.postCode = page.locator('#postal_code')
     this.billingButton = page.locator('//button[@data-test="proceed-3"]')
   }
 
   async fillDeliveryForm(address: BillingAddress): Promise<void> {
-    await this.address.fill(address.address)
+    await this.street.fill(address.street)
     await this.city.fill(address.city)
     await this.state.fill(address.state)
     await this.country.fill(address.country)
@@ -30,7 +31,7 @@ export class DeliveryPage {
   }
 
   billingAddress: BillingAddress = {
-    address: 'Sezamkowa 3/30',
+    street: 'Sezamkowa 3/30',
     city: 'Warsaw',
     state: 'mazowieckie',
     country: 'Poland',
