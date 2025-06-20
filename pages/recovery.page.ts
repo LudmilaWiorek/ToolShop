@@ -17,7 +17,7 @@ export class RecoveryPage {
   }
 
   async recoverPassword(): Promise<void> {
-    const dataEmail = users.userdata[0].email
+    const dataEmail = users.userdata.user[0].email
     await this.forgetPasswordLink.click()
     await this.emailInput.fill(dataEmail)
   }

@@ -1,14 +1,23 @@
 {
-  "userdata": [
-    {
-      "user": "JackHowe",
-      "email": "customer2@practicesoftwaretesting.com",
-      "password": "welcome01"
-    },
-    {
-      "user": "JaneDoe",
-      "email": "customer@practicesoftwaretesting.com",
-      "password": "welcome01"
-    }
-  ]
+  "userdata": {
+    "user": [
+      {
+        "user": "JackHowe",
+        "email": "customer2@practicesoftwaretesting.com",
+        "password": "welcome01"
+      },
+      {
+        "user": "JaneDoe",
+        "email": "customer@practicesoftwaretesting.com",
+        "password": "welcome01"
+      }
+    ],
+    "admin": [
+      {
+        "user": "JohnDoe",
+        "email": "admin@practicesoftwaretesting.com",
+        "password": "welcome01"
+      }
+    ]
+  }
 }

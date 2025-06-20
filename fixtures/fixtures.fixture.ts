@@ -42,8 +42,8 @@ export const fixtures = baseTest.extend<MyFixtures>({
   loginPage: async ({ page }, use) => {
     const loginPage = new LoginPage(page)
     await loginPage.goToPage()
-    const dataEmail = users.userdata[0].email
-    const dataPass = users.userdata[0].password
+    const dataEmail = users.userdata.user[1].email
+    const dataPass = users.userdata.user[1].password
     await loginPage.login(dataEmail, dataPass)
     await page.waitForTimeout(1000)
     await page.waitForLoadState()
