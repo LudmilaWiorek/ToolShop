@@ -9,50 +9,60 @@ test.describe('login section tests', () => {
     await loginPage.goToPage()
   })
   //positive scenarios
-  // documentation of test cases this case was titled "valid email with a lowercase letter;
 
-  test('login with correct credentials', async ({ page }) => {
-    const dataEmail = users.userdata[0].email
-    const dataPass = users.userdata[0].password
-    const pageTitle = page.locator('[data-test="page-title"]')
-    const textMyAccount = 'My account'
+  test('login user with correct credentials', async () => {
+    const dataEmail = users.userdata.user[0].email
+    const dataPass = users.userdata.user[0].password
+    const pageHeader = loginPage.pageHeader
+    const textHeader = 'My account'
+    const textTitle = 'Overview'
 
     await loginPage.login(dataEmail, dataPass)
-    await page.waitForLoadState()
-    await expect(pageTitle).toContainText(textMyAccount)
+    await loginPage.page.waitForLoadState()
+    await expect(pageHeader).toContainText(textHeader)
+    await expect(await loginPage.page.title()).toContain(textTitle)
   })
-  // I changed for "uppercase" due to valid account details provided in Github repository of practicesoftwaretesting
-  // we agreed that this test case is strong "depends", I decided to include it here anyway
-  test('login with correct credentials - valid email started with a uppercase letter', async ({
-    page,
-  }) => {
+
+  test('login admin with correct credentials', async () => {
+    const dataEmail = users.userdata.admin[0].email
+    const dataPass = users.userdata.admin[0].password
+    const pageHeader = loginPage.pageHeader
+    const textHeader = 'Sales over the years'
+    const textTitle = 'Dashboard'
+
+    await loginPage.login(dataEmail, dataPass)
+    await loginPage.page.waitForLoadState()
+    await expect(pageHeader).toContainText(textHeader)
+    await expect(await loginPage.page.title()).toContain(textTitle)
+  })
+  test('login  user with correct credentials - valid email started with a uppercase letter', async () => {
     const dataEmail = 'Customer2@practicesoftwaretesting.com'
-    const dataPass = users.userdata[0].password
-    const pageTitle = page.locator('[data-test="page-title"]')
-    const textMyAccount = 'My account'
+    const dataPass = users.userdata.user[0].password
+    const pageHeader = loginPage.pageHeader
+    const textHeader = 'My account'
 
     await loginPage.login(dataEmail, dataPass)
 
-    await expect(pageTitle).toContainText(textMyAccount)
+    await expect(pageHeader).toContainText(textHeader)
   })
   //negative scenarios
 
-  test('unsuccessful login with incorrect email', async ({ page }) => {
-    const dataEmail = 'CustomerXXX@practicesoftwaretesting.com'
-    const dataPass = users.userdata[0].password
-    const errorEmailOrPassword = page.locator('.help-block')
-    const textInvalidData = 'Invalid email or password'
+  test('unsuccessful user login with incorrect email', async () => {
+    const dataEmail = 'customerXXX@practicesoftwaretesting.com'
+    const dataPass = users.userdata.user[0].password
+    const errorEmailOrPassword = loginPage.errorMessage
+    const textInvalidData = loginPage.textInvalidData
 
     await loginPage.login(dataEmail, dataPass)
 
     await expect(errorEmailOrPassword).toHaveText(textInvalidData)
   })
 
-  test('unsuccessful login with incorrect password', async ({ page }) => {
-    const dataEmail = 'Customer2@practicesoftwaretesting.com'
+  test('unsuccessful user login with incorrect password', async () => {
+    const dataEmail = users.userdata.user[0].email
     const dataPass = 'welcome111'
-    const errorEmailOrPassword = page.locator('.help-block')
-    const textInvalidData = 'Invalid email or password'
+    const errorEmailOrPassword = loginPage.errorMessage
+    const textInvalidData = loginPage.textInvalidData
 
     await loginPage.login(dataEmail, dataPass)
 

@@ -9,6 +9,9 @@ export class LoginPage {
   readonly submitButton: Locator
   readonly errorMessage: Locator
   readonly myAccountTitle: Locator
+  readonly pageHeader: Locator
+
+  readonly textInvalidData: string
 
   constructor(page: Page) {
     this.page = page
@@ -18,6 +21,9 @@ export class LoginPage {
     this.submitButton = page.locator('[data-test="login-submit"]')
     this.errorMessage = page.locator('.help-block')
     this.myAccountTitle = page.locator('[data-test="page-title"]')
+    this.pageHeader = page.locator('[data-test="page-title"]')
+
+    this.textInvalidData = 'Invalid email or password'
   }
   async goToPage(): Promise<void> {
     await this.page.goto('/')

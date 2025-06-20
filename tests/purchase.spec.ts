@@ -143,7 +143,7 @@ test.describe.parallel('end to end tests', () => {
 
     //                  ~~ DELIVERY FORM ~~
     // we need to fill delivery form and we overwrite built-in data
-    await page.waitForTimeout(6000) // timeout is needed so we can overwrite predefined address
+    await page.waitForTimeout(3000) // timeout is needed so we can overwrite predefined address
     await deliveryPage.fillDeliveryForm(deliveryPage.billingAddress)
     await deliveryPage.confirmAddress()
 

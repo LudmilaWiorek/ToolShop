@@ -15,6 +15,7 @@ test.describe.parallel('testing payment module', () => {
       paymentPage,
     }) => {
       apiClass = new ApiStore(request)
+      // testInfo.setTimeout(testInfo.timeout + 30_000)
 
       // creating cart
       const cartId = await apiClass.prepareCart(3)
@@ -84,7 +85,7 @@ test.describe.parallel('testing payment module', () => {
       method: 'Credit Card',
       creditCardModel: {
         creditCardNumber: '1111-2222-3333-4444',
-        expirationDate: '02/2025',
+        expirationDate: '10/2025',
         CVV: '123',
         cardHolderName: 'V',
       },
