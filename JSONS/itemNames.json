@@ -1,10 +1,13 @@
 {
   "itemName": [
-    { "name": " Thor Hammer ", "ID": "01JCZEW28P0H05XD6AV8BGRPEP" },
+    { "name": " Thor Hammer ", "ID": "01JYH3THX7KA03Y33EH6EV3RVR" },
     { "name": " Circular Saw ", "ID": "01JCZNQREZBA11FA63PDKYZ07G" },
     { "name": "Bolt Cutters", "ID": "01JCZNQRD2SXKVBXD7B9A672MQ" },
     { "name": "Claw Hammer", "ID": "01JCZNQRD9NEGFFAYSR6W8BBXQ" },
     { "name": "Hammer", "ID": "01JCZNQRD8N12ABN8P6AAXVGQT" },
-    { "name": "Slip Joint Pliers", "ID": "01JJ206Z84SA0QQ2MKKC1BVWC6" }
+    { "name": "Slip Joint Pliers", "ID": "01JYH3THX16ABF0SR78YPPHHT1" },
+    { "name": "Pliers", "ID": "01JYH3THWWRJ7GNBPZTR03TEEJ" },
+    { "name": "Long Nose Pliers", "ID": "01JYH0CPJ9NXC6EV83MTQ3YS80" },
+    { "name": "Court Hammer", "ID": "01JYH0CPJRX0KGJX80FHGR8CKH" }
   ]
 }
