@@ -1,10 +1,12 @@
 import * as users from '../../JSONS/users.json'
 import { expect, fixtures as test } from '../../fixtures/fixtures.fixture'
+import { ApiStore } from '../../pages/apiClass.page'
 
 test.describe('testing login module', () => {
-  const baseUrl = 'https://api.practicesoftwaretesting.com/'
+  let apiClass: ApiStore
   test('api login user with correct credentials', async ({ request }) => {
-    const response = await request.post(`${baseUrl}users/login`, {
+    apiClass = new ApiStore(request)
+    const response = await request.post(`${apiClass.baseUrl}/users/login`, {
       data: {
         email: users.userdata.user[0].email,
         password: users.userdata.user[0].password,
