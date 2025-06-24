@@ -1,0 +1,19 @@
+import * as users from '../../JSONS/users.json'
+import { expect, fixtures as test } from '../../fixtures/fixtures.fixture'
+
+test.describe('testing login module', () => {
+  const baseUrl = 'https://api.practicesoftwaretesting.com/'
+  test('api login user with correct credentials', async ({ request }) => {
+    const response = await request.post(`${baseUrl}users/login`, {
+      data: {
+        email: users.userdata.user[0].email,
+        password: users.userdata.user[0].password,
+      },
+    })
+    const responseBody = JSON.parse(await response.text())
+
+    expect(responseBody).toHaveProperty('access_token')
+    expect(responseBody.access_token).toBeTruthy()
+    expect(response.status()).toBe(200)
+  })
+})
