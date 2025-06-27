@@ -1,9 +1,9 @@
 import { expect, fixtures as test } from '../fixtures/fixtures.fixture'
 import { PaymentModel } from '../models/payment.model'
-import { ApiStore } from '../pages/apiClass.page'
+import { ApiClass } from '../pages/apiClass.page'
 
 test.describe.parallel('testing payment module', () => {
-  let apiClass: ApiStore
+  let apiClass: ApiClass
   test.beforeEach(
     'POST - creating a cart and add some products into it',
     async ({
@@ -14,7 +14,7 @@ test.describe.parallel('testing payment module', () => {
       deliveryPage,
       paymentPage,
     }) => {
-      apiClass = new ApiStore(request)
+      apiClass = new ApiClass(request)
       // testInfo.setTimeout(testInfo.timeout + 30_000)
 
       // creating cart

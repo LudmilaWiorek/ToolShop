@@ -1,6 +1,6 @@
 import { APIRequestContext } from '@playwright/test'
 
-export class ApiStore {
+export class ApiClass {
   readonly request: APIRequestContext
   readonly baseUrl = 'https://api.practicesoftwaretesting.com'
 
@@ -59,12 +59,6 @@ export class ApiStore {
     // add some product to cart
     const idProducts = await this.getXItems(countItems)
 
-    // await idProducts.forEach((id) => {
-    //   const randomNumber = Math.floor(Math.random() * 5) + 1
-
-    //   this.addItem(id, randomNumber, cartId)
-
-    // })
     for (const id of idProducts) {
       const randomNumber = Math.floor(Math.random() * 5) + 1
       await this.addItem(id, randomNumber, cartId)
