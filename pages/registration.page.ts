@@ -7,7 +7,7 @@ export class RegistrationPage {
   readonly registerLink: Locator
   readonly firstNameInput: Locator
   readonly lastNameInput: Locator
-  readonly dateOfBirth: Locator
+  readonly birthDate: Locator
   readonly streetInput: Locator
   readonly postCode: Locator
   readonly city: Locator
@@ -23,7 +23,7 @@ export class RegistrationPage {
     this.registerLink = page.locator('[data-test="register-link"]')
     this.firstNameInput = page.locator('[data-test="first-name"]')
     this.lastNameInput = page.locator('[data-test="last-name"]')
-    this.dateOfBirth = page.locator('[data-test="dob"]')
+    this.birthDate = page.locator('[data-test="dob"]')
     this.streetInput = page.locator('#street')
     this.postCode = page.locator('#postal_code')
     this.city = page.locator('#city')
@@ -40,7 +40,7 @@ export class RegistrationPage {
   async registerUser(user: RegistrationModel): Promise<void> {
     await this.firstNameInput.fill(user.firstName)
     await this.lastNameInput.fill(user.lastName)
-    await this.dateOfBirth.fill(user.dateOfBirth)
+    await this.birthDate.fill(user.birthDate)
     await this.streetInput.fill(user.address)
     await this.postCode.fill(user.postCode)
     await this.city.fill(user.city)
