@@ -33,4 +33,8 @@ test.describe('Slider of Price Range', () => {
     await sliderPage.setSliderValue(100)
     expect(value).toBe('100')
   })
+  test('should get the minimum slider value', async () => {
+    const minValue = await sliderPage.getSliderMinValue()
+    expect(minValue).toBe('0')
+  })
 })
