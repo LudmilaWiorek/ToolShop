@@ -27,11 +27,11 @@ export class SliderPage {
     return await this.slider.isVisible()
   }
 
-  async getSliderMinValue(): Promise<number> {
-    return await this.slider.getAttribute('aria-valuemin')
+  async getSliderMinValue(): Promise<string> {
+    return await this.sliderPoint.getAttribute('aria-valuemin')
   }
 
-  async getSliderMaxValue() {
-    return await this.slider.getAttribute('aria-valuemax')
+  async getSliderMaxValue(): Promise<string> {
+    return await this.sliderPoint.getAttribute('aria-valuemax')
   }
 }
