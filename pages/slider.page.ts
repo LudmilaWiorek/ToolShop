@@ -12,7 +12,7 @@ export class SliderPage {
   }
 
   async getSliderValue(): Promise<string> {
-    return await this.slider.getAttribute('aria-valuenow')
+    return await this.sliderPoint.getAttribute('aria-valuenow')
   }
 
   async setSliderValue(value: number): Promise<number> {
@@ -27,7 +27,7 @@ export class SliderPage {
     return await this.slider.isVisible()
   }
 
-  async getSliderMinValue() {
+  async getSliderMinValue(): Promise<number> {
     return await this.slider.getAttribute('aria-valuemin')
   }
 
