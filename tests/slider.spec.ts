@@ -29,4 +29,9 @@ test.describe('Slider of Price Range', () => {
     await sliderPage.setSliderValue(200)
     await expect(sliderPoint).toHaveAttribute('aria-valuenow', '200')
   })
+  test('should set slider value to 100', async () => {
+    await sliderPage.setSliderValue(100)
+    const value = await sliderPage.getSliderValue()
+    expect(value).toBe('100')
+  })
 })
