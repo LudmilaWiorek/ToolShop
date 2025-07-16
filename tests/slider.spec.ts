@@ -28,17 +28,22 @@ test.describe('Slider of Price Range', () => {
     await sliderPage.setSliderValue(200)
     await expect(sliderPoint).toHaveAttribute('aria-valuenow', '200')
   })
-  test('should set slider value to 100', async () => {
+  test('Should set slider value to 100', async () => {
     const value = await sliderPage.getSliderValue()
     await sliderPage.setSliderValue(100)
     expect(value).toBe('100')
   })
-  test('should get the minimum slider value', async () => {
+  test('Should get the minimum slider value', async () => {
     const minValue = await sliderPage.getSliderMinValue()
     expect(minValue).toBe('0')
   })
-  test('should get the maximum slider value', async () => {
+  test('Should get the maximum slider value', async () => {
     const maxValue = await sliderPage.getSliderMaxValue()
     expect(maxValue).toBe('200')
+  })
+  test('Should set slider value to 200', async () => {
+    const value = await sliderPage.getSliderValue()
+    await sliderPage.setSliderValue(200)
+    expect(value).toBe('200')
   })
 })
