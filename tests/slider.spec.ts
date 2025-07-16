@@ -19,19 +19,18 @@ test.describe('Slider of Price Range', () => {
   })
   test('Verify standard slider value', async () => {
     const sliderValueLocator = sliderPage.sliderPoint
-    await expect(sliderValueLocator).toHaveAttribute('aria-valuenow', '100')
     const sliderValue = await sliderPage.getSliderValue()
+    await expect(sliderValueLocator).toHaveAttribute('aria-valuenow', '100')
     await expect(sliderValue).toBe('100')
   })
   test('Verify that slider can be moved to maximum value 200 without errors', async () => {
     const sliderPoint = sliderPage.sliderPoint
-
     await sliderPage.setSliderValue(200)
     await expect(sliderPoint).toHaveAttribute('aria-valuenow', '200')
   })
   test('should set slider value to 100', async () => {
-    await sliderPage.setSliderValue(100)
     const value = await sliderPage.getSliderValue()
+    await sliderPage.setSliderValue(100)
     expect(value).toBe('100')
   })
 })
