@@ -4,11 +4,15 @@ export class SliderPage {
   readonly page: Page
   readonly slider: Locator
   readonly sliderPoint: Locator
+  readonly sliderBubble: Locator
+  readonly boxSlider: Locator
   constructor(page: Page) {
     this.page = page
 
     this.slider = this.page.locator('.ngx-slider-selection-bar')
     this.sliderPoint = page.locator('.ngx-slider-pointer').nth(1)
+    this.sliderBubble = page.locator('.ngx-slider-bubble').nth(3)
+    this.boxSlider = page.locator('.ngx-slider.animate')
   }
 
   async getSliderValue(): Promise<string> {

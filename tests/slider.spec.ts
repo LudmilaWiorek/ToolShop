@@ -1,6 +1,6 @@
 import { expect, fixtures as test } from '../fixtures/fixtures.fixture'
 
-test.describe('Slider of Price Range', () => {
+test.describe.parallel('Slider of Price Range', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/')
     if (
@@ -58,5 +58,34 @@ test.describe('Slider of Price Range', () => {
     const value = await sliderPage.getSliderValue()
     await sliderPage.setSliderValue(250)
     expect(parseInt(value)).toBeLessThanOrEqual(200)
+  })
+  test('Verify if list of products is filtered correctly after setting slider value', async ({
+    sliderPage,
+    page,
+  }) => {
+    const sliderTrack = await sliderPage.boxSlider.boundingBox()
+    const targetX = sliderTrack.x + sliderTrack.width / 2
+    const targetY = sliderTrack.y + sliderTrack.height / 2
+
+    await page.mouse.move(targetX, targetY)
+    await page.mouse.down()
+    await page.mouse.move(targetX - 44, targetY, { steps: 10 })
+    await page.mouse.up()
+    const maxSliderValueAfterMoving = await sliderPage.getSliderValue()
+
+    const listOfProductPrice = page
+      .locator('//span[@data-test="product-price"]')
+      .all()
+
+    let priceText: string | null
+    let price: number
+    for (const productPrice of await listOfProductPrice) {
+      priceText = await productPrice.textContent()
+      priceText = priceText?.replace('$', '')
+      // console.log('Price Text:', priceText)
+      price = parseFloat(priceText || '0')
+
+      expect(price).toBeLessThanOrEqual(parseFloat(maxSliderValueAfterMoving))
+    }
   })
 })
