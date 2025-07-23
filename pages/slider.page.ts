@@ -4,19 +4,21 @@ export class SliderPage {
   readonly page: Page
   readonly slider: Locator
   readonly sliderPoint: Locator
-  readonly sliderBubble: Locator
   readonly boxSlider: Locator
   constructor(page: Page) {
     this.page = page
 
     this.slider = this.page.locator('.ngx-slider-selection-bar')
     this.sliderPoint = page.locator('.ngx-slider-pointer').nth(1)
-    this.sliderBubble = page.locator('.ngx-slider-bubble').nth(3)
     this.boxSlider = page.locator('.ngx-slider.animate')
   }
 
   async getSliderValue(): Promise<string> {
-    return await this.sliderPoint.getAttribute('aria-valuenow')
+    const sliderValue = await this.sliderPoint.getAttribute('aria-valuenow')
+    if (sliderValue == null) {
+      throw new Error('Slider aria value not found')
+    }
+    return sliderValue
   }
 
   async setSliderValue(value: number): Promise<number> {
@@ -26,16 +28,37 @@ export class SliderPage {
     }, value)
     return value
   }
+  async getBoundingBox(): Promise<{
+    x: number
+    y: number
+    width: number
+    height: number
+  }> {
+    const sliderTrack = await this.boxSlider.boundingBox()
+    if (sliderTrack == null) {
+      throw new Error('Slider track bounding box not found')
+    }
+    return sliderTrack
+  }
+
+  async getFloatFromProductPrice(productPrice: Locator): Promise<number> {
+    const priceText = await productPrice.textContent()
+    if (priceText) {
+      const price = parseFloat(priceText.replace('$', '').trim())
+      return price
+    }
+    return 0
+  }
 
   async isSliderVisible(): Promise<boolean> {
     return await this.slider.isVisible()
   }
 
-  async getSliderMinValue(): Promise<string> {
+  async getSliderMinValue(): Promise<string | null> {
     return await this.sliderPoint.getAttribute('aria-valuemin')
   }
 
-  async getSliderMaxValue(): Promise<string> {
+  async getSliderMaxValue(): Promise<string | null> {
     return await this.sliderPoint.getAttribute('aria-valuemax')
   }
 }
