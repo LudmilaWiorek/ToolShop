@@ -67,10 +67,12 @@ export const fixtures = baseTest.extend<MyFixtures>({
   },
   sliderPage: async ({ page }, use) => {
     const sliderPage = new SliderPage(page)
+    await sliderPage.page.goto('/')
     await use(sliderPage)
   },
   sortDropdownPage: async ({ page }, use) => {
     const sortPage = new SortDropdownPage(page)
+    await sortPage.page.goto('/')
     await use(sortPage)
   },
   toolsPage: async ({ page }, use) => {
