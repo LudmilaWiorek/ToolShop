@@ -1,9 +1,7 @@
+import { OrderByEnum } from '../enums/orderBy.enum'
 import { expect, fixtures as test } from '../fixtures/fixtures.fixture'
 
 test.describe('Sort functionality', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/')
-  })
   test('Verify that sort options are visible', async ({ sortDropdownPage }) => {
     const sortHeader = sortDropdownPage.sortHeader
     const selectForm = sortDropdownPage.selectForm
@@ -14,7 +12,6 @@ test.describe('Sort functionality', () => {
   })
   test('Verify that sort options are applied correctly - A-Z ascending order', async ({
     sortDropdownPage,
-    page,
   }) => {
     const productName = sortDropdownPage.productNameHeaders
     const expectedTexts = [
@@ -28,16 +25,17 @@ test.describe('Sort functionality', () => {
       ' Claw Hammer with Fiberglass Handle ',
       ' Claw Hammer with Shock Reduction Grip ',
     ]
+    const orderBy = OrderByEnum.nameAsc
+
     await sortDropdownPage.clickSortOption()
-    await sortDropdownPage.openSortOptionsForAscendingOrder()
-    await page.waitForTimeout(1000) // Wait for the options to be applied
+    await sortDropdownPage.selectOrderOption(orderBy)
+    await sortDropdownPage.page.waitForTimeout(1000) // Wait for the options to be applied
     await expect(productName).toHaveCount(9)
     const productNameText = await sortDropdownPage.getProductNames()
     await expect(productNameText).toEqual(expectedTexts)
   })
   test('Verify that sort options are applied correctly - Z_A descending order', async ({
     sortDropdownPage,
-    page,
   }) => {
     const productName = sortDropdownPage.productNameHeaders
     const expectedTexts = [
@@ -51,9 +49,10 @@ test.describe('Sort functionality', () => {
       ' Swiss Woodcarving Chisels ',
       ' Super-thin Protection Gloves ',
     ]
+    const orderBy = OrderByEnum.nameDesc
     await sortDropdownPage.clickSortOption()
-    await sortDropdownPage.openSortOptionsForDescendingOrder()
-    await page.waitForTimeout(1000) // Wait for the options to be applied
+    await sortDropdownPage.selectOrderOption(orderBy)
+    await sortDropdownPage.page.waitForTimeout(1000) // Wait for the options to be applied
     await expect(productName).toHaveCount(9)
     const productNameText = await sortDropdownPage.getProductNames()
     await expect(productNameText).toEqual(expectedTexts)
