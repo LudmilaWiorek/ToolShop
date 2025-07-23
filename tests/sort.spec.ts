@@ -8,20 +8,21 @@ test.describe('Sort functionality', () => {
     sortPage = new SortPage(page)
     await page.goto('/')
   })
-  test('Verify that sort options are visible', async ({ page }) => {
+  test('Verify that sort options are visible', async () => {
     const sortHeader = sortPage.sortHeader
     const selectForm = sortPage.selectForm
     await expect(sortHeader).toBeVisible()
     await expect(sortHeader).toHaveText('Sort')
     await expect(selectForm).toBeVisible()
     await expect(selectForm).toHaveAttribute('aria-label')
-
-    await selectForm.click()
-    await selectForm.selectOption({ value: 'name,desc' })
-    await page.waitForTimeout(1000)
-    const h5selectors = page.locator('h5')
-    await expect(h5selectors).toHaveCount(9)
-    const h5Texts = await h5selectors.allTextContents()
+  })
+  test('Verify that sort options are applied correctly', async ({ page }) => {
+    await sortPage.clickSortOption()
+    await sortPage.openSortOptions()
+    await page.waitForTimeout(1000) // Wait for the options to be applied
+    const productName = sortPage.productNameHeaders
+    await expect(productName).toHaveCount(9)
+    const productNameText = await sortPage.getProductNames()
     const expectedTexts = [
       ' Wood Saw ',
       ' Wood Carving Chisels ',
@@ -33,6 +34,6 @@ test.describe('Sort functionality', () => {
       ' Swiss Woodcarving Chisels ',
       ' Super-thin Protection Gloves ',
     ]
-    await expect(h5Texts).toEqual(expectedTexts)
+    await expect(productNameText).toEqual(expectedTexts)
   })
 })
