@@ -1,3 +1,4 @@
+import { OrderByEnum } from '../enums/orderBy.enum'
 import { Locator, Page } from '@playwright/test'
 
 export class SortDropdownPage {
@@ -9,7 +10,7 @@ export class SortDropdownPage {
   constructor(page: Page) {
     this.page = page
 
-    this.sortHeader = page
+    this.sortHeader = this.page
       .locator('//h4[contains(@class, "grid-title")]')
       .nth(0)
     this.selectForm = page.locator('.form-select')
@@ -20,12 +21,8 @@ export class SortDropdownPage {
     await this.selectForm.click()
   }
 
-  async openSortOptionsForAscendingOrder(): Promise<void> {
-    await this.selectForm.selectOption({ value: 'name,asc' })
-  }
-
-  async openSortOptionsForDescendingOrder(): Promise<void> {
-    await this.selectForm.selectOption({ value: 'name,desc' })
+  async selectOrderOption(orderBy: OrderByEnum): Promise<void> {
+    await this.selectForm.selectOption({ value: orderBy })
   }
 
   async getProductNames(): Promise<string[]> {
