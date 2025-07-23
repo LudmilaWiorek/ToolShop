@@ -8,7 +8,7 @@ import { PaymentPage } from '../pages/payment.page'
 import { RecoveryPage } from '../pages/recovery.page'
 import { RegistrationPage } from '../pages/registration.page'
 import { SliderPage } from '../pages/slider.page'
-import { SortPage } from '../pages/sort.page'
+import { SortDropdownPage } from '../pages/sort.page'
 import { ToolsPage } from '../pages/tools.page'
 import { test as baseTest } from '@playwright/test'
 
@@ -22,7 +22,7 @@ interface MyFixtures {
   recoveryPage: RecoveryPage
   registrationPage: RegistrationPage
   sliderPage: SliderPage
-  sortPage: SortPage
+  sortDropdownPage: SortDropdownPage
   toolsPage: ToolsPage
 }
 
@@ -69,8 +69,8 @@ export const fixtures = baseTest.extend<MyFixtures>({
     const sliderPage = new SliderPage(page)
     await use(sliderPage)
   },
-  sortPage: async ({ page }, use) => {
-    const sortPage = new SortPage(page)
+  sortDropdownPage: async ({ page }, use) => {
+    const sortPage = new SortDropdownPage(page)
     await use(sortPage)
   },
   toolsPage: async ({ page }, use) => {

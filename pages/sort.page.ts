@@ -1,6 +1,6 @@
 import { Locator, Page } from '@playwright/test'
 
-export class SortPage {
+export class SortDropdownPage {
   readonly page: Page
   readonly sortHeader: Locator
   readonly selectForm: Locator
@@ -20,7 +20,11 @@ export class SortPage {
     await this.selectForm.click()
   }
 
-  async openSortOptions(): Promise<void> {
+  async openSortOptionsForAscendingOrder(): Promise<void> {
+    await this.selectForm.selectOption({ value: 'name,asc' })
+  }
+
+  async openSortOptionsForDescendingOrder(): Promise<void> {
     await this.selectForm.selectOption({ value: 'name,desc' })
   }
 
