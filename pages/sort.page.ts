@@ -4,6 +4,8 @@ export class SortPage {
   readonly page: Page
   readonly sortHeader: Locator
   readonly selectForm: Locator
+  readonly productNameHeaders: Locator
+
   constructor(page: Page) {
     this.page = page
 
@@ -11,16 +13,20 @@ export class SortPage {
       .locator('//h4[contains(@class, "grid-title")]')
       .nth(0)
     this.selectForm = page.locator('.form-select')
-    // Initialization code can go here
+    this.productNameHeaders = page.locator('h5')
   }
 
-  // Method to sort an array of numbers
-  sortNumbers(numbers: number[]): number[] {
-    return numbers.sort((a, b) => a - b)
+  async clickSortOption(): Promise<void> {
+    await this.selectForm.click()
   }
 
-  // Method to sort an array of strings
-  sortStrings(strings: string[]): string[] {
-    return strings.sort()
+  async openSortOptions(): Promise<void> {
+    await this.selectForm.selectOption({ value: 'name,desc' })
+  }
+
+  async getProductNames(): Promise<string[]> {
+    const productNames: string[] =
+      await this.productNameHeaders.allTextContents()
+    return productNames
   }
 }
