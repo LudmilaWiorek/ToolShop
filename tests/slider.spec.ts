@@ -1,10 +1,10 @@
 import { expect, fixtures as test } from '../fixtures/fixtures.fixture'
 
 test.describe.parallel('Slider of Price Range', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/')
+  test.beforeEach(async ({ sliderPage }) => {
     if (
-      (await page.title()) !== 'Practice Software Testing - Toolshop - v5.0'
+      (await sliderPage.page.title()) !==
+      'Practice Software Testing - Toolshop - v5.0'
     ) {
       throw new Error('Page title is not as expected')
     }
@@ -63,7 +63,8 @@ test.describe.parallel('Slider of Price Range', () => {
     sliderPage,
     page,
   }) => {
-    const sliderTrack = await sliderPage.boxSlider.boundingBox()
+    const sliderTrack = await sliderPage.getBoundingBox()
+
     const targetX = sliderTrack.x + sliderTrack.width / 2
     const targetY = sliderTrack.y + sliderTrack.height / 2
 
@@ -77,13 +78,9 @@ test.describe.parallel('Slider of Price Range', () => {
       .locator('//span[@data-test="product-price"]')
       .all()
 
-    let priceText: string | null
     let price: number
     for (const productPrice of await listOfProductPrice) {
-      priceText = await productPrice.textContent()
-      priceText = priceText?.replace('$', '')
-      // console.log('Price Text:', priceText)
-      price = parseFloat(priceText || '0')
+      price = await sliderPage.getFloatFromProductPrice(productPrice)
 
       expect(price).toBeLessThanOrEqual(parseFloat(maxSliderValueAfterMoving))
     }
