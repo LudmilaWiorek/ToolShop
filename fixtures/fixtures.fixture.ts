@@ -8,6 +8,7 @@ import { PaymentPage } from '../pages/payment.page'
 import { RecoveryPage } from '../pages/recovery.page'
 import { RegistrationPage } from '../pages/registration.page'
 import { SliderPage } from '../pages/slider.page'
+import { SortPage } from '../pages/sort.page'
 import { ToolsPage } from '../pages/tools.page'
 import { test as baseTest } from '@playwright/test'
 
@@ -21,6 +22,7 @@ interface MyFixtures {
   recoveryPage: RecoveryPage
   registrationPage: RegistrationPage
   sliderPage: SliderPage
+  sortPage: SortPage
   toolsPage: ToolsPage
 }
 
@@ -66,6 +68,10 @@ export const fixtures = baseTest.extend<MyFixtures>({
   sliderPage: async ({ page }, use) => {
     const sliderPage = new SliderPage(page)
     await use(sliderPage)
+  },
+  sortPage: async ({ page }, use) => {
+    const sortPage = new SortPage(page)
+    await use(sortPage)
   },
   toolsPage: async ({ page }, use) => {
     const toolsPage = new ToolsPage(page)
