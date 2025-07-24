@@ -17,6 +17,14 @@ This project contains automated UI and API tests for a fictional online tool sto
 - Page Object Model for better structure
 - Fixtures for reusable test logic
 
+## How to deal with flaky tests
+
+- repeat test (`--repeat-each`)
+- smart waits: `expect(...).toBeVisible()`
+- individual timeouts for `expect`
+- synchronise with network: `page.waitForResponse(...)`, `networkidle`
+- avoiding waitForTimeout
+
 ## Installation and setup
 
 ### Prerequisites
