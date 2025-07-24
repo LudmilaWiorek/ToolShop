@@ -2,6 +2,9 @@ import * as users from '../JSONS/users.json'
 import { LoginPage } from '../pages/login.page'
 import { expect, test } from '@playwright/test'
 
+// import { expect, fixtures as test } from '../fixtures/fixtures.fixture'
+// // we don't use fixture for loginPage here, because the fixture is defined as positive login scenarios only
+
 test.describe('login section tests', () => {
   let loginPage: LoginPage
   test.beforeEach('go to page practice software testing', async ({ page }) => {
@@ -18,6 +21,18 @@ test.describe('login section tests', () => {
     const textTitle = 'Overview'
 
     await loginPage.login(dataEmail, dataPass)
+    await loginPage.page.waitForLoadState()
+    await expect(pageHeader).toContainText(textHeader)
+    await expect(await loginPage.page.title()).toContain(textTitle)
+  })
+  test('login user with correct credentials by using Enter', async () => {
+    const dataEmail = users.userdata.user[0].email
+    const dataPass = users.userdata.user[0].password
+    const pageHeader = loginPage.pageHeader
+    const textHeader = 'My account'
+    const textTitle = 'Overview'
+
+    await loginPage.loginByUsingEnterKey(dataEmail, dataPass)
     await loginPage.page.waitForLoadState()
     await expect(pageHeader).toContainText(textHeader)
     await expect(await loginPage.page.title()).toContain(textTitle)
