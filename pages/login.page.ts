@@ -31,6 +31,17 @@ export class LoginPage {
   async signIn(): Promise<void> {
     await this.signInIcon.click()
   }
+  async loginByUsingEnterKey(
+    dataTestEmail: string,
+    dataTestPassword: string,
+  ): Promise<void> {
+    await this.signInIcon.click()
+
+    await this.dataTestEmail.fill(dataTestEmail)
+    await this.page.waitForTimeout(500)
+    await this.dataTestPassword.fill(dataTestPassword)
+    await this.submitButton.press('Enter')
+  }
   async login(dataTestEmail: string, dataTestPassword: string): Promise<void> {
     await this.signInIcon.click()
 
