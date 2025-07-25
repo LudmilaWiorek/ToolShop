@@ -31,9 +31,10 @@ test.describe.parallel('Slider of Price Range', () => {
     const value = await sliderPage.getSliderValue()
     await sliderPage.setSliderValue(100)
     expect(value).toBe('100')
-  })
+  }) // ? slider point moved but default value is 100
   test('Should get the minimum slider value', async ({ sliderPage }) => {
     const minValue = await sliderPage.getSliderMinValue()
+    await sliderPage.moveSliderWithMouse(150, 10, 'left')
     expect(minValue).toBe('0')
   })
   test('Should get the maximum slider value', async ({ sliderPage }) => {
@@ -41,7 +42,8 @@ test.describe.parallel('Slider of Price Range', () => {
     expect(maxValue).toBe('200')
   })
   test('Should set slider value to 200', async ({ sliderPage }) => {
-    await sliderPage.setSliderValue(200)
+    // await sliderPage.setSliderValue(200)
+    await sliderPage.moveSliderWithMouse(150, 10, 'right')
     const value = await sliderPage.getSliderValue()
     await expect(value).toBe('200')
   })
