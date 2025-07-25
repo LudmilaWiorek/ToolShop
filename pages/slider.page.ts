@@ -71,7 +71,7 @@ export class SliderPage {
     const targetX = sliderTrack.x + sliderTrack.width / 2 // target x - srodek slidera
     const targetY = sliderTrack.y + sliderTrack.height / 2
     // add condition to determine the direction of movement
-    const offset = direction === 'left' ? -stepSize : -stepSize // offset - liczba pixeli o jakie chcemy przesunac
+    const offset = direction === 'left' ? -stepSize : stepSize // offset - liczba pixeli o jakie chcemy przesunac
     await this.page.mouse.move(targetX, targetY)
     await this.page.mouse.down()
     await this.page.mouse.move(targetX + offset, targetY, { steps }) // targetx + offset - daje nowa pozycje, do ktorej przesuwasz myszke
