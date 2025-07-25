@@ -66,15 +66,12 @@ test.describe.parallel('Slider of Price Range', () => {
   })
   test('Verify if list of products is filtered correctly after setting slider value', async ({
     sliderPage,
-    page,
   }) => {
     await sliderPage.moveSliderWithMouse(44, 10, 'left')
     const maxSliderValueAfterMoving = await sliderPage.getSliderValue()
     await expect(maxSliderValueAfterMoving).toBe('62')
 
-    const listOfProductPrice = page
-      .locator('//span[@data-test="product-price"]')
-      .all()
+    const listOfProductPrice = sliderPage.productPrice.all()
 
     let price: number
     for (const productPrice of await listOfProductPrice) {

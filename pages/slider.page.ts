@@ -5,12 +5,14 @@ export class SliderPage {
   readonly slider: Locator
   readonly sliderPoint: Locator
   readonly boxSlider: Locator
+  readonly productPrice: Locator
   constructor(page: Page) {
     this.page = page
 
     this.slider = this.page.locator('.ngx-slider-selection-bar')
     this.sliderPoint = page.locator('.ngx-slider-pointer').nth(1)
     this.boxSlider = page.locator('.ngx-slider.animate')
+    this.productPrice = page.locator('//span[@data-test="product-price"]')
   }
 
   async getSliderValue(): Promise<string> {
