@@ -63,16 +63,9 @@ test.describe.parallel('Slider of Price Range', () => {
     sliderPage,
     page,
   }) => {
-    const sliderTrack = await sliderPage.getBoundingBox()
-
-    const targetX = sliderTrack.x + sliderTrack.width / 2
-    const targetY = sliderTrack.y + sliderTrack.height / 2
-
-    await page.mouse.move(targetX, targetY)
-    await page.mouse.down()
-    await page.mouse.move(targetX - 44, targetY, { steps: 10 })
-    await page.mouse.up()
+    await sliderPage.moveSliderWithMouse(44, 10, 'left')
     const maxSliderValueAfterMoving = await sliderPage.getSliderValue()
+    await expect(maxSliderValueAfterMoving).toBe('62')
 
     const listOfProductPrice = page
       .locator('//span[@data-test="product-price"]')
