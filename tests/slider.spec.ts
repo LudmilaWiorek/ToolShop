@@ -49,14 +49,17 @@ test.describe.parallel('Slider of Price Range', () => {
     sliderPage,
   }) => {
     const value = await sliderPage.getSliderValue()
-    await sliderPage.setSliderValue(-10)
+    await sliderPage.moveSliderWithMouse(150, 10, 'left')
+    // await sliderPage.setSliderValue(-10)
     expect(parseInt(value)).toBeGreaterThanOrEqual(0)
   })
   test('Should not allow setting slider value above maximum', async ({
     sliderPage,
   }) => {
+    await sliderPage.moveSliderWithMouse(150, 10, 'right')
     const value = await sliderPage.getSliderValue()
-    await sliderPage.setSliderValue(250)
+    // await sliderPage.setSliderValue(250)
+
     expect(parseInt(value)).toBeLessThanOrEqual(200)
   })
   test('Verify if list of products is filtered correctly after setting slider value', async ({
