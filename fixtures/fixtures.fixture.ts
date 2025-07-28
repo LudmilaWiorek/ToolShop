@@ -1,5 +1,6 @@
 import * as users from '../JSONS/users.json'
 import { AccessoryPage } from '../pages/accessory.page'
+import { ApiClass } from '../pages/apiClass.page'
 import { CartPage } from '../pages/cart.page'
 import { DeliveryPage } from '../pages/delivery.page'
 import { FavoritePage } from '../pages/favorite.page'
@@ -11,7 +12,34 @@ import { SearchPage } from '../pages/search.page'
 import { SliderPage } from '../pages/slider.page'
 import { SortDropdownPage } from '../pages/sort.page'
 import { ToolsPage } from '../pages/tools.page'
-import { test as baseTest } from '@playwright/test'
+import { test as base, test as baseTest } from '@playwright/test'
+
+//fixture for login USER API tests (written by Copilot)
+type ApiLoginFixtures = {
+  apiClass: ApiClass
+  apiHeader: { Authorization: string }
+}
+
+export const apiFixtures = base.extend<ApiLoginFixtures>({
+  apiClass: async ({ request }, use) => {
+    const apiClass = new ApiClass(request)
+    await use(apiClass)
+  },
+  apiHeader: async ({ request }, use) => {
+    const apiClass = new ApiClass(request)
+    const response = await request.post(`${apiClass.baseUrl}/users/login`, {
+      data: {
+        email: users.userdata.user[0].email,
+        password: users.userdata.user[0].password,
+      },
+    })
+    const responseBody = await response.json()
+    const header = {
+      Authorization: `Bearer ${responseBody.access_token}`,
+    }
+    await use(header)
+  },
+})
 
 interface MyFixtures {
   accessoryPage: AccessoryPage
