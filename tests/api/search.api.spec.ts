@@ -7,9 +7,11 @@ test.describe('API Search Tests', () => {
     request,
   }) => {
     apiClass = new ApiClass(request)
-    const response = await request.get(`${apiClass.baseUrl}/products/search`, {
-      data: { q: 'hammer' },
-    })
+    const q = 'hammer'
+    const response = await request.get(
+      `${apiClass.baseUrl}/products/search?q=${q}`,
+      {},
+    )
     expect(response.status()).toBe(200)
 
     const responseBody = JSON.parse(await response.text())
