@@ -40,6 +40,32 @@ export const apiFixtures = base.extend<ApiLoginFixtures>({
     await use(header)
   },
 })
+//fixture for login ADMIN API tests
+type ApiAdminLoginFixtures = {
+  apiClass: ApiClass
+  apiHeader: { Authorization: string }
+}
+
+export const apiAdminFixtures = base.extend<ApiAdminLoginFixtures>({
+  apiClass: async ({ request }, use) => {
+    const apiClass = new ApiClass(request)
+    await use(apiClass)
+  },
+  apiHeader: async ({ request }, use) => {
+    const apiClass = new ApiClass(request)
+    const response = await request.post(`${apiClass.baseUrl}/users/login`, {
+      data: {
+        email: users.userdata.admin[0].email,
+        password: users.userdata.admin[0].password,
+      },
+    })
+    const responseBody = await response.json()
+    const header = {
+      Authorization: `Bearer ${responseBody.access_token}`,
+    }
+    await use(header)
+  },
+})
 
 interface MyFixtures {
   accessoryPage: AccessoryPage
