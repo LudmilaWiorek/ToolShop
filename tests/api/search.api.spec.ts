@@ -10,11 +10,10 @@ test.describe('API Search Tests', () => {
     const q = 'hammer'
     const response = await request.get(
       `${apiClass.baseUrl}/products/search?q=${q}`,
-      {},
     )
     expect(response.status()).toBe(200)
 
-    const responseBody = JSON.parse(await response.text())
+    const responseBody = await response.json()
     expect(responseBody.total).toBeGreaterThan(0)
 
     responseBody.data.forEach((product) => {
