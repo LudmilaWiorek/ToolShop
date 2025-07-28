@@ -25,15 +25,13 @@ test.describe('API Search Tests', () => {
     request,
   }) => {
     apiClass = new ApiClass(request)
+    const q = 'mouse'
     const responseNotFound = await request.get(
-      `${apiClass.baseUrl}/products/search`,
-      {
-        data: { q: 'mouse' },
-      },
+      `${apiClass.baseUrl}/products/search?q=${q}`,
     )
     expect(responseNotFound.status()).toBe(200)
 
-    const responseBody = JSON.parse(await responseNotFound.text())
+    const responseBody = await responseNotFound.json()
     expect(responseBody.total).toBe(0)
   })
 })
