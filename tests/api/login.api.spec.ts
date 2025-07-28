@@ -38,10 +38,25 @@ test.describe('testing login module', () => {
     expect(responseBody).toHaveProperty('email')
     expect(responseBody.email).toBe(users.userdata.user[0].email)
   })
-  test('Unsuccessful login - without token', async ({ request }) => {
-    // we use that key
+  test('Testing endpoint users/me - without token', async ({ request }) => {
     const response = await request.get(`${apiClass.baseUrl}/users/me`)
 
     expect(response.status()).toBe(401)
+    const responseBody = await response.json()
+    expect(responseBody.message).toBe('Unauthorized')
+  })
+  test('Testing endpoint users/me - with invalid token', async ({
+    request,
+  }) => {
+    header = {
+      Authorization: 'Bearer fakeToken',
+    }
+    const response = await request.get(`${apiClass.baseUrl}/users/me`, {
+      headers: header,
+    })
+
+    expect(response.status()).toBe(401)
+    const responseBody = await response.json()
+    expect(responseBody.message).toBe('Unauthorized')
   })
 })
