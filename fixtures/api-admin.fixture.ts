@@ -2,8 +2,6 @@ import * as users from '../JSONS/users.json'
 import type { ApiClass } from '../pages/apiClass.page'
 import { apiClassFixture } from './api-class.fixture'
 
-// import {test as base, expect} from '@playwright/test'
-
 type ApiAdminFixture = {
   apiHeader: { Authorization: string }
   apiClass: ApiClass // <-- bo dziedziczysz z apiClassFixture
