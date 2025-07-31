@@ -19,7 +19,7 @@ export const apiUserFixture = apiClassFixture.extend<ApiUserFixture>({
     const header = {
       Authorization: `Bearer ${responseBody.access_token}`,
     }
-    console.log('[FIXTURE] Admin token:', header)
+    console.log('[FIXTURE] USER token:', header)
     await use(header)
   },
 })
