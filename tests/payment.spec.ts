@@ -1,5 +1,5 @@
 import { expect, fixtures as test } from '../fixtures/fixtures.fixture'
-import { PaymentModel } from '../models/payment.model'
+import { PaymentMethod, PaymentModel } from '../models/payment.model'
 import { ApiClass } from '../pages/apiClass.page'
 
 test.describe.parallel('Testing payment module', () => {
@@ -47,13 +47,14 @@ test.describe.parallel('Testing payment module', () => {
     paymentPage,
   }) => {
     const payment: PaymentModel = {
-      method: 'Bank Transfer',
+      method: PaymentMethod.BankTransfer,
       bankTransferModel: {
         bankName: 'PKO Bank',
         accountName: 'Jan Kowalski.123.',
         accountNumber: '1234566789',
       },
     }
+
     await paymentPage.fillPaymentForm(payment)
     await paymentPage.confirmPayment()
 
@@ -65,7 +66,7 @@ test.describe.parallel('Testing payment module', () => {
     paymentPage,
   }) => {
     const payment: PaymentModel = {
-      method: 'Bank Transfer',
+      method: PaymentMethod.BankTransfer,
       bankTransferModel: {
         bankName: '111111111',
         accountName: 'Jan Kowalski.123.',
@@ -83,7 +84,7 @@ test.describe.parallel('Testing payment module', () => {
 
   test('successful payment via credit card method', async ({ paymentPage }) => {
     const payment: PaymentModel = {
-      method: 'Credit Card',
+      method: PaymentMethod.CreditCard,
       creditCardModel: {
         creditCardNumber: '1111-2222-3333-4444',
         expirationDate: '10/2025',
@@ -103,7 +104,7 @@ test.describe.parallel('Testing payment module', () => {
     paymentPage,
   }) => {
     const payment: PaymentModel = {
-      method: 'Cash on Delivery',
+      method: PaymentMethod.CashOnDelivery,
     }
     await paymentPage.fillPaymentForm(payment)
     await paymentPage.confirmPayment()
@@ -117,7 +118,7 @@ test.describe.parallel('Testing payment module', () => {
     paymentPage,
   }) => {
     const payment: PaymentModel = {
-      method: 'Buy Now Pay Later',
+      method: PaymentMethod.BuyNowPayLater,
       buyNowPayLaterModel: {
         installment: '12 Monthly Installments',
       },
@@ -131,7 +132,7 @@ test.describe.parallel('Testing payment module', () => {
   })
   test('successful payment via gift card method', async ({ paymentPage }) => {
     const payment: PaymentModel = {
-      method: 'Gift Card',
+      method: PaymentMethod.GiftCard,
       giftCardModel: {
         giftCardNumber: '1234abc',
         validationCode: '4567',
