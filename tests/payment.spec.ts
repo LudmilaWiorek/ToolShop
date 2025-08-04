@@ -2,7 +2,7 @@ import { expect, fixtures as test } from '../fixtures/fixtures.fixture'
 import { PaymentModel } from '../models/payment.model'
 import { ApiClass } from '../pages/apiClass.page'
 
-test.describe.parallel('testing payment module', () => {
+test.describe.parallel('Testing payment module', () => {
   let apiClass: ApiClass
   test.beforeEach(
     'POST - creating a cart and add some products into it',
@@ -15,8 +15,6 @@ test.describe.parallel('testing payment module', () => {
       paymentPage,
     }) => {
       apiClass = new ApiClass(request)
-      // testInfo.setTimeout(testInfo.timeout + 30_000)
-
       // creating cart
       const cartId = await apiClass.prepareCart(3)
 
@@ -24,7 +22,8 @@ test.describe.parallel('testing payment module', () => {
       await page.evaluate((cartId) => {
         sessionStorage['cart_id'] = cartId
         sessionStorage['cart_quantity'] = 5
-        // because there are 2 parameters in session storage about cart; number is needed just to have possibility to enter the cart
+        // because there are 2 parameters in session storage about cart;
+        // number is needed just to have possibility to enter the cart
       }, cartId)
 
       await loginPage.goToPage()
@@ -44,7 +43,9 @@ test.describe.parallel('testing payment module', () => {
     },
   )
   // positive scenarios
-  test('testing bank transfer module', async ({ paymentPage }) => {
+  test('successful payment via bank transfer method', async ({
+    paymentPage,
+  }) => {
     const payment: PaymentModel = {
       method: 'Bank Transfer',
       bankTransferModel: {
@@ -60,7 +61,7 @@ test.describe.parallel('testing payment module', () => {
       'Payment was successful',
     )
   })
-  test('testing bank transfer module - incorrect bankName', async ({
+  test('unsuccessful payment via bank transfer method - incorrect bankName', async ({
     paymentPage,
   }) => {
     const payment: PaymentModel = {
@@ -80,7 +81,7 @@ test.describe.parallel('testing payment module', () => {
     await expect(paymentPage.confirmButton).toBeDisabled()
   })
 
-  test('testing credit card module', async ({ paymentPage }) => {
+  test('successful payment via credit card method', async ({ paymentPage }) => {
     const payment: PaymentModel = {
       method: 'Credit Card',
       creditCardModel: {
@@ -98,7 +99,9 @@ test.describe.parallel('testing payment module', () => {
     )
   })
 
-  test('testing cash on delivery module', async ({ paymentPage }) => {
+  test('successful payment via cash on delivery method', async ({
+    paymentPage,
+  }) => {
     const payment: PaymentModel = {
       method: 'Cash on Delivery',
     }
@@ -110,7 +113,9 @@ test.describe.parallel('testing payment module', () => {
     )
   })
 
-  test('testing buy now pay later module', async ({ paymentPage }) => {
+  test('successful payment via buy now pay later method', async ({
+    paymentPage,
+  }) => {
     const payment: PaymentModel = {
       method: 'Buy Now Pay Later',
       buyNowPayLaterModel: {
@@ -124,7 +129,7 @@ test.describe.parallel('testing payment module', () => {
       'Payment was successful',
     )
   })
-  test('testing gift card module', async ({ paymentPage }) => {
+  test('successful payment via gift card method', async ({ paymentPage }) => {
     const payment: PaymentModel = {
       method: 'Gift Card',
       giftCardModel: {
