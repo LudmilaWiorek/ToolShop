@@ -4,8 +4,12 @@ import { RegistrationModel } from '../models/registration.model'
 import { ApiUser } from '../pages/apiUser.page'
 import { faker } from '@faker-js/faker'
 
-test.describe('registration tests', () => {
-  test('new registration test', async ({ page, registrationPage, request }) => {
+test.describe('Testing registration module', () => {
+  test('successful registration test', async ({
+    page,
+    registrationPage,
+    request,
+  }) => {
     const apiUser = new ApiUser(request)
 
     const registerUser: RegistrationModel = {
