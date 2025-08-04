@@ -1,6 +1,6 @@
 import { expect, fixtures as test } from '../fixtures/fixtures.fixture'
 
-test.describe('Verify search functionality', () => {
+test.describe('Testing search module', () => {
   test.beforeEach(async ({ searchPage }) => {
     if (
       (await searchPage.page.title()) !==
