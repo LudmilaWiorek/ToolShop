@@ -1,6 +1,11 @@
 import { expect, fixtures as test } from '../fixtures/fixtures.fixture'
 
-test.describe.parallel('Slider of Price Range', () => {
+//for this group of tests added particular viewport,
+// because results in headless/headful mode depends on viewport configuration.
+test.describe.parallel('Testing slider of Price Range', () => {
+  test.use({
+    viewport: { width: 1600, height: 1200 },
+  })
   test.beforeEach(async ({ sliderPage }) => {
     if (
       (await sliderPage.page.title()) !==
@@ -69,7 +74,7 @@ test.describe.parallel('Slider of Price Range', () => {
   }) => {
     await sliderPage.moveSliderWithMouse(44, 10, 'left')
     const maxSliderValueAfterMoving = await sliderPage.getSliderValue()
-    await expect(maxSliderValueAfterMoving).toBe('62')
+    await expect(maxSliderValueAfterMoving).toBe('68')
 
     const listOfProductPrice = sliderPage.productPrice.all()
 
