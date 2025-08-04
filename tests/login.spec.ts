@@ -5,7 +5,7 @@ import { expect, test } from '@playwright/test'
 // import { expect, fixtures as test } from '../fixtures/fixtures.fixture'
 // // we don't use fixture for loginPage here, because the fixture is defined as positive login scenarios only
 
-test.describe('login section tests', () => {
+test.describe('Testing login module', () => {
   let loginPage: LoginPage
   test.beforeEach('go to page practice software testing', async ({ page }) => {
     loginPage = new LoginPage(page)
@@ -13,7 +13,7 @@ test.describe('login section tests', () => {
   })
   //positive scenarios
 
-  test('login user with correct credentials', async () => {
+  test('successful login user with correct credentials', async () => {
     const dataEmail = users.userdata.user[0].email
     const dataPass = users.userdata.user[0].password
     const pageHeader = loginPage.pageHeader
@@ -25,7 +25,7 @@ test.describe('login section tests', () => {
     await expect(pageHeader).toContainText(textHeader)
     await expect(await loginPage.page.title()).toContain(textTitle)
   })
-  test('login user with correct credentials by using Enter', async () => {
+  test('successful login user with correct credentials by using Enter', async () => {
     const dataEmail = users.userdata.user[0].email
     const dataPass = users.userdata.user[0].password
     const pageHeader = loginPage.pageHeader
@@ -38,7 +38,7 @@ test.describe('login section tests', () => {
     await expect(await loginPage.page.title()).toContain(textTitle)
   })
 
-  test('login admin with correct credentials', async () => {
+  test('successful login admin with correct credentials', async () => {
     const dataEmail = users.userdata.admin[0].email
     const dataPass = users.userdata.admin[0].password
     const pageHeader = loginPage.pageHeader
@@ -50,7 +50,7 @@ test.describe('login section tests', () => {
     await expect(pageHeader).toContainText(textHeader)
     await expect(await loginPage.page.title()).toContain(textTitle)
   })
-  test('login  user with correct credentials - valid email started with a uppercase letter', async () => {
+  test('successful login  user with correct credentials - valid email started with a uppercase letter', async () => {
     const dataEmail = 'Customer2@practicesoftwaretesting.com'
     const dataPass = users.userdata.user[0].password
     const pageHeader = loginPage.pageHeader
