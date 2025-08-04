@@ -1,11 +1,13 @@
+export enum PaymentMethod {
+  BankTransfer = 'Bank Transfer',
+  CashOnDelivery = 'Cash on Delivery',
+  CreditCard = 'Credit Card',
+  BuyNowPayLater = 'Buy Now Pay Later',
+  GiftCard = 'Gift Card',
+}
+
 export interface PaymentModel {
-  method:
-    | 'Bank Transfer'
-    | 'Cash on Delivery'
-    | 'Credit Card'
-    | 'Buy Now Pay Later'
-    | 'Gift Card'
-  // payment details
+  method: PaymentMethod
   bankTransferModel?: BankTransferModel
   creditCardModel?: CreditCardModel
   buyNowPayLaterModel?: BuyNowPayLaterModel
@@ -24,6 +26,8 @@ export interface CreditCardModel {
   CVV: string
   cardHolderName: string
 }
+
+// TODO: refactor to enum
 export interface BuyNowPayLaterModel {
   installment:
     | '3 Monthly Installments'
