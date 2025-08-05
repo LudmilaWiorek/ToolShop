@@ -1,7 +1,8 @@
+import { BasePage } from './base.page'
 import { Locator, Page } from '@playwright/test'
 
-export class LoginPage {
-  readonly page: Page
+export class LoginPage extends BasePage {
+  // readonly page: Page
 
   readonly signInIcon: Locator
   readonly dataTestEmail: Locator
@@ -12,9 +13,11 @@ export class LoginPage {
   readonly pageHeader: Locator
 
   readonly textInvalidData: string
+  readonly successfulUrl: RegExp
 
   constructor(page: Page) {
-    this.page = page
+    super(page)
+
     this.signInIcon = page.locator('[data-test="nav-sign-in"]')
     this.dataTestEmail = page.locator('[data-test="email"]')
     this.dataTestPassword = page.locator('[data-test="password"]')
@@ -24,6 +27,7 @@ export class LoginPage {
     this.pageHeader = page.locator('[data-test="page-title"]')
 
     this.textInvalidData = 'Invalid email or password'
+    this.successfulUrl = /.*\/account/
   }
   async goToPage(): Promise<void> {
     await this.page.goto('/')
