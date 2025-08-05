@@ -1,9 +1,8 @@
 import * as itemNames from '../JSONS/itemNames.json'
+import { BasePage } from './base.page'
 import { Locator, Page } from '@playwright/test'
 
-export class AccessoryPage {
-  readonly page: Page
-
+export class AccessoryPage extends BasePage {
   readonly productAddedMessage: Locator
   readonly cartCount: Locator
   readonly thorHammer: Locator
@@ -15,7 +14,7 @@ export class AccessoryPage {
   readonly successButton: Locator
 
   constructor(page: Page) {
-    this.page = page
+    super(page)
 
     this.productAddedMessage = page.getByLabel('Product added to shopping')
     this.cartCount = page.locator('#lblCartCount')
