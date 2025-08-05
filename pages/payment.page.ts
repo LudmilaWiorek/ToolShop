@@ -3,13 +3,13 @@ import {
   BuyNowPayLaterModel,
   CreditCardModel,
   GiftCardModel,
+  PaymentMethod,
   PaymentModel,
 } from '../models/payment.model'
+import { BasePage } from './base.page'
 import { Locator, Page } from '@playwright/test'
 
-export class PaymentPage {
-  readonly page: Page
-
+export class PaymentPage extends BasePage {
   readonly paymentMethod: Locator
   readonly h3Payment: Locator
   readonly bankNameInput: Locator
@@ -32,7 +32,7 @@ export class PaymentPage {
   readonly bankNameAlert: Locator
 
   constructor(page: Page) {
-    this.page = page
+    super(page)
 
     this.paymentMethod = page.locator('#payment-method') // dropdown
     this.h3Payment = page.locator('//h3[text()="Payment"]')
@@ -104,7 +104,7 @@ export class PaymentPage {
   async fillPaymentForm(paymentObject: PaymentModel): Promise<void> {
     await this.choosePaymentMethod(paymentObject)
     switch (paymentObject.method) {
-      case 'Bank Transfer':
+      case PaymentMethod.BankTransfer:
         // await this.choosePaymentMethod(paymentObject)
         if (paymentObject.bankTransferModel === undefined)
           throw new Error('no data about bank transfer model')
@@ -112,11 +112,11 @@ export class PaymentPage {
         await this.fillBankData(paymentObject.bankTransferModel)
         break
 
-      case 'Cash on Delivery':
+      case PaymentMethod.CashOnDelivery:
         // await this.choosePaymentMethod(paymentObject)
         break
 
-      case 'Credit Card':
+      case PaymentMethod.CreditCard:
         // await this.choosePaymentMethod(paymentObject)
         if (paymentObject.creditCardModel === undefined)
           throw new Error('no data about credit card model')
@@ -124,14 +124,14 @@ export class PaymentPage {
         await this.fillCreditCardData(paymentObject.creditCardModel)
         break
 
-      case 'Buy Now Pay Later':
+      case PaymentMethod.BuyNowPayLater:
         // await this.choosePaymentMethod(paymentObject)
         if (paymentObject.buyNowPayLaterModel === undefined)
           throw new Error('no data about buy now pay later model')
         await this.chooseBuyNowPayLater(paymentObject.buyNowPayLaterModel)
         break
 
-      case 'Gift Card':
+      case PaymentMethod.GiftCard:
         // await this.choosePaymentMethod(paymentObject)
         if (paymentObject.giftCardModel === undefined)
           throw new Error('no data about gift card model')
