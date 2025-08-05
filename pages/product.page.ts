@@ -1,18 +1,20 @@
-import { Page } from '@playwright/test'
+import { BasePage } from './base.page'
+import { Locator, Page } from '@playwright/test'
 
-export class ProductPage {
-  private page: Page
+export class ProductPage extends BasePage {
+  readonly productName: Locator
 
   constructor(page: Page) {
-    this.page = page
+    super(page)
+    this.productName = page.locator('[data-test=product-name]')
   }
 
-  get productName() {
-    return this.page.locator('[data-test=product-name]')
-  }
+  //   get productName(): Locator {
+  //     return this.page.locator('[data-test=product-name]')
+  //   }
 
   async getProductNameText(): Promise<string> {
-    return await this.productName.textContent()
+    return (await (await this.productName).textContent()) || ''
   }
 
   async assertProductName(expectedName: string): Promise<void> {
