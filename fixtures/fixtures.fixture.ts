@@ -48,9 +48,13 @@ export const fixtures = baseTest.extend<MyFixtures>({
   loginPage: async ({ page }, use) => {
     const loginPage = new LoginPage(page)
     await loginPage.goToPage()
+    await page.waitForTimeout(5000)
     const dataEmail = users.userdata.user[1].email
     const dataPass = users.userdata.user[1].password
     await loginPage.login(dataEmail, dataPass)
+    await page.waitForLoadState()
+    // await loginPage.myAccountTitle.waitFor()
+    await loginPage.waitForSuccessfulUrl()
 
     await use(loginPage)
   },
