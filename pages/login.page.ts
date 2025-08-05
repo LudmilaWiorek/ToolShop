@@ -2,8 +2,6 @@ import { BasePage } from './base.page'
 import { Locator, Page } from '@playwright/test'
 
 export class LoginPage extends BasePage {
-  // readonly page: Page
-
   readonly signInIcon: Locator
   readonly dataTestEmail: Locator
   readonly dataTestPassword: Locator
