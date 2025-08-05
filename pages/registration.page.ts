@@ -1,9 +1,8 @@
 import { RegistrationModel } from '../models/registration.model'
+import { BasePage } from './base.page'
 import { Locator, Page } from '@playwright/test'
 
-export class RegistrationPage {
-  readonly page: Page
-
+export class RegistrationPage extends BasePage {
   readonly registerLink: Locator
   readonly firstNameInput: Locator
   readonly lastNameInput: Locator
@@ -19,7 +18,7 @@ export class RegistrationPage {
   readonly registerButton: Locator
 
   constructor(page: Page) {
-    this.page = page
+    super(page)
     this.registerLink = page.locator('[data-test="register-link"]')
     this.firstNameInput = page.locator('[data-test="first-name"]')
     this.lastNameInput = page.locator('[data-test="last-name"]')
