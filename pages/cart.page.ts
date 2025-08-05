@@ -1,14 +1,13 @@
 import { LineItem } from '../models/lineItem.model'
+import { BasePage } from './base.page'
 import { Locator, Page } from '@playwright/test'
 
-export class CartPage {
-  readonly page: Page
-
+export class CartPage extends BasePage {
   readonly itemLineLocator: Locator
   readonly totalSumLocator: Locator
 
   constructor(page: Page) {
-    this.page = page
+    super(page)
 
     this.itemLineLocator = page.locator('//tbody/tr')
     this.totalSumLocator = page.locator('//tfoot/tr/td[4]')
