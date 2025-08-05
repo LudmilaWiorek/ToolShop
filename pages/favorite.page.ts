@@ -1,7 +1,8 @@
+import { BasePage } from './base.page'
 import { Locator, Page } from '@playwright/test'
 
-export class FavoritePage {
-  readonly page: Page
+export class FavoritePage extends BasePage {
+  // readonly page: Page
 
   readonly mainMenu: Locator
   readonly dropdownItemFavorite: Locator
@@ -12,7 +13,9 @@ export class FavoritePage {
   readonly messageFavoriteItemAdded: Locator
 
   constructor(page: Page) {
-    this.page = page
+    super(page) // super page calls constructor from BasePage;
+    // super page must be the first line in constructor
+
     this.mainMenu = page.locator('#menu')
     this.dropdownItemFavorite = page.getByText('My favorites')
     this.favoriteTitle = page.locator('[data-test="page-title"]')
