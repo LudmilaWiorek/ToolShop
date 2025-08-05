@@ -1,9 +1,8 @@
 import { LineItem } from '../models/lineItem.model'
+import { BasePage } from './base.page'
 import { Locator, Page } from '@playwright/test'
 
-export class ToolsPage {
-  readonly page: Page
-
+export class ToolsPage extends BasePage {
   readonly searchInput: Locator
   readonly addToCartButton: Locator
   readonly cartCount: Locator
@@ -15,7 +14,7 @@ export class ToolsPage {
   readonly decreaseButton: Locator
 
   constructor(page: Page) {
-    this.page = page
+    super(page)
 
     this.searchInput = page.locator('[data-test="search-query"]')
     this.addToCartButton = page.locator('#btn-add-to-cart')
