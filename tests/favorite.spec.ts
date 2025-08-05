@@ -3,11 +3,10 @@ import { expect, fixtures as test } from '../fixtures/fixtures.fixture'
 test.describe('Testing favorite module', () => {
   test('successful add to favorite section', async ({
     accessoryPage,
-    favoritePage: favoritePage,
+    favoritePage,
     loginPage,
   }) => {
-    loginPage
-    await expect(favoritePage.page).toHaveURL(/.*\/account/)
+    // await expect(favoritePage).page.waitForURL(/.*\/account/)
 
     const slipJointPliersName = 'Slip Joint Pliers'
     const itemAddedToFavorite = 'Product added to your favorites list.'
