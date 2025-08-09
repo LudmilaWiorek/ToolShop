@@ -19,7 +19,6 @@ export const apiAdminFixture = apiClassFixture.extend<ApiAdminFixture>({
     const header = {
       Authorization: `Bearer ${responseBody.access_token}`,
     }
-    console.log('[FIXTURE] Admin token:', header)
     await use(header)
   },
 })
