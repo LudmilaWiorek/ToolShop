@@ -7,7 +7,7 @@ export enum PaymentMethod {
 }
 
 export interface PaymentModel {
-  method: PaymentMethod
+  method: string
   bankTransferModel?: BankTransferModel
   creditCardModel?: CreditCardModel
   buyNowPayLaterModel?: BuyNowPayLaterModel
