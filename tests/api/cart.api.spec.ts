@@ -21,4 +21,17 @@ test.describe('Testing api endpoints for cart', () => {
       'Method is not allowed for the requested route',
     )
   })
+  test('add item to cart', async ({ request, apiClass }) => {
+    let response = await request.post(`${apiClass.baseUrl}/carts`)
+    expect(response.status()).toBe(201)
+    const responseBody = await response.json()
+    const cartId = responseBody.id
+
+    const productIdResponse = await request.get(`${apiClass.baseUrl}/products`)
+    const responseProductId = (await productIdResponse.json()).data[0].id
+
+    response = await request.post(`${apiClass.baseUrl}/carts/${cartId}`, {
+      params: { product_id: responseProductId, quantity: 1 },
+    })
+  })
 })
