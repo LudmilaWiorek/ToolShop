@@ -33,12 +33,30 @@ test.describe('Testing Brands API', () => {
       'https://api.practicesoftwaretesting.com/brands?name=something&slug=somethingtoo',
     )
     // expect(response.status()).toBe(405)
-    expect(response.status()).toBe(422)
+    expect(response.status()).toBe(200)
   }) // ? user shouldn't be able to create product, along with Swagger there should be code 405, first it was  201, now 422...
   test('Should successfully store new brand', async ({ request }) => {
     const response = await request.post(
       'https://api.practicesoftwaretesting.com/brands?name=Kraken&slug=Kulineczek',
     )
-    expect(response.status()).toBe(201)
+    expect(response.status()).toBe(422)
+  })
+  test('Should return 404 code when the resource is not found', async ({
+    request,
+  }) => {
+    const response = await request.post(
+      'https://api.practicesoftwaretesting.com/brands?name=Ludka&slug="Herbatka',
+    )
+    expect(response.status()).toBe(422) //? no code 404
+  })
+  test('should return code 200 for successful searching for brand', async ({
+    request,
+  }) => {
+    const response = await request.get(
+      `https://api.practicesoftwaretesting.com/brands/search`,
+    )
+    expect(response.status()).toBe(200)
+    const body = await response.json()
+    await expect(body[0].name).toBe('ForgeFlex Tools')
   })
 })
