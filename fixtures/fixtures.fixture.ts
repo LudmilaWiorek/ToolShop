@@ -5,6 +5,7 @@ import { DeliveryPage } from '../pages/delivery.page'
 import { FavoritePage } from '../pages/favorite.page'
 import { LoginPage } from '../pages/login.page'
 import { PaymentPage } from '../pages/payment.page'
+import { ProductPage } from '../pages/product.page'
 import { RecoveryPage } from '../pages/recovery.page'
 import { RegistrationPage } from '../pages/registration.page'
 import { SearchPage } from '../pages/search.page'
@@ -20,6 +21,7 @@ interface MyFixtures {
   favoritePage: FavoritePage
   loginPage: LoginPage
   paymentPage: PaymentPage
+  productPage: ProductPage
   recoveryPage: RecoveryPage
   registrationPage: RegistrationPage
   searchPage: SearchPage
@@ -54,13 +56,16 @@ export const fixtures = baseTest.extend<MyFixtures>({
     await loginPage.login(dataEmail, dataPass)
     await page.waitForLoadState()
     // await loginPage.myAccountTitle.waitFor()
-    await loginPage.waitForSuccessfulUrl()
 
     await use(loginPage)
   },
   paymentPage: async ({ page }, use) => {
     const paymentPage = new PaymentPage(page)
     await use(paymentPage)
+  },
+  productPage: async ({ page }, use) => {
+    const productPage = new ProductPage(page)
+    await use(productPage)
   },
   recoveryPage: async ({ page }, use) => {
     const recoveryPage = new RecoveryPage(page)
@@ -72,7 +77,7 @@ export const fixtures = baseTest.extend<MyFixtures>({
   },
   searchPage: async ({ page }, use) => {
     const searchPage = new SearchPage(page)
-    await searchPage.page.goto('/')
+    await searchPage.goto('/')
     await use(searchPage)
   },
   sliderPage: async ({ page }, use) => {
