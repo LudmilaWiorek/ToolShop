@@ -1,5 +1,7 @@
 import { defineConfig, devices } from '@playwright/test'
+import path from 'path'
 
+export const SESSION_PATH = path.join(__dirname, '././auth/session.json')
 export default defineConfig({
   testDir: './tests',
   timeout: 50_000,
@@ -19,6 +21,19 @@ export default defineConfig({
     },
   },
 
+  // projects: [
+  //   {
+  //     name: 'setup',
+  //     use: { ...devices['Desktop Chrome'] },
+  //     testMatch: /.*\.setup\.ts/,
+  //   }, // refers to file login.setup.ts
+  //   {
+  //     name: 'chromium',
+  //     use: { ...devices['Desktop Chrome'], storageState: SESSION_PATH },
+  //     dependencies: ['setup'],
+  //     //project depends ond previous setup project
+  //   },
+  // ],
   projects: [
     {
       name: 'chromium',
