@@ -3,12 +3,8 @@ export enum FilterCategory {
   power_tools = 'Power Tools',
   other = 'Other',
 }
-export enum FilterBrand {
-  forge_flex = 'ForgeFlex',
-  mighty_craft_hardware = 'MightyCraft Hardware',
-}
-export enum handToolsFilter {
-  handToolsFilter = ' Hand Tools ',
+
+export enum HandToolsFilter {
   hammerCheckbox = ' Hammer ',
   handSawCheckbox = ' Hand Saw ',
   wrenchCheckbox = ' Wrench ',
@@ -17,18 +13,20 @@ export enum handToolsFilter {
   chiselsCheckbox = ' Chisels ',
   measuresCheckbox = ' Measuring Tools ',
 }
-export enum powerToolsFilter {
-  powerToolsFilter = ' Power Tools ',
+export enum PowerToolsFilter {
   grinderCheckbox = ' Grinder ',
   sanderCheckbox = ' Sander ',
   sawCheckbox = ' Saw ',
   drillCheckbox = ' Drill ',
 }
-export enum otherFilter {
-  otherFilter = ' Other ',
+export enum OtherFilter {
   toolBeltsCheckbox = ' Tool Belts ',
   storagesolutionsCheckbox = ' Storage Solutions ',
   workbenchCheckbox = ' Workbench ',
   safetyGearCheckbox = ' Safety Gear ',
   fastenersCheckbox = ' Fasteners ',
+}
+export enum FilterBrand {
+  forge_flex = 'ForgeFlex',
+  mighty_craft_hardware = 'MightyCraft Hardware',
 }

@@ -25,7 +25,7 @@ export class LoginPage extends BasePage {
     this.pageHeader = page.locator('[data-test="page-title"]')
 
     this.textInvalidData = 'Invalid email or password'
-    this.successfulUrl = /.*\/account/
+    this.successfulUrl = /.*\/dashboard/
   }
   async goToPage(): Promise<void> {
     await this.page.goto('/')
@@ -44,12 +44,24 @@ export class LoginPage extends BasePage {
     await this.dataTestPassword.fill(dataTestPassword)
     await this.submitButton.press('Enter')
   }
-  async login(dataTestEmail: string, dataTestPassword: string): Promise<void> {
+  async login(
+    dataTestEmail: string,
+    dataTestPassword: string,
+    asAdmin: boolean = false,
+  ): Promise<void> {
     await this.signInIcon.click()
 
     await this.dataTestEmail.fill(dataTestEmail)
     await this.page.waitForTimeout(500)
     await this.dataTestPassword.fill(dataTestPassword)
     await this.submitButton.click()
+
+    // await this.waitForSuccessfulUrl()
+    if (asAdmin) {
+      await this.waitForSuccessfulUrl(/.*\/dashboard/)
+    } else {
+      await this.waitForSuccessfulUrl(/.*\/account/)
+    }
+    await this.page.waitForLoadState()
   }
 }

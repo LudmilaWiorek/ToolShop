@@ -25,7 +25,7 @@ export class FilterPage extends BasePage {
 
     this.noProductsFoundMessage = page.getByText('There are no products found.')
   }
-  async getLocatorByMainCategory(category: FilterCategory): Promise<Locator> {
+  getLocatorByMainCategory(category: FilterCategory): Locator {
     return this.page.getByLabel(category)
   }
   async getLocatorBySubCategory(
