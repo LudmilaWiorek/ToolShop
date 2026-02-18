@@ -8,3 +8,4 @@ node_modules/
 /.vscode/
 /testingKoszyk.spec.test
 /auth.json
+/session.json
