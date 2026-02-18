@@ -1,4 +1,4 @@
-import { expect, apiAdminFixture as test } from '@fixtures/api-admin.fixture'
+import { expect, apiAdminFixture as test } from '@fixtures/admin-api.fixture'
 
 test.describe('testing admin role', () => {
   test.beforeEach('log admin', async ({ apiHeader, page }) => {

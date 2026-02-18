@@ -1,0 +1,88 @@
+import { expect, fixtures as test } from '@fixtures/fixtures.fixture'
+
+//for this group of tests added particular viewport,
+// because results in headless/headful mode depends on viewport configuration.
+test.describe.parallel('Testing slider of Price Range', () => {
+  test.use({
+    viewport: { width: 1600, height: 1200 },
+  })
+  test.beforeEach(async ({ sliderPage }) => {
+    if (
+      (await sliderPage.page.title()) !==
+      'Practice Software Testing - Toolshop - v5.0'
+    ) {
+      throw new Error('Page title is not as expected')
+    }
+  })
+  test('Verify that slider is visible', async ({ sliderPage }) => {
+    const slider = sliderPage.slider
+    await sliderPage.isSliderVisible()
+    await expect(slider).toBeVisible()
+  })
+  test('Verify standard slider value', async ({ sliderPage }) => {
+    const sliderValueLocator = sliderPage.sliderPoint
+    const sliderValue = await sliderPage.getSliderValue()
+    await expect(sliderValueLocator).toHaveAttribute('aria-valuenow', '100')
+    await expect(sliderValue).toBe('100')
+  })
+  test('Verify that slider can be moved to maximum value 200 without errors', async ({
+    sliderPage,
+  }) => {
+    const sliderPoint = sliderPage.sliderPoint
+    await sliderPage.setSliderValue(200)
+    await expect(sliderPoint).toHaveAttribute('aria-valuenow', '200')
+  })
+  test('Should set slider value to 100', async ({ sliderPage }) => {
+    const value = await sliderPage.getSliderValue()
+    await sliderPage.setSliderValue(100)
+    expect(value).toBe('100')
+  }) // ? slider point moved but default value is 100
+  test('Should get the minimum slider value', async ({ sliderPage }) => {
+    const minValue = await sliderPage.getSliderMinValue()
+    await sliderPage.moveSliderWithMouse(150, 10, 'left')
+    expect(minValue).toBe('0')
+  })
+  test('Should get the maximum slider value', async ({ sliderPage }) => {
+    const maxValue = await sliderPage.getSliderMaxValue()
+    expect(maxValue).toBe('200')
+  })
+  test('Should set slider value to 200', async ({ sliderPage }) => {
+    // await sliderPage.setSliderValue(200)
+    await sliderPage.moveSliderWithMouse(150, 10, 'right')
+    const value = await sliderPage.getSliderValue()
+    await expect(value).toBe('200')
+  })
+  test('Should not allow setting slider value below minimum', async ({
+    sliderPage,
+  }) => {
+    const value = await sliderPage.getSliderValue()
+    await sliderPage.moveSliderWithMouse(150, 10, 'left')
+    // await sliderPage.setSliderValue(-10)
+    expect(parseInt(value)).toBeGreaterThanOrEqual(0)
+  })
+  test('Should not allow setting slider value above maximum', async ({
+    sliderPage,
+  }) => {
+    await sliderPage.moveSliderWithMouse(150, 10, 'right')
+    const value = await sliderPage.getSliderValue()
+    // await sliderPage.setSliderValue(250)
+
+    expect(parseInt(value)).toBeLessThanOrEqual(200)
+  })
+  test('Verify if list of products is filtered correctly after setting slider value', async ({
+    sliderPage,
+  }) => {
+    await sliderPage.moveSliderWithMouse(44, 10, 'left')
+    const maxSliderValueAfterMoving = await sliderPage.getSliderValue()
+    await expect(maxSliderValueAfterMoving).toBe('68')
+
+    const listOfProductPrice = sliderPage.productPrice.all()
+
+    let price: number
+    for (const productPrice of await listOfProductPrice) {
+      price = await sliderPage.getFloatFromProductPrice(productPrice)
+
+      expect(price).toBeLessThanOrEqual(parseFloat(maxSliderValueAfterMoving))
+    }
+  })
+})

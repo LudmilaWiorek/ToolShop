@@ -1,5 +1,5 @@
-import * as users from '@JSONS/users.json'
-import { expect, apiUserFixture as test } from '@fixtures/api-user.fixture'
+import * as users from '@data/users.json'
+import { expect, apiUserFixture as test } from '@fixtures/auth.fixture'
 
 test.describe('testing login module', () => {
   test('Successful login with valid token', async ({

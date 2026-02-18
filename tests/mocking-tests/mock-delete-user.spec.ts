@@ -1,4 +1,4 @@
-import { expect, apiAdminFixture as test } from '@fixtures/api-admin.fixture'
+import { expect, apiAdminFixture as test } from '@fixtures/admin-api.fixture'
 
 test('Mock: DELETE request using page and page.route()', async ({
   page,

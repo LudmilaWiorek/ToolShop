@@ -1,4 +1,4 @@
-import { expect, apiClassFixture as test } from '@fixtures/api-class.fixture'
+import { expect, fixtures as test } from '@fixtures/api.fixture'
 
 test.describe('Testing api endpoints for cart', () => {
   test('successfully create cart - POST', async ({ request, apiClass }) => {

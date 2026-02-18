@@ -1,6 +1,6 @@
 import { SESSION_PATH } from '../playwright.config'
-import * as users from '@JSONS/users.json'
-import { LoginPage } from '@pages/login.page'
+import * as users from '@data/users.json'
+import { LoginPage } from '@pages/authentication/login.page'
 import { expect, test } from '@playwright/test'
 
 let loginPage: LoginPage
