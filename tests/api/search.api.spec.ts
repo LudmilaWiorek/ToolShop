@@ -15,7 +15,7 @@ test.describe('API Search Tests', () => {
 
     const responseBody = await response.json()
     expect(responseBody.total).toBeGreaterThan(0)
-
+    expect(response.body).toBeTruthy()
     responseBody.data.forEach((product) => {
       expect(product.name.toLowerCase()).toContain(`${q}`)
     })
