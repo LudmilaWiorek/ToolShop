@@ -10,7 +10,7 @@ test.describe('Testing filter journey', () => {
     await loginPage.goToPage()
 
     await expect(
-      await filterPage.getLocatorByMainCategory(FilterCategory.hand_tools),
+      filterPage.getLocatorByMainCategory(FilterCategory.hand_tools),
     ).toBeVisible()
   })
 })

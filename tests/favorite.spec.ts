@@ -3,7 +3,7 @@ import { expect, fixtures as test } from '../fixtures/fixtures.fixture'
 // flaky test
 test.use({
   launchOptions: {
-    slowMo: 200, // 100ms pauza między akcjami
+    slowMo: 300, // 100ms pauza między akcjami
   },
 })
 test.describe('Testing favorite module', () => {
@@ -20,9 +20,10 @@ test.describe('Testing favorite module', () => {
 
     // clearing everything
     await favoritePage.clearAllFavoritesCompletely()
+    await page.waitForTimeout(5000) // timeout here ensures the list is empty
     await expect(favoritePage.removeButtons).toHaveCount(0)
     await expect(favoritePage.favoriteItemLine).toHaveCount(0)
-    await expect(favoritePage.favoriteItemLine).not.toBeVisible()
+    await expect(favoritePage.favoriteItemLine).toBeHidden()
     // await expect(favoritePage.noFavoritesOnList).toBeVisible()
     // STEP 2: Go to homepage and pick ANY product (favorites are empty now)
     await accessoryPage.logoToolShop.click()

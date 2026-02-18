@@ -17,7 +17,7 @@ test.describe('API Search Tests', () => {
     expect(responseBody.total).toBeGreaterThan(0)
 
     responseBody.data.forEach((product) => {
-      expect(product.name.toLowerCase()).toContain('hammer')
+      expect(product.name.toLowerCase()).toContain(`${q}`)
     })
   })
 
