@@ -10,7 +10,6 @@ test.describe('Testing favorite module', () => {
   test('successful add to favorite section', async ({
     accessoryPage,
     favoritePage,
-    loginPage,
     page,
   }) => {
     // STEP 1: Go to favorites and clear EVERYTHING
@@ -24,7 +23,6 @@ test.describe('Testing favorite module', () => {
     await expect(favoritePage.removeButtons).toHaveCount(0)
     await expect(favoritePage.favoriteItemLine).toHaveCount(0)
     await expect(favoritePage.favoriteItemLine).toBeHidden()
-    // await expect(favoritePage.noFavoritesOnList).toBeVisible()
     // STEP 2: Go to homepage and pick ANY product (favorites are empty now)
     await accessoryPage.logoToolShop.click()
 
