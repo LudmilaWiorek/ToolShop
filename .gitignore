@@ -7,3 +7,4 @@ node_modules/
 /config/
 /.vscode/
 /testingKoszyk.spec.test
+/auth.json
