@@ -1,5 +1,6 @@
 import { defineConfig, devices } from '@playwright/test'
 import path from 'path'
+import 'tsconfig-paths/register'
 
 export const SESSION_PATH = path.join(__dirname, '././auth/session.json')
 export default defineConfig({
@@ -41,3 +42,6 @@ export default defineConfig({
     },
   ],
 })
+
+
+

@@ -27,6 +27,7 @@
     "eslint-plugin-prettier": "^5.2.1",
     "globals": "^15.13.0",
     "prettier": "3.3.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript-eslint": "^7.2.0"
   },
   "dependencies": {

@@ -5,9 +5,16 @@
     "moduleResolution": "Node",
     "baseUrl": ".",
     "paths": {
+      "@/*": ["./*"],
       "@pages/*": ["pages/*"],
       "@tests/*": ["tests/*"],
-      "@utils/*": ["utils/*"]
+      "@fixtures/*": ["fixtures/*"],
+      "@models/*": ["models/*"],
+      "@enums/*": ["enums/*"],
+      "@factory/*": ["factory/*"],
+      "@JSONS/*": ["JSONS/*"],
+      "@config/*": ["config/*"],
+      "@auth/*": ["auth/*"]
     },
     "types": ["node", "@playwright/test"],
     "esModuleInterop": true,
