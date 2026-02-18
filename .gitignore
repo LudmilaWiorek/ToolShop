@@ -12,3 +12,10 @@ node_modules/
 /planner.chatmode.md
 /generator.chatmode.md
 /healer.chatmode.md
+/.github/
+/auth/
+/factory/product-factory.ts
+/factory/product-ui-helper.ts
+/pages/addProduct.page.ts
+/tests/account-with-session.spec.ts
+/tests/api/order.api.spec.ts
