@@ -1,5 +1,5 @@
 import { BasePage } from './base.page'
-import * as users from '@JSONS/users.json'
+import * as users from '@data/users.json'
 import { Locator, Page } from '@playwright/test'
 
 export class RecoveryPage extends BasePage {

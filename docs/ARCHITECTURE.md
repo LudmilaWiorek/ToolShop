@@ -73,6 +73,7 @@ export class LoginPage extends BasePage {
 ```
 
 **Benefits:**
+
 - Centralized locators and interactions
 - Easy to maintain and update
 - Reusable across tests
@@ -87,7 +88,11 @@ export class CartApi extends BaseApi {
     // API request
   }
 
-  async addItem(productId: string, quantity: number, cartId: string): Promise<void> {
+  async addItem(
+    productId: string,
+    quantity: number,
+    cartId: string,
+  ): Promise<void> {
     // Add item to cart
   }
 }
@@ -151,10 +156,11 @@ export const getProductIdNotInList = async (...): Promise<string> => {
 ### TypeScript Paths
 
 Path aliases simplify imports:
+
 ```typescript
-import { LoginPage } from '@pages/authentication/login.page'
 import { AuthApi } from '@api/auth.api'
 import { fixtures } from '@fixtures/pages.fixture'
+import { LoginPage } from '@pages/authentication/login.page'
 ```
 
 ### Environment Setup

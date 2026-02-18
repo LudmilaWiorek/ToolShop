@@ -158,11 +158,13 @@ test('add unique product to cart', async ({ apiClass, request }) => {
 ### Avoid Hard Waits
 
 ❌ **Don't**:
+
 ```typescript
 await page.waitForTimeout(5000)
 ```
 
 ✅ **Do**:
+
 ```typescript
 await expect(page.locator('.success-message')).toBeVisible()
 await page.waitForURL('/account')
@@ -231,7 +233,9 @@ async createCart(): Promise<string> {
 ```typescript
 test('handle login failure', async ({ loginPage }) => {
   await loginPage.login('wrong@email.com', 'wrongpassword')
-  await expect(loginPage.errorMessage).toContainText('Invalid email or password')
+  await expect(loginPage.errorMessage).toContainText(
+    'Invalid email or password',
+  )
 })
 ```
 
@@ -240,6 +244,7 @@ test('handle login failure', async ({ loginPage }) => {
 ### Each test should be independent
 
 ✅ **Good**:
+
 ```typescript
 test('add to favorites', async ({ favoritePage }) => {
   await favoritePage.goto('/')
@@ -248,6 +253,7 @@ test('add to favorites', async ({ favoritePage }) => {
 ```
 
 ❌ **Bad**:
+
 ```typescript
 // Depends on previous test
 test('view favorites', async ({ page }) => {

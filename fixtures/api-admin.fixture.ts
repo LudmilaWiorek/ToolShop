@@ -1,10 +1,10 @@
 import { apiClassFixture } from './api-class.fixture'
-import * as users from '@JSONS/users.json'
-import type { ApiClass } from '@pages/apiClass.page'
+import type { CartApi } from '@api/cart.api'
+import * as users from '@data/users.json'
 
 type ApiAdminFixture = {
   apiHeader: { Authorization: string }
-  apiClass: ApiClass // <-- bo dziedziczysz z apiClassFixture
+  apiClass: CartApi // <-- because you inherit from apiClassFixture
 }
 
 export const apiAdminFixture = apiClassFixture.extend<ApiAdminFixture>({

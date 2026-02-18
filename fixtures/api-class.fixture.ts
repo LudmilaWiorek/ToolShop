@@ -1,11 +1,11 @@
-import { ApiClass } from '@pages/apiClass.page'
+import { CartApi } from '@api/cart.api'
 import { test as base } from '@playwright/test'
 
 export const apiClassFixture = base.extend<{
-  apiClass: ApiClass
+  apiClass: CartApi
 }>({
   apiClass: async ({ request }, use) => {
-    const apiClass = new ApiClass(request)
+    const apiClass = new CartApi(request)
     await use(apiClass)
   },
 })
