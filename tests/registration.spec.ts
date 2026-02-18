@@ -1,8 +1,8 @@
-import { userdata } from '../JSONS/users.json'
-import { expect, fixtures as test } from '../fixtures/fixtures.fixture'
-import { RegistrationModel } from '../models/registration.model'
-import { ApiUser } from '../pages/apiUser.page'
+import { userdata } from '@JSONS/users.json'
 import { faker } from '@faker-js/faker'
+import { expect, fixtures as test } from '@fixtures/fixtures.fixture'
+import { RegistrationModel } from '@models/registration.model'
+import { ApiUser } from '@pages/apiUser.page'
 
 test.describe('Testing registration module', () => {
   test('successful registration test', async ({

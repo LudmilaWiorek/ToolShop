@@ -1,7 +1,4 @@
-import {
-  expect,
-  apiClassFixture as test,
-} from '../../fixtures/api-class.fixture.ts'
+import { expect, apiClassFixture as test } from '@fixtures/api-class.fixture'
 
 test.describe('Testing Brands API', () => {
   test('get all brands', async ({ request, apiClass }) => {

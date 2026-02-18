@@ -1,5 +1,5 @@
-import { LineItem } from '../models/lineItem.model'
 import { BasePage } from './base.page'
+import { LineItem } from '@models/lineItem.model'
 import { Locator, Page } from '@playwright/test'
 
 export class CartPage extends BasePage {

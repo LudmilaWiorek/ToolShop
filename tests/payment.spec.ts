@@ -1,6 +1,6 @@
-import { expect, fixtures as test } from '../fixtures/fixtures.fixture'
-import { PaymentMethod, PaymentModel } from '../models/payment.model'
-import { ApiClass } from '../pages/apiClass.page'
+import { expect, fixtures as test } from '@fixtures/fixtures.fixture'
+import { PaymentMethod, PaymentModel } from '@models/payment.model'
+import { ApiClass } from '@pages/apiClass.page'
 
 test.describe.parallel('Testing payment module', () => {
   let apiClass: ApiClass

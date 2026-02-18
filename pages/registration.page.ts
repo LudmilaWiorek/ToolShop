@@ -1,5 +1,5 @@
-import { RegistrationModel } from '../models/registration.model'
 import { BasePage } from './base.page'
+import { RegistrationModel } from '@models/registration.model'
 import { Locator, Page } from '@playwright/test'
 
 export class RegistrationPage extends BasePage {

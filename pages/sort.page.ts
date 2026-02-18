@@ -1,5 +1,5 @@
-import { OrderByEnum } from '../enums/orderBy.enum'
 import { BasePage } from './base.page'
+import { OrderByEnum } from '@enums/orderBy.enum'
 import { Locator, Page } from '@playwright/test'
 
 export class SortDropdownPage extends BasePage {

@@ -1,4 +1,4 @@
-import { ApiClass } from '../pages/apiClass.page'
+import { ApiClass } from '@pages/apiClass.page'
 import { test as base } from '@playwright/test'
 
 export const apiClassFixture = base.extend<{

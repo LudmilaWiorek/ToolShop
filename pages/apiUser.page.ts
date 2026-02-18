@@ -1,9 +1,6 @@
-import { UserModel } from '../models/registration.model'
+import { UserModel } from '@models/registration.model'
 import { APIRequestContext, APIResponse } from '@playwright/test'
 
-// export interface Headers {
-//   [key: string]: string
-// }
 export class ApiUser {
   readonly request: APIRequestContext
   readonly baseUrl = 'https://api.practicesoftwaretesting.com'

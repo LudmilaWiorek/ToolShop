@@ -1,4 +1,4 @@
-import { expect, fixtures as test } from '../fixtures/fixtures.fixture'
+import { expect, fixtures as test } from '@fixtures/fixtures.fixture'
 
 // flaky test
 test.use({
@@ -42,3 +42,6 @@ test.describe('Testing favorite module', () => {
     await expect(favoritePage.messageFavoriteItemAdded).toBeVisible()
   })
 })
+
+
+

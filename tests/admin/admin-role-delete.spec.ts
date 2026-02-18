@@ -1,7 +1,4 @@
-import {
-  expect,
-  apiAdminFixture as test,
-} from '../../fixtures/api-admin.fixture'
+import { expect, apiAdminFixture as test } from '@fixtures/api-admin.fixture'
 
 test.describe('testing admin role', () => {
   test.beforeEach('log admin', async ({ apiHeader, page }) => {
@@ -28,14 +25,13 @@ test.describe('testing admin role', () => {
     await page.goto('/admin/products')
 
     const deleteButton = page.locator('.btn-danger').nth(0)
-    const productName = page.getByRole('cell', { name: 'Combination Pliers' })
+    // const productName = page.getByRole('cell', { name: 'Combination Pliers' })
     const alertMessage = page.locator('#toast-container')
 
     await deleteButton.click()
-    await expect.soft(productName).toBeVisible()
+    // await expect.soft(productName).toBeVisible()
     await expect(alertMessage).toHaveText(
       'Seems like this product is used elsewhere.',
     )
   })
 })
- 

@@ -1,7 +1,4 @@
-import {
-  expect,
-  apiClassFixture as test,
-} from '../../fixtures/api-class.fixture.ts'
+import { expect, apiClassFixture as test } from '@fixtures/api-class.fixture'
 
 test.describe('Testing api endpoints for cart', () => {
   test('successfully create cart - POST', async ({ request, apiClass }) => {
@@ -36,14 +33,11 @@ test.describe('Testing api endpoints for cart', () => {
     })
     const responseForProduct = await response.json()
     expect(response.status()).toBe(200)
-    console.log('succssfull json', responseForProduct)
     await expect(responseForProduct.result).toBe('item added or updated')
   })
   test('resource is not found - POST', async ({ request, apiClass }) => {
     let response = await request.post(`${apiClass.baseUrl}/carts`)
     expect(response.status()).toBe(201)
-    const responseBody = await response.json()
-    // const cartId = responseBody.id
     const cartId = 'invalid'
 
     const productIdResponse = await request.get(`${apiClass.baseUrl}/products`)

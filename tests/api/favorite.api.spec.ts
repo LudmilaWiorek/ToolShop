@@ -1,5 +1,5 @@
-import { getProductId } from '../../factory/product-factory'
-import { expect, apiUserFixture as test } from '../../fixtures/api-user.fixture'
+import { getProductId } from '@factory/product-factory'
+import { expect, apiUserFixture as test } from '@fixtures/api-user.fixture'
 
 test.describe('Favorite module tests - API', () => {
   test('Add product to favorites (user logged)', async ({
@@ -58,3 +58,6 @@ test.describe('Favorite module tests - API', () => {
     expect(listOfFavorites).toContain(responseBody.product_id) // sprawdzamy z tego potweirdzenia czy nasze id ktore dostarczylismy, jest na tej liscie.
   })
 })
+
+
+

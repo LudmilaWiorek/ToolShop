@@ -1,4 +1,4 @@
-import { expect, fixtures as test } from '../fixtures/fixtures.fixture'
+import { expect, fixtures as test } from '@fixtures/fixtures.fixture'
 
 test.describe('Testing search module', () => {
   test.beforeEach(async ({ searchPage }) => {

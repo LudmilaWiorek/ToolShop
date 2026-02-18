@@ -1,4 +1,4 @@
-import { BillingAddress } from '../models/billingAddress.model'
+import { BillingAddress } from '@models/billingAddress.model'
 import { Locator, Page } from '@playwright/test'
 
 export class DeliveryPage {

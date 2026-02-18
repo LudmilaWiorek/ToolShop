@@ -1,8 +1,8 @@
-import * as users from '../JSONS/users.json'
-import { ProductModel } from '../models/addProduct.model'
-import { AddProductPage } from '../pages/addProduct.page'
-import { LoginPage } from '../pages/login.page'
+import * as users from '@JSONS/users.json'
 import { faker } from '@faker-js/faker'
+import { ProductModel } from '@models/addProduct.model'
+import { AddProductPage } from '@pages/addProduct.page'
+import { LoginPage } from '@pages/login.page'
 import { Page } from '@playwright/test'
 
 async function loginAsAdmin(page: Page): Promise<void> {

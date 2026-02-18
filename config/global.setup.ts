@@ -1,4 +1,4 @@
-import { STORAGE_STATE } from '@_pw-config'
+import { STORAGE_STATE } from '../pw.config'
 import * as fs from 'fs'
 
 async function globalSetup(): Promise<void> {

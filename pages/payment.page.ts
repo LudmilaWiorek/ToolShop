@@ -1,3 +1,4 @@
+import { BasePage } from './base.page'
 import {
   BankTransferModel,
   BuyNowPayLaterModel,
@@ -5,8 +6,7 @@ import {
   GiftCardModel,
   PaymentMethod,
   PaymentModel,
-} from '../models/payment.model'
-import { BasePage } from './base.page'
+} from '@models/payment.model'
 import { Locator, Page } from '@playwright/test'
 
 export class PaymentPage extends BasePage {

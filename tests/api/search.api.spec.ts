@@ -1,4 +1,4 @@
-import { ApiClass } from '../../pages/apiClass.page'
+import { ApiClass } from '@pages/apiClass.page'
 import { expect, test } from '@playwright/test'
 
 test.describe('API Search Tests', () => {

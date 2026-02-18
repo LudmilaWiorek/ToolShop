@@ -1,11 +1,11 @@
+import { BasePage } from './base.page'
 import {
   FilterBrand,
   FilterCategory,
   HandToolsFilter,
   OtherFilter,
   PowerToolsFilter,
-} from '../enums/filter.enum'
-import { BasePage } from './base.page'
+} from '@enums/filter.enum'
 import { Locator, Page } from '@playwright/test'
 
 export class FilterPage extends BasePage {

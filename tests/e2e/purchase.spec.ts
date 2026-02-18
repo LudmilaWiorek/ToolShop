@@ -1,6 +1,6 @@
-import { expect, fixtures as test } from '../../fixtures/fixtures.fixture'
-import { LineItem } from '../../models/lineItem.model'
-import { PaymentModel } from '../../models/payment.model'
+import { expect, fixtures as test } from '@fixtures/fixtures.fixture'
+import { LineItem } from '@models/lineItem.model'
+import { PaymentModel } from '@models/payment.model'
 
 test('purchasing test', async ({
   toolsPage,
