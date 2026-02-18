@@ -22,4 +22,13 @@ test.describe('Testing search module', () => {
     await searchPage.typeInSearchInput('test product')
     await expect(searchInput).toHaveValue('test product')
   })
+
+  test('Verify that input is secured from XSS attack', async ({
+    searchPage,
+  }) => {
+    const searchInput = searchPage.searchInput
+    await searchPage.typeInSearchInput('<script>alert("XSS")</script>')
+    await searchPage.typeInSearchInput('<script>alert(1)</script>')
+    await expect(searchInput).not.toHaveValue('alert(1)')
+  })
 })
