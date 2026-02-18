@@ -9,3 +9,6 @@ node_modules/
 /testingKoszyk.spec.test
 /auth.json
 /session.json
+/planner.chatmode.md
+/generator.chatmode.md
+/healer.chatmode.md
