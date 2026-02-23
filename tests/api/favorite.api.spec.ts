@@ -58,6 +58,3 @@ test.describe('Favorite module tests - API', () => {
     expect(listOfFavorites).toContain(responseBody.product_id) // sprawdzamy z tego potweirdzenia czy nasze id ktore dostarczylismy, jest na tej liscie.
   })
 })
-
-
-

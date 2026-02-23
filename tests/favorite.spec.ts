@@ -42,6 +42,3 @@ test.describe('Testing favorite module', () => {
     await expect(favoritePage.messageFavoriteItemAdded).toBeVisible()
   })
 })
-
-
-
