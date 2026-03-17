@@ -16,7 +16,7 @@ test.describe('Testing api endpoints for cart', () => {
     const response = await request.delete(`${api.baseUrl}/carts`)
     expect(response.status()).toBe(405)
     const responseBody = await response.json()
-    await expect(responseBody.message).toBe(
+    expect(responseBody.message).toBe(
       'Method is not allowed for the requested route',
     )
   })
@@ -35,7 +35,7 @@ test.describe('Testing api endpoints for cart', () => {
     })
     const responseForProduct = await response.json()
     expect(response.status()).toBe(200)
-    await expect(responseForProduct.result).toBe('item added or updated')
+    expect(responseForProduct.result).toBe('item added or updated')
   })
   test('resource is not found - POST', async ({ request }) => {
     let response = await request.post(`${api.baseUrl}/carts`)
