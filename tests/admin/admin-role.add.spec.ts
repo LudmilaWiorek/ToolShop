@@ -1,4 +1,4 @@
-import { productModelFactory } from '@factories/addProduct.factory'
+import { productModelFactory } from '@factory/addProduct.factory'
 import { AddProductPage } from '@pages/shopping/addProduct.page'
 import { expect, test } from '@playwright/test'
 
