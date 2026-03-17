@@ -1,6 +1,6 @@
 import { expect, fixtures as test } from '@fixtures/pages.fixture'
-import { LineItem } from '@models/lineItem.model'
-import { PaymentModel } from '@models/payment.model'
+import { LineItem } from '@models/shopping/line-item.model'
+import { PaymentModel } from '@models/shopping/payment.model'
 
 test('purchasing test', async ({
   toolsPage,
@@ -148,7 +148,7 @@ test('purchasing test', async ({
     method: 'Credit Card',
     creditCardModel: {
       creditCardNumber: '1111-2222-3333-4444',
-      expirationDate: '10/2025',
+      expirationDate: '10/2027',
       CVV: '123',
       cardHolderName: 'V',
     },
