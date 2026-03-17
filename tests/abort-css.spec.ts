@@ -9,10 +9,11 @@ test.describe('CSS Blocking Test', () => {
     await page.goto('/')
 
     // Verify that the page loads without CSS
-    const nav = await page.$('nav')
-    const backgroundColor = await nav.evaluate(
-      (el) => getComputedStyle(el).backgroundColor,
-    )
+    const nav = page.locator('nav').first()
+    await expect(nav).toBeVisible()
+    const backgroundColor = await nav.evaluate((el) => {
+      return getComputedStyle(el).backgroundColor
+    })
 
     // Check if the background color is not the default one - transparent
     expect(backgroundColor).toBe('rgba(0, 0, 0, 0)')
