@@ -1,4 +1,4 @@
-import { expect, fixtures as test } from '@fixtures/fixtures.fixture'
+import { expect, fixtures as test } from '@fixtures/pages.fixture'
 
 //for this group of tests added particular viewport,
 // because results in headless/headful mode depends on viewport configuration.

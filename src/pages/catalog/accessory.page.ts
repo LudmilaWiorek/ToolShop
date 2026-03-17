@@ -1,5 +1,5 @@
 import { BasePage } from '../base.page'
-import * as itemNames from '@data/itemNames.json'
+import * as itemNames from '@data/items.json'
 import { Locator, Page } from '@playwright/test'
 
 export class AccessoryPage extends BasePage {

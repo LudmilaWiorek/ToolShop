@@ -1,4 +1,4 @@
-import { expect, fixtures as test } from '@fixtures/fixtures.fixture'
+import { expect, fixtures as test } from '@fixtures/pages.fixture'
 import { LineItem } from '@models/lineItem.model'
 import { PaymentModel } from '@models/payment.model'
 

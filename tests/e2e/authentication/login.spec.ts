@@ -1,8 +1,8 @@
 import * as users from '@data/users.json'
-import { expect, fixtures as test } from '@fixtures/fixtures.fixture'
+import { expect, fixtures as test } from '@fixtures/pages.fixture'
 import { LoginPage } from '@pages/authentication/login.page'
 
-// import { expect, fixtures as test } from '@fixtures/fixtures.fixture'
+// import { expect, fixtures as test } from '@fixtures/pages.fixture'
 // // we don't use fixture for loginPage here, because the fixture is defined as positive login scenarios only
 
 test.describe('Testing login module', () => {

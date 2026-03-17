@@ -1,4 +1,4 @@
-import { expect, fixtures as test } from '@fixtures/fixtures.fixture'
+import { expect, fixtures as test } from '@fixtures/pages.fixture'
 
 // flaky test
 test.use({

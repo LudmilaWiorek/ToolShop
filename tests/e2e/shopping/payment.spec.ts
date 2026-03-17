@@ -1,5 +1,5 @@
 import { CartApi } from '@api/cart.api'
-import { expect, fixtures as test } from '@fixtures/fixtures.fixture'
+import { expect, fixtures as test } from '@fixtures/pages.fixture'
 import { PaymentMethod, PaymentModel } from '@models/payment.model'
 
 test.describe.parallel('Testing payment module', () => {

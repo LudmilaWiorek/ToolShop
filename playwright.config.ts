@@ -22,19 +22,6 @@ export default defineConfig({
     },
   },
 
-  // projects: [
-  //   {
-  //     name: 'setup',
-  //     use: { ...devices['Desktop Chrome'] },
-  //     testMatch: /.*\.setup\.ts/,
-  //   }, // refers to file login.setup.ts
-  //   {
-  //     name: 'chromium',
-  //     use: { ...devices['Desktop Chrome'], storageState: SESSION_PATH },
-  //     dependencies: ['setup'],
-  //     //project depends ond previous setup project
-  //   },
-  // ],
   projects: [
     {
       name: 'chromium',

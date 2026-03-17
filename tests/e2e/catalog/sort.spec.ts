@@ -1,5 +1,5 @@
 import { OrderByEnum } from '@enums/orderBy.enum'
-import { expect, fixtures as test } from '@fixtures/fixtures.fixture'
+import { expect, fixtures as test } from '@fixtures/pages.fixture'
 
 test.describe('Sort functionality', () => {
   test('Verify that sort options are visible', async ({ sortDropdownPage }) => {

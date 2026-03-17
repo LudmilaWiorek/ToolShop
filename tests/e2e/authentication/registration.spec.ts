@@ -1,7 +1,7 @@
 import { AuthApi } from '@api/auth.api'
 import { userdata } from '@data/users.json'
 import { faker } from '@faker-js/faker'
-import { expect, fixtures as test } from '@fixtures/fixtures.fixture'
+import { expect, fixtures as test } from '@fixtures/pages.fixture'
 import { RegistrationModel } from '@models/registration.model'
 
 test.describe('Testing registration module', () => {

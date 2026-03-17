@@ -1,4 +1,4 @@
-import { expect, fixtures as test } from '@fixtures/fixtures.fixture'
+import { expect, fixtures as test } from '@fixtures/pages.fixture'
 import { LoginPage } from '@pages/authentication/login.page'
 
 test('set new password functionality', async ({ page, recoveryPage }) => {

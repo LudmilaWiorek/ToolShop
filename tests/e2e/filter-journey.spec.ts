@@ -1,6 +1,5 @@
-// import { expect, fixtures as test } from '@./fixtures.fixture'
 import { FilterCategory } from '@enums/filter.enum'
-import { expect, fixtures as test } from '@fixtures/fixtures.fixture'
+import { expect, fixtures as test } from '@fixtures/pages.fixture'
 import { FilterPage } from '@pages/catalog/filter.page'
 
 test.describe('Testing filter journey', () => {

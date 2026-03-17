@@ -15,7 +15,8 @@
       "@factories/*": ["./src/factories/*"],
       "@data/*": ["./src/data/*"],
       "@config/*": ["./src/config/*"],
-      "@utils/*": ["./src/utils/*"]
+      "@utils/*": ["./src/utils/*"],
+      "pages/*": ["./pages/*"]
     },
     "types": ["node", "@playwright/test"],
     "esModuleInterop": true,
